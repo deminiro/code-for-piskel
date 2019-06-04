@@ -5,16 +5,110 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Piskel App</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
 <body class="body">
   <header class="header">
     <a href="#" class="header--headline-of-page white-color">PISKEL APP</a>
-    <p class="header--headline-new white-color">New Piskel</p>
-    <div class="header--block-buttons">
-      <button class="header-buttons header--button-create-sprite">Create Sprite</button>
-      <button class="header-buttons header--button-sign-in">Sign in</button>
+    <p class="header-headline--new white-color">New Piskel</p>
+    <div class="header-block--buttons">
+      <button class="header-buttons header-button--create-sprite">Create Sprite</button>
+      <button class="header-buttons header-button--sign-in">Sign in</button>
     </div>
   </header>
+  <main class="main">
+    <div class="main-div-of-tools">
+      <div class="main-tools--buttons-pen-size">
+        <button class="main-tools-pen-size main-tools-pen-size--left">
+          <p></p>
+        </button>
+        <button class="main-tools-pen-size main-tools-pen-size--middle-left">
+          <p></p>
+        </button>
+        <button class="main-tools-pen-size main-tools-pen-size--middle-right">
+          <p></p>
+        </button>
+        <button class="main-tools-pen-size main-tools-pen-size--right">
+          <p></p>
+        </button>
+      </div>
+      <div class="main-tools--tools-which-change-canvas">
+        <button class="tools-which-change-canvas tools-which-change-canvas--pen">
+            <i class="white-color fas fa-pencil-alt"></i>
+        </button>
+        <button class="tools-which-change-canvas tools-which-change-canvas--vertical-mirror-pen">
+
+        </button>
+        <button class="tools-which-change-canvas tools-which-change-canvas--paint-bucket-tool">
+            <i class="white-color fas fa-fill-drip"></i>
+        </button>
+        <button class="tools-which-change-canvas tools-which-change-canvas--paint-all-pixels-of-the-same-color">
+            <i class="white-color fab fa-500px"></i>
+            <i class="white-color fas fa-fill-drip"></i>
+        </button>
+        <button class="tools-which-change-canvas tools-which-change-canvas--eraser-tool">
+            <i class="white-color fas fa-eraser"></i>
+        </button>
+        <button class="tools-which-change-canvas tools-which-change-canvas--stroke-tool">
+            <i class="white-color fas fa-slash"></i>
+        </button>
+        <button class="tools-which-change-canvas tools-which-change-canvas--rectangle-tool">
+            <i class="white-color far fa-square"></i>
+        </button>
+        <button class="tools-which-change-canvas tools-which-change-canvas--circle-tool">
+            <i class="white-color far fa-circle"></i>
+        </button>
+        <button class="tools-which-change-canvas tools-which-change-canvas--move-tool">
+            <i class="white-color fas fa-hand-paper"></i>
+        </button>
+        <button class="tools-which-change-canvas tools-which-change-canvas--shape-selection">
+            <i class="white-color fas fa-magic"></i>
+        </button>
+        <button class="tools-which-change-canvas tools-which-change-canvas--rectangle-selection">
+
+        </button>
+        <button class="tools-which-change-canvas tools-which-change-canvas--lasso-selection">
+
+        </button>
+        <button class="tools-which-change-canvas tools-which-change-canvas--lighten">
+
+        </button>
+        <button class="tools-which-change-canvas tools-which-change-canvas--dithering-tool">
+
+        </button>
+        <button class="tools-which-change-canvas tools-which-change-canvas--color-picker">
+            <i class="white-color fas fa-eye-dropper"></i>
+        </button>
+      </div>
+      <div class="main-tools--choose-color">
+        <p class="tools-choose-color--top"></p>
+        <p class="tools-choose-color--bottom"></p>
+      </div>
+      <div class="main-tools--keyboard">
+          <i class="fas fa-keyboard"></i>
+      </div>
+    </div>
+    <div class="main-div-of-frames">
+        <div class="block-frames-inner">
+            <ul class="ul-of-frames" id="list-of-frames">
+                <li class="li-frame gray-border" id="frame">
+                    <div class="gray-frame-items text-center" id="frame-top-left-item"><p class="number-of-frame">1</p></div>
+                    <div class="gray-frame-items text-center button-delete" id="frame-top-right-item"><i class="fas fa-trash-alt"></i></div>
+                    <div class="gray-frame-items text-center" id="frame-bottom-left-item"><i class="fas fa-arrows-alt"></i></div>
+                    <div class="gray-frame-items text-center button-copy" id="frame-bottom-right-item"><i class="fas fa-copy"></i></div>
+                    <canvas class="canvas-frame" id="canvas-frame" width="63" height="50"></canvas>
+                </li>
+            </ul>
+            <button class="button-add-new-frame" id="button-add-new-frame">
+                <i class="fas fa-plus"></i>
+                <p class="button-frame-text">Add new frame</p>
+            </button>
+        </div>
+      <div class="main-frames--line"></div>
+    </div>
+    <div class="main-div-of-canvas white-color">c</div>
+    <div class="main-div-of-preview-and-settings white-color">c</div>
+  </main>
   <script src="/piskel-clone/src/app/index.js"></script>
 </body>
 </html>
