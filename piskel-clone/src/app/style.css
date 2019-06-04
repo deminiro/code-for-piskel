@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Righteous&display=swap');
+
 .body {
  margin: 0;
  padding: 0;
  background-color: #1D1D1D;
+ font-family: 'Righteous', cursive;
 }
 
 .white-color {
@@ -43,6 +46,7 @@
   border-radius: 1px;
   height: 1.5rem;
   font-size: 1rem;
+  font-weight: bold;
 }
 
 /* main */
@@ -51,7 +55,7 @@
   height: 37.8rem;
   padding-top: 5px;
   display: grid;
-  grid-template-columns: 7.2% 9.2% 64.4% 19.2%;
+  grid-template-columns: 7.2% 9.2% 63.9% 19.7%;
 }
 
 /* tools to canvas */
@@ -187,7 +191,7 @@
 }
 
 .li-frame {
-  background: #E3E3E3;
+  background-image: url('/src/assets/setka.png');
   width: 98px;
   height: 98px;
   display: grid;
@@ -199,6 +203,26 @@
 .li-frame>div {
   height: 25px;
   width: 25px;
+}
+
+.frame-top-left-item {
+  border-top-left-radius: 5px;
+}
+
+.frame-top-right-item {
+  border-top-right-radius: 5px;
+}
+
+.frame-bottom-left-item {
+  border-bottom-left-radius: 5px;
+}
+
+.frame-bottom-right-item {
+  border-bottom-right-radius: 5px;
+}
+
+.canvas-frame:hover, .frame-top-left-item:hover, .frame-top-right-item:hover, .frame-bottom-left-item:hover, .frame-bottom-right-item:hover {
+  cursor: pointer;
 }
 
 .gray-frame-items {
@@ -234,8 +258,8 @@
 .button-add-new-frame {
   margin-top: 20px;
   display: flex;
-  background: #E3E3E3;
-  border: 2px solid gray;
+  background: #222222;
+  border: 2px solid #888888;
   width: 102px;
 }
 
@@ -245,4 +269,94 @@
 
 .button-frame-text {
   margin: 0;
+}
+
+.main-frames-line {
+  border: none;
+  width: 5px;
+  height: 607px;
+  background-color: #252525;
+  margin: 0;
+}
+
+/* main-canvas, on which drawing */
+.main-div-of-canvas {
+  background-color: #A0A0A0;
+  text-align: center;
+}
+
+.main-div--canvas {
+  background-image: url('/src/assets/setka.png');
+  width: 81%;
+  height: 100%;
+}
+
+/* right side of page */
+/* preview */
+.main-div-of-preview-and-settings {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 79% 21%;
+}
+
+.main-preview--left-column {
+  padding-left: 7px;
+}
+
+.main-preview-left-canvas-with-fps {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 88% 12%;
+  height: 228px;
+}
+
+.canvas-preview {
+  width: 100%;
+  height: 100%;
+  background-image: url('/src/assets/setka.png');
+}
+
+.preview--fps-with-onion {
+  display: grid;
+  grid-template-columns: 20% 80%;
+}
+
+.preview--onion {
+  background-image: url('/src/assets/onion.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  height: 26px;
+}
+
+.preview--fps {
+  display: grid;
+  grid-template-columns: 30% 70%;
+}
+
+.preview-fps--number-fps {
+  margin: 0;
+  padding-top: 4px;
+  padding-left: 10px;
+  color: #AAAA8F;
+}
+
+/* right column */
+.main-preview--right-column {
+  display: grid;
+  grid-template-rows: repeat(5, 12%);
+  grid-gap: 3px;
+  padding-left: 10px;
+  padding-top: 15rem;
+}
+
+.main-preview-right--buttons {
+  padding: 0;
+  border: none;
+  background-color: #3A3A3A;
+  border-radius: 5px;
+}
+
+button:hover, input:hover {
+  cursor: pointer;
 }

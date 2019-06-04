@@ -81,8 +81,8 @@
         </button>
       </div>
       <div class="main-tools--choose-color">
-        <p class="tools-choose-color--top"></p>
-        <p class="tools-choose-color--bottom"></p>
+        <input type="color" name="" class="tools-choose-color--top" id="">
+        <input type="color" name="" class="tools-choose-color--bottom" id="" value="white">
       </div>
       <div class="main-tools--keyboard">
           <i class="fas fa-keyboard"></i>
@@ -92,22 +92,64 @@
         <div class="block-frames-inner">
             <ul class="ul-of-frames" id="list-of-frames">
                 <li class="li-frame gray-border" id="frame">
-                    <div class="gray-frame-items text-center" id="frame-top-left-item"><p class="number-of-frame">1</p></div>
-                    <div class="gray-frame-items text-center button-delete" id="frame-top-right-item"><i class="fas fa-trash-alt"></i></div>
-                    <div class="gray-frame-items text-center" id="frame-bottom-left-item"><i class="fas fa-arrows-alt"></i></div>
-                    <div class="gray-frame-items text-center button-copy" id="frame-bottom-right-item"><i class="fas fa-copy"></i></div>
+                    <div class="gray-frame-items text-center frame-top-left-item" id="frame-top-left-item">
+                      <p class="number-of-frame">1</p>
+                    </div>
+                    <div class="gray-frame-items text-center frame-top-right-item" id="frame-top-right-item">
+                      <i class="fas fa-trash-alt"></i>
+                    </div>
+                    <div class="gray-frame-items text-center frame-bottom-left-item" id="frame-bottom-left-item">
+                      <i class="fas fa-arrows-alt"></i>
+                    </div>
+                    <div class="gray-frame-items text-center frame-bottom-right-item" id="frame-bottom-right-item">
+                      <i class="fas fa-copy"></i>
+                    </div>
                     <canvas class="canvas-frame" id="canvas-frame" width="63" height="50"></canvas>
                 </li>
             </ul>
             <button class="button-add-new-frame" id="button-add-new-frame">
-                <i class="fas fa-plus"></i>
-                <p class="button-frame-text">Add new frame</p>
+                <i class="fas fa-plus white-color"></i>
+                <p class="button-frame-text white-color">Add new frame</p>
             </button>
         </div>
-      <div class="main-frames--line"></div>
+      <div class="main-frames--line">
+        <hr class="main-frames-line">
+      </div>
     </div>
-    <div class="main-div-of-canvas white-color">c</div>
-    <div class="main-div-of-preview-and-settings white-color">c</div>
+    <div class="main-div-of-canvas">
+      <canvas class="main-div--canvas"></canvas>
+    </div>
+    <div class="main-div-of-preview-and-settings">
+      <div class="main-preview--left-column">
+        <div class="main-preview-left-canvas-with-fps">
+          <canvas class="canvas-preview"></canvas>
+          <div class="preview--fps-with-onion">
+            <div class="preview--onion"></div>
+            <div class="preview--fps">
+              <p class="preview-fps--number-fps">0 fps</p>
+              <input class="preview-fps--choose-fps" value="0" type="range" name="" id="choose-fps" min="0" max="24">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="main-preview--right-column">
+        <button class="main-preview-right--buttons main-preview-right--prefences">
+          <i class="white-color fas fa-cog"></i>
+        </button>
+        <button class="main-preview-right--buttons main-preview-right--resize">
+          <i class="white-color fas fa-external-link-square-alt"></i>
+        </button>
+        <button class="main-preview-right--buttons main-preview-right--save">
+          <i class="white-color far fa-save"></i>
+        </button>
+        <button class="main-preview-right--buttons main-preview-right--export">
+          <i class="white-color far fa-file-image"></i>
+        </button>
+        <button class="main-preview-right--buttons main-preview-right--import">
+          <i class="white-color fas fa-folder-open"></i>
+        </button>
+      </div>
+    </div>
   </main>
   <script src="/piskel-clone/src/app/index.js"></script>
 </body>
