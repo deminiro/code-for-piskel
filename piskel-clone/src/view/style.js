@@ -236,8 +236,8 @@ export default function styles() {
 
 .canvas-frame {
   position: absolute;
-  margin-top: 24px;
-  margin-left: 18px;
+  margin-top: 27px;
+  margin-left: 19px;
 }
 
 .number-of-frame {
