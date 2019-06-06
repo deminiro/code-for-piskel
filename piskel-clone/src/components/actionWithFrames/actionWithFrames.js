@@ -31,13 +31,44 @@ export default function actionWithFrames() {
     buttonAddFrame.addEventListener('click', addFrame);
   }
 
-  function deleteFrame() {
+  function chooseCurrentFrame() {
+    function clickOnFrame(event) {
+      if (event.path[0].nodeName === 'CANVAS') {
+      // change yellow to gray color to previos frame
+        const previosframeBeforeClick = document.getElementsByClassName('yellow-border')[0];
+        const previosFrameElementsBeforeClick = Array.from(document
+          .getElementsByClassName('yellow-frame-items'));
 
+        previosframeBeforeClick.classList.remove('yellow-border');
+        previosframeBeforeClick.classList.add('gray-border');
+        previosFrameElementsBeforeClick.forEach((element) => {
+          element.classList.remove('yellow-frame-items');
+          element.classList.add('gray-frame-items');
+        });
+
+        // change gray to yellow color to current frame
+        const currentLi = event.path[1];
+        const elementsOfCurrentLi = Array.from(currentLi.children);
+
+        currentLi.classList.remove('gray-border');
+        currentLi.classList.add('yellow-border');
+        elementsOfCurrentLi.forEach((element) => {
+          console.log(element);
+          if (element.classList[2] === 'gray-frame-items') {
+            element.classList.remove('gray-frame-items');
+            element.classList.add('yellow-frame-items');
+          }
+        });
+        global.console.log(event);
+      }
+    }
+
+    listOfFrames.addEventListener('click', clickOnFrame);
   }
 
   function containFunctionsWhichUsedAbove() {
     addNewFrame();
-    deleteFrame();
+    chooseCurrentFrame();
   }
 
   containFunctionsWhichUsedAbove();
