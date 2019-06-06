@@ -7,7 +7,6 @@ export default function styles() {
  padding: 0;
  background-color: #1D1D1D;
  font-family: 'Righteous', cursive;
- overflow: hidden;
 }
 
 .white-color {
@@ -184,11 +183,11 @@ export default function styles() {
 }
 
 .yellow-border {
-  border: 2px solid #C9DA0D;
+  border: 2px solid #FFD700;
 }
 
 .gray-border {
-  border: 2px solid gray;
+  border: 2px solid #888888;
 }
 
 .li-frame {
@@ -199,6 +198,7 @@ export default function styles() {
   grid-template-columns: 25% 25%;
   grid-gap: 50%;
   border-radius: 10px;
+  margin-bottom: 15px;
 }
 
 .li-frame>div {
@@ -222,16 +222,16 @@ export default function styles() {
   border-bottom-right-radius: 5px;
 }
 
-.canvas-frame:hover, .frame-top-left-item:hover, .frame-top-right-item:hover, .frame-bottom-left-item:hover, .frame-bottom-right-item:hover {
+.canvas-frame:hover, .frame-top-right-item:hover, .frame-bottom-left-item:hover, .frame-bottom-right-item:hover {
   cursor: pointer;
 }
 
 .gray-frame-items {
-  background: gray;
+  background: #888888;
 }
 
 .yellow-frame-items {
-  background: #C9DA0D;
+  background: #FFD700;
 }
 
 .canvas-frame {
