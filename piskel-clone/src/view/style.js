@@ -140,19 +140,17 @@ export default function styles() {
   width: 36px;
   height: 36px;
   margin:0;
-  border: 4px solid #444444;
+  border: none;
 }
 
 .tools-choose-color--top {
   position: relative;
   z-index: 2;
-  background-color: #000000;
 }
 
 .tools-choose-color--bottom {
   position: relative;
   z-index: 1;
-  background-color: #ffffff;
   right: 18px;
   top: 26px;
 }
