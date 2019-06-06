@@ -1,5 +1,5 @@
 import css from '../view/style';
-import canvas from './canvas/mainCanvas';
+import canvas from './canvas/actionWithCanvases';
 import addNewFrame from './actionWithFrames/actionWithFrames';
 
 export default function app() {
