@@ -288,6 +288,8 @@ export default function styles() {
 
 .main-div--canvas {
   background-image: url('../src/view/assets/setka.png');
+  margin: 0;
+  padding: 0;
 }
 
 /* right side of page */
@@ -311,9 +313,9 @@ export default function styles() {
 }
 
 .canvas-preview {
-  width: 100%;
-  height: 100%;
   background-image: url('../src/view/assets/setka.png');
+  text-align: center;
+  padding-top: 20%;
 }
 
 .preview--fps-with-onion {

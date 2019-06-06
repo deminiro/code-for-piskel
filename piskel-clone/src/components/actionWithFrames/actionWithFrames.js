@@ -31,8 +31,13 @@ export default function actionWithFrames() {
     buttonAddFrame.addEventListener('click', addFrame);
   }
 
+  function deleteFrame() {
+
+  }
+
   function containFunctionsWhichUsedAbove() {
     addNewFrame();
+    deleteFrame();
   }
 
   containFunctionsWhichUsedAbove();
