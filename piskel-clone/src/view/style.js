@@ -1,3 +1,5 @@
+export default function styles() {
+  document.getElementsByTagName('head')[0].innerHTML += `<style>
 @import url('https://fonts.googleapis.com/css?family=Righteous&display=swap');
 
 .body {
@@ -5,6 +7,7 @@
  padding: 0;
  background-color: #1D1D1D;
  font-family: 'Righteous', cursive;
+ overflow: hidden;
 }
 
 .white-color {
@@ -74,7 +77,7 @@
 }
 
 .main-tools-pen-size>p {
-  background-color: white;
+  background-color: #ffffff;
   margin: 0;
 
 }
@@ -191,7 +194,7 @@
 }
 
 .li-frame {
-  background-image: url('/src/assets/setka.png');
+  background-image: url('../src/view/assets/setka.png');
   width: 98px;
   height: 98px;
   display: grid;
@@ -286,9 +289,7 @@
 }
 
 .main-div--canvas {
-  background-image: url('/src/assets/setka.png');
-  width: 81%;
-  height: 100%;
+  background-image: url('../src/view/assets/setka.png');
 }
 
 /* right side of page */
@@ -314,7 +315,7 @@
 .canvas-preview {
   width: 100%;
   height: 100%;
-  background-image: url('/src/assets/setka.png');
+  background-image: url('../src/view/assets/setka.png');
 }
 
 .preview--fps-with-onion {
@@ -323,7 +324,7 @@
 }
 
 .preview--onion {
-  background-image: url('/src/assets/onion.png');
+  background-image: url('/src/view/assets/onion.png');
   background-repeat: no-repeat;
   background-size: 100%;
   height: 26px;
@@ -359,4 +360,6 @@
 
 button:hover, input:hover {
   cursor: pointer;
+} </style>
+`;
 }

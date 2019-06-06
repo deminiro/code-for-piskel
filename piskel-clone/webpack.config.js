@@ -1,8 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  entry: './src/app/index.js',
+  entry: './src/app.js',
   output: {
     filename: 'app.bundle.js',
     path: path.resolve(__dirname, 'dist'),
@@ -14,10 +15,13 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /(node_modules)/,
+        use: {
+          loader: 'babel-loader',
+        },
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        loader: ['style-loader', 'css-loader'],
       },
     ],
   },
@@ -25,7 +29,8 @@ module.exports = {
     new HtmlWebpackPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: 'src/app/index.html',
+      template: 'src/view/index.html',
       chunks: ['main'],
-    })],
+    }),
+  ],
 };
