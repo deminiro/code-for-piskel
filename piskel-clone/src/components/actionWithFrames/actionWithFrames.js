@@ -51,6 +51,19 @@ export default function actionWithFrames() {
         global.console.log(arrayOflistFrames);
         event.path[3].removeChild(event.path[2]);
         updateNumbersOfFrames(event);
+        // if was delete current frame(with yellow color)
+        if (event.path[1].classList.contains('yellow-frame-items')) {
+          const currentFrameAfterDelete = event.path[3].children[countOfFrames - 1];
+          currentFrameAfterDelete.classList.remove('gray-border');
+          currentFrameAfterDelete.classList.add('yellow-border');
+
+          Array.from(currentFrameAfterDelete.children).forEach((element) => {
+            if (element.classList.contains('gray-frame-items')) {
+              element.classList.remove('gray-frame-items');
+              element.classList.add('yellow-frame-items');
+            }
+          });
+        }
       }
     }
 

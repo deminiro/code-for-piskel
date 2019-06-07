@@ -55,18 +55,41 @@ export default function actionWithCanvases() {
     global.console.log(canvasOfCurrentFrame, numberOfCurrentFrame);
   }
 
+  function changeKeysAfterDeleteFrame(event) {
+    if (event.target.className === 'fas fa-trash-alt') {
+      const numberOfDeleteFrame = +event.path[2].children[0].children[0].innerText;
+      // const sizeOfMap = +imagesForPreviewAndFrames.size;
+      const listFrames = document.getElementById('list-of-frames');
+      global.console.log(listFrames.children.length);
+      imagesForPreviewAndFrames.delete(numberOfDeleteFrame);
+      for (let key = numberOfDeleteFrame; key < listFrames.children.length; key += 1) {
+        if (imagesForPreviewAndFrames.has(key + 1)) {
+          const numberOfFrame = +listFrames.children[key - 1].children[0].children[0].innerText;
+          const value = imagesForPreviewAndFrames.get(key + 1);
+          imagesForPreviewAndFrames.delete(key + 1);
+          imagesForPreviewAndFrames.set(numberOfFrame, value);
+        }
+      }
+      global.console.log(imagesForPreviewAndFrames);
+    }
+  }
+
   function useEventListeners() {
     canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', () => {
       canvasWhichStateOnMiddleOfPage.addEventListener('mousemove', drawOnMiddleCanvas);
     });
+
     canvasWhichStateOnMiddleOfPage.addEventListener('mouseup', (event) => {
       canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', drawOnMiddleCanvas);
       canvasWhichStateOnMiddleOfPage.removeEventListener('mousemove', drawOnMiddleCanvas);
       saveDataUrls(event);
       changeCanvasOfPreviewAfterDrawing(event);
     });
-    listOfFrames.addEventListener('click', changeColorsToCurrentFrame);
-    // delete
+
+    listOfFrames.addEventListener('click', (event) => {
+      changeColorsToCurrentFrame();
+      changeKeysAfterDeleteFrame(event);
+    });
   }
 
   useEventListeners();
