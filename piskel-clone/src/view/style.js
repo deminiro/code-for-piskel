@@ -238,6 +238,8 @@ export default function styles() {
   position: absolute;
   margin-top: 27px;
   margin-left: 19px;
+  width: 60px;
+  height: 46px;
 }
 
 .number-of-frame {
