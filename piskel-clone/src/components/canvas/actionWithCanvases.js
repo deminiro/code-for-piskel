@@ -4,7 +4,7 @@ export default function actionWithCanvases() {
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
   const chooseCurrentColorTop = document.getElementById('tools-choose-color--top');
   // const buttonAddFrame = document.getElementById('button-add-new-frame');
-  const imagesForPreviewAndFrames = new Map();
+  let imagesForPreviewAndFrames = new Map();
 
 
   function drawOnMiddleCanvas(event) {
@@ -41,7 +41,6 @@ export default function actionWithCanvases() {
       .getElementById('image-preview')
       .setAttribute('src', imagesForPreviewAndFrames.get(arrayOfYellowBorder[0]));
     const currentFrame = childsOfUl[arrayOfYellowBorder[0] - 1].children[4];
-    global.console.log(childsOfUl[arrayOfYellowBorder[0] - 1]);
     currentFrame.innerHTML = '<img class="image-frame" width="50" height="46">';
     currentFrame
       .children[0]
@@ -49,18 +48,15 @@ export default function actionWithCanvases() {
   }
 
   function changeColorsToCurrentFrame() {
-    const currentFrame = document.getElementsByClassName('yellow-border');
-    const numberOfCurrentFrame = +currentFrame[0].innerText;
-    const canvasOfCurrentFrame = currentFrame[0].children[4];
-    global.console.log(canvasOfCurrentFrame, numberOfCurrentFrame);
+    // const currentFrame = document.getElementsByClassName('yellow-border');
+    // const numberOfCurrentFrame = +currentFrame[0].innerText;
+    // const canvasOfCurrentFrame = currentFrame[0].children[4];
   }
 
   function changeKeysAfterDeleteFrame(event) {
     if (event.target.className === 'fas fa-trash-alt') {
       const numberOfDeleteFrame = +event.path[2].children[0].children[0].innerText;
-      // const sizeOfMap = +imagesForPreviewAndFrames.size;
       const listFrames = document.getElementById('list-of-frames');
-      global.console.log(listFrames.children.length);
       imagesForPreviewAndFrames.delete(numberOfDeleteFrame);
       for (let key = numberOfDeleteFrame; key < listFrames.children.length; key += 1) {
         if (imagesForPreviewAndFrames.has(key + 1)) {
@@ -70,6 +66,26 @@ export default function actionWithCanvases() {
           imagesForPreviewAndFrames.set(numberOfFrame, value);
         }
       }
+      imagesForPreviewAndFrames = new Map([...imagesForPreviewAndFrames.entries()].sort());
+    }
+  }
+
+  function changeKeysAfterDublicateFrame(event) {
+    if (event.target.className === 'fas fa-copy') {
+      const frameOnWhichClickDublicate = event.path[2];
+      const numberOfDublicateFrame = +frameOnWhichClickDublicate
+        .children[0].children[0].innerText + 1;
+      for (let key = imagesForPreviewAndFrames.size; key >= numberOfDublicateFrame; key -= 1) {
+        if (imagesForPreviewAndFrames.has(key)) {
+          const value = imagesForPreviewAndFrames.get(key);
+          imagesForPreviewAndFrames.delete(key);
+          imagesForPreviewAndFrames.set(key + 1, value);
+        }
+      }
+      imagesForPreviewAndFrames
+        .set(numberOfDublicateFrame, imagesForPreviewAndFrames.get(numberOfDublicateFrame - 1));
+
+      imagesForPreviewAndFrames = new Map([...imagesForPreviewAndFrames.entries()].sort());
       global.console.log(imagesForPreviewAndFrames);
     }
   }
@@ -89,6 +105,7 @@ export default function actionWithCanvases() {
     listOfFrames.addEventListener('click', (event) => {
       changeColorsToCurrentFrame();
       changeKeysAfterDeleteFrame(event);
+      changeKeysAfterDublicateFrame(event);
     });
   }
 

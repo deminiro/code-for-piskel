@@ -22,7 +22,6 @@ export default function actionWithFrames() {
   function addNewFrame() {
     const newLi = listOfFrames.innerHTML;
     function addFrame() {
-      global.console.log(newLi);
       changeColorOfFrameFromYellowToGrey();
       listOfFrames.innerHTML += newLi;
       ctxOfMiddleCanvas.clearRect(0, 0, 640, 608);
@@ -48,7 +47,6 @@ export default function actionWithFrames() {
       if (event.target.className === 'fas fa-trash-alt') {
         countOfFrames -= 1;
         arrayOflistFrames.pop();
-        global.console.log(arrayOflistFrames);
         event.path[3].removeChild(event.path[2]);
         updateNumbersOfFrames(event);
         // if was delete current frame(with yellow color)
@@ -72,7 +70,6 @@ export default function actionWithFrames() {
 
   function chooseCurrentFrame() {
     function clickOnFrame(event) {
-      global.console.log(event);
       if (event.path[0].className === 'canvas-frame' || event.target.className === 'image-frame') {
         changeColorOfFrameFromYellowToGrey();
         let currentLi;
@@ -97,10 +94,56 @@ export default function actionWithFrames() {
     listOfFrames.addEventListener('click', clickOnFrame);
   }
 
+  function copyFrame() {
+    function copy(event) {
+      if (event.target.className === 'fas fa-copy') {
+        countOfFrames += 1;
+        arrayOflistFrames.push(countOfFrames);
+
+        const frameElement = event.target.parentElement.parentElement;
+        const frameElementClone = event.target.parentElement.parentElement.cloneNode(
+          true,
+        );
+        frameElement.parentNode.insertBefore(
+          frameElementClone,
+          frameElement.nextSibling,
+        );
+
+        // change colors of frame
+        frameElementClone.children[0].children[0].innerHTML = +frameElementClone
+          .children[0].children[0].innerHTML + 1;
+        if (frameElement.classList[1] === 'yellow-border') {
+          changeColorOfFrameFromYellowToGrey();
+        }
+
+        Array.from(frameElementClone.children).forEach((element) => {
+          if (element.classList.contains('gray-frame-items')) {
+            element.classList.remove('gray-frame-items');
+            element.classList.add('yellow-frame-items');
+          }
+        });
+
+        const yellowItems = Array.from(document.getElementsByClassName('yellow-frame-items'));
+        const checkHaveBorderParentElement = yellowItems[0].parentElement.classList.contains('yellow-border');
+        if (!checkHaveBorderParentElement) {
+          yellowItems.slice(0, 4).forEach((element) => {
+            element.classList.remove('yellow-frame-items');
+            element.classList.add('gray-frame-items');
+          });
+        }
+
+        updateNumbersOfFrames(event);
+      }
+    }
+
+    listOfFrames.addEventListener('click', copy);
+  }
+
   function containFunctionsWhichUsedAbove() {
     addNewFrame();
     chooseCurrentFrame();
     deleteFrame();
+    copyFrame();
   }
 
   containFunctionsWhichUsedAbove();
