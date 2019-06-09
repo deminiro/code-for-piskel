@@ -52,21 +52,19 @@ export default function actionWithCanvases() {
     childsOfUl.forEach((elem) => {
       if (elem.classList[1] === 'yellow-border') arrayOfYellowBorder.push(+elem.innerText);
     });
+    const image = imagesForPreviewAndFrames.get(arrayOfYellowBorder[0]);
     document.getElementById('canvas-preview').innerHTML = '<img id="image-preview" width="101" height="100">';
     document
       .getElementById('image-preview')
-      .setAttribute('src', imagesForPreviewAndFrames.get(arrayOfYellowBorder[0]));
+      .setAttribute('src', image);
     const currentFrame = childsOfUl[arrayOfYellowBorder[0] - 1].children[4];
     currentFrame.innerHTML = '<img class="image-frame" width="50" height="46">';
     currentFrame
       .children[0]
-      .setAttribute('src', imagesForPreviewAndFrames.get(arrayOfYellowBorder[0]));
+      .setAttribute('src', image);
   }
 
   function changeMainCanvasAfterSwitchCurrentFrame(event) {
-    // const currentFrame = document.getElementsByClassName('yellow-border');
-    // const numberOfCurrentFrame = +currentFrame[0].innerText;
-    // const canvasOfCurrentFrame = currentFrame[0].children[4];
     setTimeout(() => {
       if (event.target.className === 'canvas-frame' || event.target.className === 'image-frame') {
         const numberOfCurrentFrame = +document.getElementsByClassName('yellow-frame-items')[0]
@@ -76,6 +74,10 @@ export default function actionWithCanvases() {
         image.src = imageOfCurrentFrame;
         ctxOfMiddleCanvas.clearRect(0, 0, 640, 608);
         ctxOfMiddleCanvas.drawImage(image, 0, 0);
+
+        document
+          .getElementById('image-preview')
+          .setAttribute('src', imageOfCurrentFrame);
       }
     }, 10);
   }
