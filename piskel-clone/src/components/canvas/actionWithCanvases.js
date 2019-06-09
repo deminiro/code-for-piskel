@@ -5,14 +5,30 @@ export default function actionWithCanvases() {
   const chooseCurrentColorTop = document.getElementById('tools-choose-color--top');
   // const buttonAddFrame = document.getElementById('button-add-new-frame');
   let imagesForPreviewAndFrames = new Map();
+  const coordinateForMainCanvas = new Map();
 
 
   function drawOnMiddleCanvas(event) {
-    ctxOfMiddleCanvas.fillStyle = chooseCurrentColorTop.value;
+    // const arrayWhichSaveCoordinates = [];
+    const currentColor = chooseCurrentColorTop.value;
+    // const numberOfCurrentFrame = +document
+    //   .getElementsByClassName('yellow-frame-items')[0].children[0].innerText;
     const x = event.offsetX - 5;
     const y = event.offsetY - 5;
+    ctxOfMiddleCanvas.fillStyle = currentColor;
     ctxOfMiddleCanvas.fillRect(x, y, 10, 10);
     ctxOfMiddleCanvas.fill();
+    // eslint-disable-next-line no-restricted-syntax
+    // for (const key of coordinateForMainCanvas.keys()) {
+    //   if (key
+    // .numberOfCurrentFrame === numberOfCurrentFrame && key.currentColor === currentColor) {
+    //     arrayWhichSaveCoordinates.push(coordinateForMainCanvas.get(key));
+    //   }
+    // }
+    // arrayWhichSaveCoordinates.push(x, y);
+
+    // coordinateForMainCanvas
+    // .set({ numberOfCurrentFrame, currentColor }, arrayWhichSaveCoordinates);
   }
 
   function saveDataUrls(event) {
@@ -47,10 +63,21 @@ export default function actionWithCanvases() {
       .setAttribute('src', imagesForPreviewAndFrames.get(arrayOfYellowBorder[0]));
   }
 
-  function changeColorsToCurrentFrame() {
+  function changeMainCanvasAfterSwitchCurrentFrame(event) {
     // const currentFrame = document.getElementsByClassName('yellow-border');
     // const numberOfCurrentFrame = +currentFrame[0].innerText;
     // const canvasOfCurrentFrame = currentFrame[0].children[4];
+    setTimeout(() => {
+      if (event.target.className === 'canvas-frame' || event.target.className === 'image-frame') {
+        const numberOfCurrentFrame = +document.getElementsByClassName('yellow-frame-items')[0]
+          .children[0].innerText;
+        const imageOfCurrentFrame = imagesForPreviewAndFrames.get(numberOfCurrentFrame);
+        const image = new Image();
+        image.src = imageOfCurrentFrame;
+        ctxOfMiddleCanvas.clearRect(0, 0, 640, 608);
+        ctxOfMiddleCanvas.drawImage(image, 0, 0);
+      }
+    }, 10);
   }
 
   function changeKeysAfterDeleteFrame(event) {
@@ -103,9 +130,10 @@ export default function actionWithCanvases() {
     });
 
     listOfFrames.addEventListener('click', (event) => {
-      changeColorsToCurrentFrame();
+      changeMainCanvasAfterSwitchCurrentFrame(event);
       changeKeysAfterDeleteFrame(event);
       changeKeysAfterDublicateFrame(event);
+      global.console.log(coordinateForMainCanvas);
     });
   }
 
