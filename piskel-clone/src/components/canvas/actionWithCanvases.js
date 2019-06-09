@@ -3,19 +3,51 @@ export default function actionWithCanvases() {
   const listOfFrames = document.getElementById('list-of-frames');
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
   const chooseCurrentColorTop = document.getElementById('tools-choose-color--top');
-  // const buttonAddFrame = document.getElementById('button-add-new-frame');
   const inputRangeOnPreview = document.getElementById('preview-fps--choose-fps');
   const preview = document.getElementById('canvas-preview');
+  const submitCanvasSize = document.getElementById('submit-size-of-canvas');
   let imagesForPreviewAndFrames = new Map();
+  let units = 32;
+  let amountOfDivisonsOfCanvas = 19;
+
+  function changeUnitsOfCanvas() {
+    units = +document.querySelector('input[name="size"]:checked').value;
+    if (units === 32) amountOfDivisonsOfCanvas = 19;
+    if (units === 64) amountOfDivisonsOfCanvas = 9.5;
+    if (units === 128) amountOfDivisonsOfCanvas = 4.75;
+  }
 
 
-  function drawOnMiddleCanvas(event) {
-    const currentColor = chooseCurrentColorTop.value;
-    const x = event.offsetX - 5;
-    const y = event.offsetY - 5;
-    ctxOfMiddleCanvas.fillStyle = currentColor;
-    ctxOfMiddleCanvas.fillRect(x, y, 10, 10);
-    ctxOfMiddleCanvas.fill();
+  function draw(event) {
+    const coordinatesPerSquareOnMainCanvasX = [];
+    const coordinatesPerSquareOnMainCanvasY = [];
+    function makeCoordinatePerSquare() {
+      let devider = 1;
+      let sizeOfSquare = 0;
+      while (devider <= units) {
+        sizeOfSquare = amountOfDivisonsOfCanvas * devider;
+        coordinatesPerSquareOnMainCanvasX.push(sizeOfSquare);
+        coordinatesPerSquareOnMainCanvasY.push(sizeOfSquare);
+        devider += 1;
+      }
+      global.console.log(coordinatesPerSquareOnMainCanvasX);
+      global.console.log(coordinatesPerSquareOnMainCanvasY);
+    }
+
+    function drawOnMiddleCanvas() {
+      const currentColor = chooseCurrentColorTop.value;
+      const x = coordinatesPerSquareOnMainCanvasX.filter(coordinate => coordinate >= event.offsetX);
+      const y = coordinatesPerSquareOnMainCanvasY.filter(coordinate => coordinate >= event.offsetY);
+      ctxOfMiddleCanvas.fillStyle = currentColor;
+      ctxOfMiddleCanvas.fillRect(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas,
+        amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas);
+      ctxOfMiddleCanvas.fill();
+      global.console.log(`x${event.offsetX} y${event.offsetY}`);
+    }
+
+    makeCoordinatePerSquare();
+    drawOnMiddleCanvas(event);
+    return { drawOnMiddleCanvas };
   }
 
   function saveDataUrls(event) {
@@ -95,7 +127,6 @@ export default function actionWithCanvases() {
       .set(numberOfDublicateFrame, imagesForPreviewAndFrames.get(numberOfDublicateFrame - 1));
 
     imagesForPreviewAndFrames = new Map([...imagesForPreviewAndFrames.entries()].sort());
-    global.console.log(imagesForPreviewAndFrames);
   }
 
   function changeMainCanvasAfterDublicateFrame(event) {
@@ -142,14 +173,16 @@ export default function actionWithCanvases() {
   }
 
   function useEventListeners() {
+    submitCanvasSize.addEventListener('click', changeUnitsOfCanvas);
     canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', (event) => {
       event.preventDefault();
-      canvasWhichStateOnMiddleOfPage.addEventListener('mousemove', drawOnMiddleCanvas);
+      draw(event);
+      canvasWhichStateOnMiddleOfPage.addEventListener('mousemove', draw);
     });
 
     canvasWhichStateOnMiddleOfPage.addEventListener('mouseup', (event) => {
-      canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', drawOnMiddleCanvas);
-      canvasWhichStateOnMiddleOfPage.removeEventListener('mousemove', drawOnMiddleCanvas);
+      canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', draw);
+      canvasWhichStateOnMiddleOfPage.removeEventListener('mousemove', draw);
       saveDataUrls(event);
       changeCanvasOfPreviewAndFrameAfterDrawing(event);
       event.preventDefault();

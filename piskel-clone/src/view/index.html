@@ -117,7 +117,7 @@
       </div>
     </div>
     <div class="main-div-of-canvas">
-      <canvas class="main-div--canvas" id="main-div--canvas" width="640" height="608"></canvas>
+      <canvas class="main-div--canvas" id="main-div--canvas" width="608" height="608"></canvas>
     </div>
     <div class="main-div-of-preview-and-settings">
       <div class="main-preview--left-column">
@@ -131,6 +131,27 @@
             </div>
           </div>
         </div>
+        <form action="" class="main-div-under-preview--form" onsubmit="return false">
+            <fieldset>
+              <legend>Size of canvas:</legend>
+              <div>
+                <input type="radio" id="contactChoice1" class="radio-buttons-of-canvas-size"
+                 name="size" value="32" checked>
+                <label for="contactChoice1">32</label>
+
+                <input type="radio" id="contactChoice2" class="radio-buttons-of-canvas-size"
+                 name="size" value="64">
+                <label for="contactChoice2">64</label>
+
+                <input type="radio" id="contactChoice3" class="radio-buttons-of-canvas-size"
+                 name="size" value="128">
+                <label for="contactChoice3">128</label>
+              </div>
+              <div>
+                <button type="submit" id="submit-size-of-canvas">Submit</button>
+              </div>
+            </fieldset>
+        </form>
       </div>
       <div class="main-preview--right-column">
         <button class="main-preview-right--buttons main-preview-right--prefences">

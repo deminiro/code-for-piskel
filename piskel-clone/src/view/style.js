@@ -344,6 +344,11 @@ export default function styles() {
   color: #AAAA8F;
 }
 
+.main-div-under-preview--form>fieldset {
+  text-align: center;
+  color: #AAAA8F
+}
+
 /* right column */
 .main-preview--right-column {
   display: grid;

@@ -136,7 +136,6 @@ export default function actionWithFrames() {
 
     function fixBugsWithDublicateWhenClickNotOnCurrentFrame(event) {
       if (event.path[2].classList.contains('gray-border')) {
-        global.console.log(event.path[2].nextSibling);
         const dublicatedFrame = event.path[2].nextSibling;
         const previosFrame = document.getElementsByClassName('yellow-border')[0];
         const yellowFrameItemsOfPreviosFrame = Array.from(previosFrame.children);
