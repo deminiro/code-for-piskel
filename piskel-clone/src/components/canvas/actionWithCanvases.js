@@ -75,9 +75,12 @@ export default function actionWithCanvases() {
         ctxOfMiddleCanvas.clearRect(0, 0, 640, 608);
         ctxOfMiddleCanvas.drawImage(image, 0, 0);
 
-        document
-          .getElementById('image-preview')
-          .setAttribute('src', imageOfCurrentFrame);
+        const preview = document.getElementById('image-preview');
+        if (imagesForPreviewAndFrames.has(numberOfCurrentFrame)) {
+          preview.setAttribute('src', imageOfCurrentFrame);
+        } else {
+          preview.parentElement.innerHTML = '';
+        }
       }
     }, 10);
   }
