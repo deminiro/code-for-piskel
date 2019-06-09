@@ -4,6 +4,7 @@ export default function actionWithCanvases() {
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
   const chooseCurrentColorTop = document.getElementById('tools-choose-color--top');
   // const buttonAddFrame = document.getElementById('button-add-new-frame');
+  const inputRangeOnPreview = document.getElementById('preview-fps--choose-fps');
   const preview = document.getElementById('canvas-preview');
   let imagesForPreviewAndFrames = new Map();
 
@@ -120,8 +121,41 @@ export default function actionWithCanvases() {
     }
   }
 
+  function animationOnPreview() {
+    let number = 0;
+    let fpsOnPreview = Number(inputRangeOnPreview.value);
+
+    function forAnimation() {
+      const amountImages = imagesForPreviewAndFrames.size;
+      const keysOfImages = [];
+      // eslint-disable-next-line no-restricted-syntax
+      for (const key of imagesForPreviewAndFrames.keys()) {
+        keysOfImages.push(key);
+      }
+      const interval = setInterval(() => {
+        if (number === amountImages) number = 0;
+        setTimeout(() => {
+          document.getElementById('canvas-preview').innerHTML = '<img id="image-preview" width="101" height="100">';
+          document
+            .getElementById('image-preview')
+            .setAttribute('src', imagesForPreviewAndFrames.get(keysOfImages[number - 1]));
+          if (fpsOnPreview === 0) clearInterval(interval);
+        }, 1000);
+        number += 1;
+      }, 1000 / fpsOnPreview);
+    }
+
+    inputRangeOnPreview.addEventListener('click', () => {
+      fpsOnPreview = Number(inputRangeOnPreview.value);
+      if (fpsOnPreview > 0) {
+        forAnimation();
+      }
+    });
+  }
+
   function useEventListeners() {
-    canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', () => {
+    canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', (event) => {
+      event.preventDefault();
       canvasWhichStateOnMiddleOfPage.addEventListener('mousemove', drawOnMiddleCanvas);
     });
 
@@ -130,14 +164,18 @@ export default function actionWithCanvases() {
       canvasWhichStateOnMiddleOfPage.removeEventListener('mousemove', drawOnMiddleCanvas);
       saveDataUrls(event);
       changeCanvasOfPreviewAndFrameAfterDrawing(event);
+      event.preventDefault();
     });
 
     listOfFrames.addEventListener('click', (event) => {
+      event.preventDefault();
       changeMainCanvasAfterSwitchCurrentFrame(event);
       if (event.target.className === 'fas fa-trash-alt') changeKeysAfterDeleteFrame(event);
       if (event.target.className === 'fas fa-copy') changeKeysAfterDublicateFrame(event);
       if (event.target.className === 'fas fa-copy') changeMainCanvasAfterDublicateFrame(event);
     });
+
+    inputRangeOnPreview.addEventListener('mouseup', animationOnPreview);
   }
 
   useEventListeners();
