@@ -94,56 +94,84 @@ export default function actionWithFrames() {
     listOfFrames.addEventListener('click', clickOnFrame);
   }
 
-  function copyFrame() {
-    function copy(event) {
-      if (event.target.className === 'fas fa-copy') {
-        countOfFrames += 1;
-        arrayOflistFrames.push(countOfFrames);
+  function dublicateFrame() {
+    function dublicate(event) {
+      countOfFrames += 1;
+      arrayOflistFrames.push(countOfFrames);
 
-        const frameElement = event.target.parentElement.parentElement;
-        const frameElementClone = event.target.parentElement.parentElement.cloneNode(
-          true,
-        );
-        frameElement.parentNode.insertBefore(
-          frameElementClone,
-          frameElement.nextSibling,
-        );
+      const frameElement = event.target.parentElement.parentElement;
+      const frameElementClone = event.target.parentElement.parentElement.cloneNode(
+        true,
+      );
+      frameElement.parentNode.insertBefore(
+        frameElementClone,
+        frameElement.nextSibling,
+      );
 
-        // change colors of frame
-        frameElementClone.children[0].children[0].innerHTML = +frameElementClone
-          .children[0].children[0].innerHTML + 1;
-        if (frameElement.classList[1] === 'yellow-border') {
-          changeColorOfFrameFromYellowToGrey();
+      // change colors of frame
+      frameElementClone.children[0].children[0].innerHTML = +frameElementClone
+        .children[0].children[0].innerHTML + 1;
+      if (frameElement.classList[1] === 'yellow-border') {
+        changeColorOfFrameFromYellowToGrey();
+      }
+
+      Array.from(frameElementClone.children).forEach((element) => {
+        if (element.classList.contains('gray-frame-items')) {
+          element.classList.remove('gray-frame-items');
+          element.classList.add('yellow-frame-items');
         }
+      });
 
-        Array.from(frameElementClone.children).forEach((element) => {
+      const yellowItems = Array.from(document.getElementsByClassName('yellow-frame-items'));
+      const checkHaveBorderParentElement = yellowItems[0].parentElement.classList.contains('yellow-border');
+      if (!checkHaveBorderParentElement) {
+        yellowItems.slice(0, 4).forEach((element) => {
+          element.classList.remove('yellow-frame-items');
+          element.classList.add('gray-frame-items');
+        });
+      }
+
+      updateNumbersOfFrames(event);
+    }
+
+    function fixBugsWithDublicateWhenClickNotOnCurrentFrame(event) {
+      if (event.path[2].classList.contains('gray-border')) {
+        global.console.log(event.path[2].nextSibling);
+        const dublicatedFrame = event.path[2].nextSibling;
+        const previosFrame = document.getElementsByClassName('yellow-border')[0];
+        const yellowFrameItemsOfPreviosFrame = Array.from(previosFrame.children);
+        previosFrame.classList.remove('yellow-border');
+        previosFrame.classList.add('gray-border');
+        yellowFrameItemsOfPreviosFrame.forEach((element) => {
+          if (element.classList.contains('yellow-frame-items')) {
+            element.classList.remove('yellow-frame-items');
+            element.classList.add('gray-frame-items');
+          }
+        });
+
+        dublicatedFrame.classList.remove('gray-border');
+        dublicatedFrame.classList.add('yellow-border');
+        Array.from(dublicatedFrame.children).forEach((element) => {
           if (element.classList.contains('gray-frame-items')) {
             element.classList.remove('gray-frame-items');
             element.classList.add('yellow-frame-items');
           }
         });
-
-        const yellowItems = Array.from(document.getElementsByClassName('yellow-frame-items'));
-        const checkHaveBorderParentElement = yellowItems[0].parentElement.classList.contains('yellow-border');
-        if (!checkHaveBorderParentElement) {
-          yellowItems.slice(0, 4).forEach((element) => {
-            element.classList.remove('yellow-frame-items');
-            element.classList.add('gray-frame-items');
-          });
-        }
-
-        updateNumbersOfFrames(event);
       }
     }
-
-    listOfFrames.addEventListener('click', copy);
+    listOfFrames.addEventListener('click', (event) => {
+      if (event.target.className === 'fas fa-copy') {
+        dublicate(event);
+        fixBugsWithDublicateWhenClickNotOnCurrentFrame(event);
+      }
+    });
   }
 
   function containFunctionsWhichUsedAbove() {
     addNewFrame();
     chooseCurrentFrame();
     deleteFrame();
-    copyFrame();
+    dublicateFrame();
   }
 
   containFunctionsWhichUsedAbove();

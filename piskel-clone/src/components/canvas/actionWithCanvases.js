@@ -4,31 +4,17 @@ export default function actionWithCanvases() {
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
   const chooseCurrentColorTop = document.getElementById('tools-choose-color--top');
   // const buttonAddFrame = document.getElementById('button-add-new-frame');
+  const preview = document.getElementById('canvas-preview');
   let imagesForPreviewAndFrames = new Map();
-  const coordinateForMainCanvas = new Map();
 
 
   function drawOnMiddleCanvas(event) {
-    // const arrayWhichSaveCoordinates = [];
     const currentColor = chooseCurrentColorTop.value;
-    // const numberOfCurrentFrame = +document
-    //   .getElementsByClassName('yellow-frame-items')[0].children[0].innerText;
     const x = event.offsetX - 5;
     const y = event.offsetY - 5;
     ctxOfMiddleCanvas.fillStyle = currentColor;
     ctxOfMiddleCanvas.fillRect(x, y, 10, 10);
     ctxOfMiddleCanvas.fill();
-    // eslint-disable-next-line no-restricted-syntax
-    // for (const key of coordinateForMainCanvas.keys()) {
-    //   if (key
-    // .numberOfCurrentFrame === numberOfCurrentFrame && key.currentColor === currentColor) {
-    //     arrayWhichSaveCoordinates.push(coordinateForMainCanvas.get(key));
-    //   }
-    // }
-    // arrayWhichSaveCoordinates.push(x, y);
-
-    // coordinateForMainCanvas
-    // .set({ numberOfCurrentFrame, currentColor }, arrayWhichSaveCoordinates);
   }
 
   function saveDataUrls(event) {
@@ -44,7 +30,7 @@ export default function actionWithCanvases() {
     imagesForPreviewAndFrames.set(numberOfCurrentFrame, picture);
   }
 
-  function changeCanvasOfPreviewAfterDrawing(event) {
+  function changeCanvasOfPreviewAndFrameAfterDrawing(event) {
     const childsOfUl = Array.from(
       event.path[2].children[1].children[0].children[0].children,
     );
@@ -53,7 +39,7 @@ export default function actionWithCanvases() {
       if (elem.classList[1] === 'yellow-border') arrayOfYellowBorder.push(+elem.innerText);
     });
     const image = imagesForPreviewAndFrames.get(arrayOfYellowBorder[0]);
-    document.getElementById('canvas-preview').innerHTML = '<img id="image-preview" width="101" height="100">';
+    preview.innerHTML = '<img id="image-preview" width="101" height="100">';
     document
       .getElementById('image-preview')
       .setAttribute('src', image);
@@ -75,50 +61,62 @@ export default function actionWithCanvases() {
         ctxOfMiddleCanvas.clearRect(0, 0, 640, 608);
         ctxOfMiddleCanvas.drawImage(image, 0, 0);
 
-        const preview = document.getElementById('image-preview');
-        if (imagesForPreviewAndFrames.has(numberOfCurrentFrame)) {
-          preview.setAttribute('src', imageOfCurrentFrame);
-        } else {
-          preview.parentElement.innerHTML = '';
-        }
+        document
+          .getElementById('image-preview')
+          .setAttribute('src', imageOfCurrentFrame);
+
+        // if (imagesForPreviewAndFrames.has(numberOfCurrentFrame)) {
+        //   preview.innerHTML = '<img id="image-preview" width="101" height="100">';
+        //   preview.children[0].setAttribute('src', imageOfCurrentFrame);
+        // } else {
+        //   global.console.log(preview);
+        //   preview.innerHTML = '';
+        // }
       }
     }, 10);
   }
 
   function changeKeysAfterDeleteFrame(event) {
-    if (event.target.className === 'fas fa-trash-alt') {
-      const numberOfDeleteFrame = +event.path[2].children[0].children[0].innerText;
-      const listFrames = document.getElementById('list-of-frames');
-      imagesForPreviewAndFrames.delete(numberOfDeleteFrame);
-      for (let key = numberOfDeleteFrame; key < listFrames.children.length; key += 1) {
-        if (imagesForPreviewAndFrames.has(key + 1)) {
-          const numberOfFrame = +listFrames.children[key - 1].children[0].children[0].innerText;
-          const value = imagesForPreviewAndFrames.get(key + 1);
-          imagesForPreviewAndFrames.delete(key + 1);
-          imagesForPreviewAndFrames.set(numberOfFrame, value);
-        }
+    const numberOfDeleteFrame = +event.path[2].children[0].children[0].innerText;
+    const listFrames = document.getElementById('list-of-frames');
+    imagesForPreviewAndFrames.delete(numberOfDeleteFrame);
+    for (let key = numberOfDeleteFrame; key < listFrames.children.length; key += 1) {
+      if (imagesForPreviewAndFrames.has(key + 1)) {
+        const numberOfFrame = +listFrames.children[key - 1].children[0].children[0].innerText;
+        const value = imagesForPreviewAndFrames.get(key + 1);
+        imagesForPreviewAndFrames.delete(key + 1);
+        imagesForPreviewAndFrames.set(numberOfFrame, value);
       }
-      imagesForPreviewAndFrames = new Map([...imagesForPreviewAndFrames.entries()].sort());
     }
+    imagesForPreviewAndFrames = new Map([...imagesForPreviewAndFrames.entries()].sort());
   }
 
   function changeKeysAfterDublicateFrame(event) {
-    if (event.target.className === 'fas fa-copy') {
-      const frameOnWhichClickDublicate = event.path[2];
-      const numberOfDublicateFrame = +frameOnWhichClickDublicate
-        .children[0].children[0].innerText + 1;
-      for (let key = imagesForPreviewAndFrames.size; key >= numberOfDublicateFrame; key -= 1) {
-        if (imagesForPreviewAndFrames.has(key)) {
-          const value = imagesForPreviewAndFrames.get(key);
-          imagesForPreviewAndFrames.delete(key);
-          imagesForPreviewAndFrames.set(key + 1, value);
-        }
+    const frameOnWhichClickDublicate = event.path[2];
+    const numberOfDublicateFrame = +frameOnWhichClickDublicate
+      .children[0].children[0].innerText + 1;
+    for (let key = imagesForPreviewAndFrames.size; key >= numberOfDublicateFrame; key -= 1) {
+      if (imagesForPreviewAndFrames.has(key)) {
+        const value = imagesForPreviewAndFrames.get(key);
+        imagesForPreviewAndFrames.delete(key);
+        imagesForPreviewAndFrames.set(key + 1, value);
       }
-      imagesForPreviewAndFrames
-        .set(numberOfDublicateFrame, imagesForPreviewAndFrames.get(numberOfDublicateFrame - 1));
+    }
+    imagesForPreviewAndFrames
+      .set(numberOfDublicateFrame, imagesForPreviewAndFrames.get(numberOfDublicateFrame - 1));
 
-      imagesForPreviewAndFrames = new Map([...imagesForPreviewAndFrames.entries()].sort());
-      global.console.log(imagesForPreviewAndFrames);
+    imagesForPreviewAndFrames = new Map([...imagesForPreviewAndFrames.entries()].sort());
+    global.console.log(imagesForPreviewAndFrames);
+  }
+
+  function changeMainCanvasAfterDublicateFrame(event) {
+    const frameNumberOnWhichClickDublicate = +event.path[2].innerText;
+    if (imagesForPreviewAndFrames.has(frameNumberOnWhichClickDublicate)) {
+      const imageOfCurrentFrame = imagesForPreviewAndFrames.get(frameNumberOnWhichClickDublicate);
+      const image = new Image();
+      image.src = imageOfCurrentFrame;
+      ctxOfMiddleCanvas.clearRect(0, 0, 640, 608);
+      ctxOfMiddleCanvas.drawImage(image, 0, 0);
     }
   }
 
@@ -131,14 +129,14 @@ export default function actionWithCanvases() {
       canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', drawOnMiddleCanvas);
       canvasWhichStateOnMiddleOfPage.removeEventListener('mousemove', drawOnMiddleCanvas);
       saveDataUrls(event);
-      changeCanvasOfPreviewAfterDrawing(event);
+      changeCanvasOfPreviewAndFrameAfterDrawing(event);
     });
 
     listOfFrames.addEventListener('click', (event) => {
       changeMainCanvasAfterSwitchCurrentFrame(event);
-      changeKeysAfterDeleteFrame(event);
-      changeKeysAfterDublicateFrame(event);
-      global.console.log(coordinateForMainCanvas);
+      if (event.target.className === 'fas fa-trash-alt') changeKeysAfterDeleteFrame(event);
+      if (event.target.className === 'fas fa-copy') changeKeysAfterDublicateFrame(event);
+      if (event.target.className === 'fas fa-copy') changeMainCanvasAfterDublicateFrame(event);
     });
   }
 
