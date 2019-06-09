@@ -61,18 +61,6 @@ export default function actionWithCanvases() {
         image.src = imageOfCurrentFrame;
         ctxOfMiddleCanvas.clearRect(0, 0, 640, 608);
         ctxOfMiddleCanvas.drawImage(image, 0, 0);
-
-        document
-          .getElementById('image-preview')
-          .setAttribute('src', imageOfCurrentFrame);
-
-        // if (imagesForPreviewAndFrames.has(numberOfCurrentFrame)) {
-        //   preview.innerHTML = '<img id="image-preview" width="101" height="100">';
-        //   preview.children[0].setAttribute('src', imageOfCurrentFrame);
-        // } else {
-        //   global.console.log(preview);
-        //   preview.innerHTML = '';
-        // }
       }
     }, 10);
   }
