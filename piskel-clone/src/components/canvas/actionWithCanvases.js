@@ -1,3 +1,5 @@
+import tools from '../tools/tools';
+
 export default function actionWithCanvases() {
   const canvasWhichStateOnMiddleOfPage = document.getElementById('main-div--canvas');
   const listOfFrames = document.getElementById('list-of-frames');
@@ -30,8 +32,6 @@ export default function actionWithCanvases() {
         coordinatesPerSquareOnMainCanvasY.push(sizeOfSquare);
         devider += 1;
       }
-      global.console.log(coordinatesPerSquareOnMainCanvasX);
-      global.console.log(coordinatesPerSquareOnMainCanvasY);
     }
 
     function drawOnMiddleCanvas() {
@@ -42,7 +42,6 @@ export default function actionWithCanvases() {
       ctxOfMiddleCanvas.fillRect(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas,
         amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas);
       ctxOfMiddleCanvas.fill();
-      global.console.log(`x${event.offsetX} y${event.offsetY}`);
     }
 
     makeCoordinatePerSquare();
@@ -200,4 +199,5 @@ export default function actionWithCanvases() {
   }
 
   useEventListeners();
+  tools();
 }

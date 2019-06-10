@@ -124,8 +124,15 @@ export default function styles() {
   width: 100%;
   margin: 0;
   padding: 0;
-  border: 3px solid #3A3A3A;
   background-color: #3A3A3A;
+}
+
+.no-active {
+  border: 4px solid #3A3A3A;
+}
+
+.active {
+  border: 4px solid #FFD700;
 }
 
 /* choose color */
