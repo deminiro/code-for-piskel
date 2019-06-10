@@ -1,5 +1,4 @@
 export default function penAndEraserTools() {
-  const chooseCurrentColorTop = document.getElementById('tools-choose-color--top');
   const canvasWhichStateOnMiddleOfPage = document.getElementById('main-div--canvas');
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
   const submitCanvasSize = document.getElementById('submit-size-of-canvas');
@@ -40,10 +39,8 @@ export default function penAndEraserTools() {
 
 
     function drawOnMiddleCanvas() {
-      const currentColor = chooseCurrentColorTop.value;
       const x = coordinatesPerSquareOnMainCanvasX.filter(coordinate => coordinate >= event.offsetX);
       const y = coordinatesPerSquareOnMainCanvasY.filter(coordinate => coordinate >= event.offsetY);
-      ctxOfMiddleCanvas.fillStyle = currentColor;
       if (toolPen) {
         ctxOfMiddleCanvas.fillRect(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas,
           amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas);
@@ -54,22 +51,41 @@ export default function penAndEraserTools() {
             amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas);
       }
       ctxOfMiddleCanvas.fill();
-      global.console.log(x, y);
     }
 
     makeCoordinatePerSquare();
     drawOnMiddleCanvas(event);
   }
 
-  function deactivate(event) {
-    event.preventDefault();
+  function makeDrawingWithMouse(event) {
     draw(event);
     canvasWhichStateOnMiddleOfPage.addEventListener('mousemove', draw);
   }
 
+  function recognizeLeftOrRightClick(event) {
+    const colorLeftClick = document.getElementById('tools-choose-color--top');
+    const colorRightClick = document.getElementById('tools-choose-color--bottom');
+    let currentColor;
+    const leftClick = 1;
+    const rightClick = 3;
+    if (event.which === leftClick) {
+      currentColor = colorLeftClick.value;
+    }
+    if (event.which === rightClick) {
+      event.preventDefault();
+      currentColor = colorRightClick.value;
+    }
+    ctxOfMiddleCanvas.fillStyle = currentColor;
+    makeDrawingWithMouse(event);
+  }
+
   submitCanvasSize.addEventListener('click', changeUnitsOfCanvas);
-  canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', deactivate);
-  canvasWhichStateOnMiddleOfPage.addEventListener('mouseup', () => {
+  canvasWhichStateOnMiddleOfPage.addEventListener('click', (event) => {
+    event.preventDefault();
+  });
+  canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', recognizeLeftOrRightClick);
+  canvasWhichStateOnMiddleOfPage.addEventListener('mouseup', (event) => {
+    event.preventDefault();
     canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', draw);
     canvasWhichStateOnMiddleOfPage.removeEventListener('mousemove', draw);
   });
@@ -77,11 +93,11 @@ export default function penAndEraserTools() {
 
   divWithTools.addEventListener('mouseup', () => {
     if (!pen.classList.contains('active') && toolEraser === false) {
-      canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', deactivate);
+      canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', makeDrawingWithMouse);
       toolPen = false;
     }
     if (!eraser.classList.contains('fa-eraser') && toolPen === false) {
-      canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', deactivate);
+      canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', makeDrawingWithMouse);
       toolEraser = false;
     }
   });

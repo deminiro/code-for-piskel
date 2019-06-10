@@ -137,15 +137,13 @@ export default function actionWithCanvases() {
     activateNoActivateTools(event);
     const activeTool = document.getElementsByClassName('active')[0];
     if (activeTool.children[0].classList.contains('fa-pencil-alt')) penAndEraserTools(event);
-    global.console.log(activeTool);
   }
 
-  // function removeTools() {
-  //   const activeTool = document.getElementsByClassName('active')[0];
-  //   if (activeTool.children[0].classList.contains('fa-pencil-alt')) {
-  //     divWithTools.removeEventListener('click', tools);
-  //   }
-  // }
+  function disableSaveImageRightClick() {
+    document.body.addEventListener('contextmenu', (event) => {
+      event.preventDefault();
+    });
+  }
 
   function useEventListeners() {
     canvasWhichStateOnMiddleOfPage.addEventListener('mouseup', (event) => {
@@ -165,6 +163,6 @@ export default function actionWithCanvases() {
     inputRangeOnPreview.addEventListener('mouseup', animationOnPreview);
     divWithTools.addEventListener('mousedown', tools);
   }
-
+  disableSaveImageRightClick();
   useEventListeners();
 }
