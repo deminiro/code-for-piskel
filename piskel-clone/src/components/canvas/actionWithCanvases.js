@@ -1,5 +1,5 @@
 import activateNoActivateTools from '../tools/activeNoActiveTools';
-import penTool from '../tools/penTool';
+import penAndEraserTools from '../tools/penAndEraserTools';
 
 export default function actionWithCanvases() {
   const divWithTools = document.getElementById('div-with-tools');
@@ -136,7 +136,7 @@ export default function actionWithCanvases() {
   function tools(event) {
     activateNoActivateTools(event);
     const activeTool = document.getElementsByClassName('active')[0];
-    if (activeTool.children[0].classList.contains('fa-pencil-alt')) penTool(event);
+    if (activeTool.children[0].classList.contains('fa-pencil-alt')) penAndEraserTools(event);
     global.console.log(activeTool);
   }
 

@@ -1,4 +1,4 @@
-export default function penTool() {
+export default function penAndEraserTools() {
   const chooseCurrentColorTop = document.getElementById('tools-choose-color--top');
   const canvasWhichStateOnMiddleOfPage = document.getElementById('main-div--canvas');
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
@@ -7,7 +7,14 @@ export default function penTool() {
   let units = 32;
   let amountOfDivisonsOfCanvas = 19;
   const pen = document.getElementsByClassName('tools-which-change-canvas--pen')[0];
+  const eraser = document.getElementsByClassName('tools-which-change-canvas--eraser-tool')[0];
+  let toolPen = false;
+  let toolEraser = false;
 
+  divWithTools.addEventListener('mouseup', () => {
+    if (pen.classList.contains('active')) toolPen = true;
+    if (eraser.classList.contains('active')) toolEraser = true;
+  });
 
   function changeUnitsOfCanvas() {
     units = +document.querySelector('input[name="size"]:checked').value;
@@ -37,8 +44,15 @@ export default function penTool() {
       const x = coordinatesPerSquareOnMainCanvasX.filter(coordinate => coordinate >= event.offsetX);
       const y = coordinatesPerSquareOnMainCanvasY.filter(coordinate => coordinate >= event.offsetY);
       ctxOfMiddleCanvas.fillStyle = currentColor;
-      ctxOfMiddleCanvas.fillRect(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas,
-        amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas);
+      if (toolPen) {
+        ctxOfMiddleCanvas.fillRect(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas,
+          amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas);
+      }
+      if (toolEraser) {
+        ctxOfMiddleCanvas
+          .clearRect(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas,
+            amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas);
+      }
       ctxOfMiddleCanvas.fill();
       global.console.log(x, y);
     }
@@ -62,8 +76,13 @@ export default function penTool() {
 
 
   divWithTools.addEventListener('mouseup', () => {
-    if (!pen.classList.contains('active')) {
+    if (!pen.classList.contains('active') && toolEraser === false) {
       canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', deactivate);
+      toolPen = false;
+    }
+    if (!eraser.classList.contains('fa-eraser') && toolPen === false) {
+      canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', deactivate);
+      toolEraser = false;
     }
   });
 }
