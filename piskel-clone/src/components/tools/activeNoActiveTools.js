@@ -1,13 +1,11 @@
-export default function tools() {
-  const divWithTools = document.getElementById('div-with-tools');
-
+export default function tools(event) {
   function makeToolNoActive() {
     const activeTool = document.getElementsByClassName('active')[0];
     activeTool.classList.remove('active');
     activeTool.classList.add('no-active');
   }
 
-  function makeToolActive(event) {
+  function makeToolActive() {
     if (event.target.classList.contains('no-active')) {
       event.target.classList.remove('no-active');
       event.target.classList.add('active');
@@ -20,8 +18,7 @@ export default function tools() {
     }
   }
 
-  divWithTools.addEventListener('click', (event) => {
-    makeToolNoActive();
-    makeToolActive(event);
-  });
+  makeToolNoActive();
+  makeToolActive(event);
+  return { makeToolActive, makeToolNoActive };
 }

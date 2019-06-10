@@ -1,53 +1,14 @@
-import tools from '../tools/tools';
+import activateNoActivateTools from '../tools/activeNoActiveTools';
+import penTool from '../tools/penTool';
 
 export default function actionWithCanvases() {
-  const canvasWhichStateOnMiddleOfPage = document.getElementById('main-div--canvas');
+  const divWithTools = document.getElementById('div-with-tools');
   const listOfFrames = document.getElementById('list-of-frames');
-  const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
-  const chooseCurrentColorTop = document.getElementById('tools-choose-color--top');
   const inputRangeOnPreview = document.getElementById('preview-fps--choose-fps');
   const preview = document.getElementById('canvas-preview');
-  const submitCanvasSize = document.getElementById('submit-size-of-canvas');
+  const canvasWhichStateOnMiddleOfPage = document.getElementById('main-div--canvas');
+  const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
   let imagesForPreviewAndFrames = new Map();
-  let units = 32;
-  let amountOfDivisonsOfCanvas = 19;
-
-  function changeUnitsOfCanvas() {
-    units = +document.querySelector('input[name="size"]:checked').value;
-    if (units === 32) amountOfDivisonsOfCanvas = 19;
-    if (units === 64) amountOfDivisonsOfCanvas = 9.5;
-    if (units === 128) amountOfDivisonsOfCanvas = 4.75;
-  }
-
-
-  function draw(event) {
-    const coordinatesPerSquareOnMainCanvasX = [];
-    const coordinatesPerSquareOnMainCanvasY = [];
-    function makeCoordinatePerSquare() {
-      let devider = 1;
-      let sizeOfSquare = 0;
-      while (devider <= units) {
-        sizeOfSquare = amountOfDivisonsOfCanvas * devider;
-        coordinatesPerSquareOnMainCanvasX.push(sizeOfSquare);
-        coordinatesPerSquareOnMainCanvasY.push(sizeOfSquare);
-        devider += 1;
-      }
-    }
-
-    function drawOnMiddleCanvas() {
-      const currentColor = chooseCurrentColorTop.value;
-      const x = coordinatesPerSquareOnMainCanvasX.filter(coordinate => coordinate >= event.offsetX);
-      const y = coordinatesPerSquareOnMainCanvasY.filter(coordinate => coordinate >= event.offsetY);
-      ctxOfMiddleCanvas.fillStyle = currentColor;
-      ctxOfMiddleCanvas.fillRect(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas,
-        amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas);
-      ctxOfMiddleCanvas.fill();
-    }
-
-    makeCoordinatePerSquare();
-    drawOnMiddleCanvas(event);
-    return { drawOnMiddleCanvas };
-  }
 
   function saveDataUrls(event) {
     const childsOfUl = Array.from(
@@ -171,17 +132,23 @@ export default function actionWithCanvases() {
     });
   }
 
-  function useEventListeners() {
-    submitCanvasSize.addEventListener('click', changeUnitsOfCanvas);
-    canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', (event) => {
-      event.preventDefault();
-      draw(event);
-      canvasWhichStateOnMiddleOfPage.addEventListener('mousemove', draw);
-    });
+  // function below needs to change current tool
+  function tools(event) {
+    activateNoActivateTools(event);
+    const activeTool = document.getElementsByClassName('active')[0];
+    if (activeTool.children[0].classList.contains('fa-pencil-alt')) penTool(event);
+    global.console.log(activeTool);
+  }
 
+  // function removeTools() {
+  //   const activeTool = document.getElementsByClassName('active')[0];
+  //   if (activeTool.children[0].classList.contains('fa-pencil-alt')) {
+  //     divWithTools.removeEventListener('click', tools);
+  //   }
+  // }
+
+  function useEventListeners() {
     canvasWhichStateOnMiddleOfPage.addEventListener('mouseup', (event) => {
-      canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', draw);
-      canvasWhichStateOnMiddleOfPage.removeEventListener('mousemove', draw);
       saveDataUrls(event);
       changeCanvasOfPreviewAndFrameAfterDrawing(event);
       event.preventDefault();
@@ -196,8 +163,8 @@ export default function actionWithCanvases() {
     });
 
     inputRangeOnPreview.addEventListener('mouseup', animationOnPreview);
+    divWithTools.addEventListener('mousedown', tools);
   }
 
   useEventListeners();
-  tools();
 }
