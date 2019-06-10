@@ -1,5 +1,6 @@
 import activateNoActivateTools from '../tools/activeNoActiveTools';
 import penAndEraserTools from '../tools/penAndEraserTools';
+import colorPickerTool from '../tools/colorPickerTool';
 
 export default function actionWithCanvases() {
   const divWithTools = document.getElementById('div-with-tools');
@@ -137,6 +138,8 @@ export default function actionWithCanvases() {
     activateNoActivateTools(event);
     const activeTool = document.getElementsByClassName('active')[0];
     if (activeTool.children[0].classList.contains('fa-pencil-alt')) penAndEraserTools(event);
+    if (activeTool.children[0].classList.contains('fa-eraser')) penAndEraserTools(event);
+    if (activeTool.children[0].classList.contains('fa-eye-dropper')) colorPickerTool(event);
   }
 
   function disableSaveImageRightClick() {
