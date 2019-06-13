@@ -17,9 +17,36 @@ export default function penAndEraserTools() {
 
   function changeUnitsOfCanvas() {
     units = +document.querySelector('input[name="size"]:checked').value;
-    if (units === 32) amountOfDivisonsOfCanvas = 19;
-    if (units === 64) amountOfDivisonsOfCanvas = 9.5;
-    if (units === 128) amountOfDivisonsOfCanvas = 4.75;
+    if (units === 32) {
+      amountOfDivisonsOfCanvas = 19;
+      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-two')) {
+        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-two');
+      }
+      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-four')) {
+        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-four');
+      }
+      canvasWhichStateOnMiddleOfPage.classList.add('scaled-divide-by-one');
+    }
+    if (units === 64) {
+      amountOfDivisonsOfCanvas = 9.5;
+      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-one')) {
+        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-one');
+      }
+      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-four')) {
+        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-four');
+      }
+      canvasWhichStateOnMiddleOfPage.classList.add('scaled-divide-by-two');
+    }
+    if (units === 128) {
+      amountOfDivisonsOfCanvas = 4.75;
+      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-one')) {
+        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-one');
+      }
+      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-two')) {
+        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-two');
+      }
+      canvasWhichStateOnMiddleOfPage.classList.add('scaled-divide-by-four');
+    }
   }
 
 
@@ -92,13 +119,14 @@ export default function penAndEraserTools() {
 
 
   divWithTools.addEventListener('mouseup', () => {
-    if (!pen.classList.contains('active') && toolEraser === false) {
+    if (!pen.classList.contains('active')) {
       canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', makeDrawingWithMouse);
       toolPen = false;
     }
-    if (!eraser.classList.contains('fa-eraser') && toolPen === false) {
+    if (!eraser.classList.contains('active')) {
       canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', makeDrawingWithMouse);
       toolEraser = false;
+      global.console.log(toolEraser);
     }
   });
 }

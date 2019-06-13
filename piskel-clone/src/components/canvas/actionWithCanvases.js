@@ -4,7 +4,7 @@ import colorPickerTool from '../tools/colorPickerTool';
 // import strokeTool from '../tools/strokeTool';
 import allPixelsSameColorTool from '../tools/allPixelsSameColorTool';
 import showCoordinate from './showCoordinate';
-import paintBucketTool from '../tools/paintBucketTool';
+// import paintBucketTool from '../tools/paintBucketTool';
 
 export default function actionWithCanvases() {
   const divWithTools = document.getElementById('div-with-tools');
@@ -142,8 +142,10 @@ export default function actionWithCanvases() {
     const previosActiveTool = document.getElementsByClassName('active')[0];
     activateNoActivateTools(event);
     const activeTool = document.getElementsByClassName('active')[0];
-    if (activeTool.children[0].classList.contains('fa-pencil-alt')) penAndEraserTools(event);
-    if (activeTool.children[0].classList.contains('fa-eraser')) penAndEraserTools(event);
+    if (activeTool.children[0].classList.contains('fa-pencil-alt')
+     || previosActiveTool.children[0].classList.contains('fa-pencil-alt')
+     || activeTool.children[0].classList.contains('fa-eraser')
+     || previosActiveTool.children[0].classList.contains('fa-eraser')) penAndEraserTools(event);
     if (activeTool.children[0].classList.contains('fa-eye-dropper')) colorPickerTool(event);
     // if (activeTool.children[0].classList.contains('fa-slash')) strokeTool(event);
     if (activeTool.classList
@@ -152,9 +154,9 @@ export default function actionWithCanvases() {
          .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')) {
       allPixelsSameColorTool(event);
     }
-    if (activeTool.children[0].classList.contains('fa-fill-drip')) {
-      paintBucketTool(event);
-    }
+    // if (activeTool.children[0].classList.contains('fa-fill-drip')) {
+    //   paintBucketTool(event);
+    // }
   }
 
   function disableSaveImageRightClick() {
