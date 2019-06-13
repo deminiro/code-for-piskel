@@ -106,7 +106,7 @@ export default function allPixelsSameColorTool() {
     takeImageData(event);
   }
 
-  canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', recognizeLeftOrRightClick);
+
   function active(event) {
     const activeTool = document.getElementsByClassName('active')[0];
     if (activeTool.classList
@@ -114,15 +114,18 @@ export default function allPixelsSameColorTool() {
       recognizeLeftOrRightClick(event);
     }
   }
-
-  function nonActive() {
+  function act() {
     const activeTool = document.getElementsByClassName('active')[0];
+    if (activeTool.classList
+      .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')) {
+      canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', active);
+      global.console.log('act');
+    }
     if (!activeTool.classList
       .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')) {
       canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', active);
+      global.console.log('dis');
     }
   }
-
-  canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', active);
-  nonActive();
+  act();
 }

@@ -1,9 +1,10 @@
 import activateNoActivateTools from '../tools/activeNoActiveTools';
 import penAndEraserTools from '../tools/penAndEraserTools';
 import colorPickerTool from '../tools/colorPickerTool';
-import strokeTool from '../tools/strokeTool';
+// import strokeTool from '../tools/strokeTool';
 import allPixelsSameColorTool from '../tools/allPixelsSameColorTool';
 import showCoordinate from './showCoordinate';
+import paintBucketTool from '../tools/paintBucketTool';
 
 export default function actionWithCanvases() {
   const divWithTools = document.getElementById('div-with-tools');
@@ -144,12 +145,15 @@ export default function actionWithCanvases() {
     if (activeTool.children[0].classList.contains('fa-pencil-alt')) penAndEraserTools(event);
     if (activeTool.children[0].classList.contains('fa-eraser')) penAndEraserTools(event);
     if (activeTool.children[0].classList.contains('fa-eye-dropper')) colorPickerTool(event);
-    if (activeTool.children[0].classList.contains('fa-slash')) strokeTool(event);
+    // if (activeTool.children[0].classList.contains('fa-slash')) strokeTool(event);
     if (activeTool.classList
       .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')
        || previosActiveTool.classList
          .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')) {
       allPixelsSameColorTool(event);
+    }
+    if (activeTool.children[0].classList.contains('fa-fill-drip')) {
+      paintBucketTool(event);
     }
   }
 
