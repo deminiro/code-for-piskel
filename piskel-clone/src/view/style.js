@@ -120,6 +120,10 @@ export default function styles() {
   grid-template-rows: repeat(8, 46px);
 }
 
+.tools-which-change-canvas>i{
+  font-size: 176%;
+}
+
 .tools-which-change-canvas {
   width: 100%;
   margin: 0;
@@ -301,6 +305,18 @@ export default function styles() {
   padding: 0;
 }
 
+.scaled-divide-by-one {
+  transform: scale(1);
+}
+
+.scaled-divide-by-two {
+  transform: scale(0.5);
+}
+
+.scaled-divide-by-four {
+  transform: scale(0.25);
+}
+
 /* right side of page */
 /* preview */
 .main-div-of-preview-and-settings {
@@ -356,6 +372,11 @@ export default function styles() {
   color: #AAAA8F
 }
 
+.under-preview-coordinates {
+  color: #AAAA8f;
+  margin-bottom: 0
+}
+
 /* right column */
 .main-preview--right-column {
   display: grid;
@@ -370,6 +391,10 @@ export default function styles() {
   border: none;
   background-color: #3A3A3A;
   border-radius: 5px;
+}
+
+.main-preview-right--buttons>i {
+  font-size: 176%;
 }
 
 button:hover, input:hover {
