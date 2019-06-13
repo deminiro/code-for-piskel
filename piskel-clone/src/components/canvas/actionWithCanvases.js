@@ -1,6 +1,9 @@
 import activateNoActivateTools from '../tools/activeNoActiveTools';
 import penAndEraserTools from '../tools/penAndEraserTools';
 import colorPickerTool from '../tools/colorPickerTool';
+import strokeTool from '../tools/strokeTool';
+import allPixelsSameColorTool from '../tools/allPixelsSameColorTool';
+import showCoordinate from './showCoordinate';
 
 export default function actionWithCanvases() {
   const divWithTools = document.getElementById('div-with-tools');
@@ -135,11 +138,19 @@ export default function actionWithCanvases() {
 
   // function below needs to change current tool
   function tools(event) {
+    const previosActiveTool = document.getElementsByClassName('active')[0];
     activateNoActivateTools(event);
     const activeTool = document.getElementsByClassName('active')[0];
     if (activeTool.children[0].classList.contains('fa-pencil-alt')) penAndEraserTools(event);
     if (activeTool.children[0].classList.contains('fa-eraser')) penAndEraserTools(event);
     if (activeTool.children[0].classList.contains('fa-eye-dropper')) colorPickerTool(event);
+    if (activeTool.children[0].classList.contains('fa-slash')) strokeTool(event);
+    if (activeTool.classList
+      .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')
+       || previosActiveTool.classList
+         .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')) {
+      allPixelsSameColorTool(event);
+    }
   }
 
   function disableSaveImageRightClick() {
@@ -152,11 +163,9 @@ export default function actionWithCanvases() {
     canvasWhichStateOnMiddleOfPage.addEventListener('mouseup', (event) => {
       saveDataUrls(event);
       changeCanvasOfPreviewAndFrameAfterDrawing(event);
-      event.preventDefault();
     });
 
     listOfFrames.addEventListener('click', (event) => {
-      event.preventDefault();
       changeMainCanvasAfterSwitchCurrentFrame(event);
       if (event.target.className === 'fas fa-trash-alt') changeKeysAfterDeleteFrame(event);
       if (event.target.className === 'fas fa-copy') changeKeysAfterDublicateFrame(event);
@@ -168,4 +177,5 @@ export default function actionWithCanvases() {
   }
   disableSaveImageRightClick();
   useEventListeners();
+  showCoordinate();
 }
