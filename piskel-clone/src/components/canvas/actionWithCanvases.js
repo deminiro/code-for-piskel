@@ -1,9 +1,10 @@
 import activateNoActivateTools from '../tools/activeNoActiveTools';
 import penAndEraserTools from '../tools/penAndEraserTools';
 import colorPickerTool from '../tools/colorPickerTool';
-// import strokeTool from '../tools/strokeTool';
+import strokeTool from '../tools/strokeTool';
 import allPixelsSameColorTool from '../tools/allPixelsSameColorTool';
 import showCoordinate from './showCoordinate';
+// import actionWithFrames from '../actionWithFrames/actionWithFrames';
 // import paintBucketTool from '../tools/paintBucketTool';
 
 export default function actionWithCanvases() {
@@ -147,7 +148,8 @@ export default function actionWithCanvases() {
      || activeTool.children[0].classList.contains('fa-eraser')
      || previosActiveTool.children[0].classList.contains('fa-eraser')) penAndEraserTools(event);
     if (activeTool.children[0].classList.contains('fa-eye-dropper')) colorPickerTool(event);
-    // if (activeTool.children[0].classList.contains('fa-slash')) strokeTool(event);
+    if (activeTool.children[0].classList.contains('fa-slash')
+     || previosActiveTool.children[0].classList.contains('fa-slash')) strokeTool(event);
     if (activeTool.classList
       .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')
        || previosActiveTool.classList
@@ -184,4 +186,95 @@ export default function actionWithCanvases() {
   disableSaveImageRightClick();
   useEventListeners();
   showCoordinate();
+
+  // local storage
+  function storage() {
+    let saveImagesAndKeysFromMap = [];
+    function saveDataInArray() {
+      const arrayOfKeys = [];
+      const arrayOfValues = [];
+      // eslint-disable-next-line no-restricted-syntax
+      for (const key of imagesForPreviewAndFrames.keys()) {
+        arrayOfKeys.push(key);
+      }
+      // eslint-disable-next-line no-restricted-syntax
+      for (const value of imagesForPreviewAndFrames) {
+        arrayOfValues.push(value);
+      }
+      if (localStorage.getItem('images') !== null) {
+        saveImagesAndKeysFromMap = [];
+      }
+      let number = 0;
+      while (number < arrayOfKeys.length) {
+        saveImagesAndKeysFromMap.push({
+          arrayOfKeys: arrayOfValues,
+        });
+        number += 1;
+      }
+      localStorage.setItem('images', JSON.stringify(saveImagesAndKeysFromMap));
+    }
+    canvasWhichStateOnMiddleOfPage.addEventListener('mouseup', saveDataInArray);
+    listOfFrames.addEventListener('mouseup', saveDataInArray);
+    window.onload = () => {
+      if (localStorage.getItem('images') !== null) {
+        const images = JSON.parse(localStorage.getItem('images'));
+        if (images[images.length - 1] !== undefined) {
+          const takeLastItemFromImages = images[images.length - 1].arrayOfKeys;
+          const numbersOfFrames = [];
+          takeLastItemFromImages.forEach((element) => {
+            numbersOfFrames.push(element[0]);
+          });
+          const defineAmountOfFrames = Math.max.apply(null, numbersOfFrames);
+          for (let amount = 0; amount < defineAmountOfFrames - 1; amount += 1) {
+            const frame = listOfFrames.children[listOfFrames.children.length - 1];
+            const frameClone = frame.cloneNode(true);
+            frameClone.classList.remove('yellow-border');
+            frameClone.classList.add('gray-border');
+            Array.from(frameClone.children).forEach((element) => {
+              if (element.classList.contains('yellow-frame-items')) {
+                element.classList.remove('yellow-frame-items');
+                element.classList.add('gray-frame-items');
+              }
+            });
+            frame.parentNode.insertBefore(frameClone, frame.nextSibling);
+          }
+          // update numbers of frames
+          Array.from(listOfFrames.children).forEach((element, index) => {
+          // eslint-disable-next-line no-param-reassign
+            element.children[0].children[0].innerText = index + 1;
+          });
+
+          // change Map with images
+          takeLastItemFromImages.forEach((element) => {
+            imagesForPreviewAndFrames.set(element[0], element[1]);
+          });
+          // change image of frames
+          Array.from(listOfFrames.children).forEach((element) => {
+            const keyOfMap = +element.children[0].innerText;
+            if (imagesForPreviewAndFrames.has(keyOfMap)) {
+              const image = imagesForPreviewAndFrames.get(keyOfMap);
+              // eslint-disable-next-line no-param-reassign
+              element.children[4].innerHTML = '<img class="image-frame" width="50" height="46">';
+              element.children[4]
+                .children[0]
+                .setAttribute('src', image);
+            }
+          });
+          // change image of main canvas and preview
+          if (imagesForPreviewAndFrames.has(1)) {
+            const previewImage = document.getElementById('canvas-preview');
+            const imageForPreview = imagesForPreviewAndFrames.get(1);
+            const image = new Image();
+            image.src = imagesForPreviewAndFrames.get(1);
+            ctxOfMiddleCanvas.clearRect(0, 0, 640, 608);
+            ctxOfMiddleCanvas.drawImage(image, 0, 0);
+            previewImage.innerHTML = '<img id="image-preview" width="101" height="100">';
+            document.getElementById('image-preview')
+              .setAttribute('src', imageForPreview);
+          }
+        }
+      }
+    };
+  }
+  storage();
 }

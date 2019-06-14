@@ -1,3 +1,5 @@
+import moveFrame from './moveFrame';
+
 export default function actionWithFrames() {
   const listOfFrames = document.getElementById('list-of-frames');
   const buttonAddFrame = document.getElementById('button-add-new-frame');
@@ -5,6 +7,12 @@ export default function actionWithFrames() {
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
   let countOfFrames = 1;
   const arrayOflistFrames = [1];
+
+  // change count of frames, if frames were upload from local storage
+  // function changeCountOfFrames() {
+  //   countOfFrames = listOfFrames.children.length + 1;
+  // }
+  // changeCountOfFrames();
 
   function changeColorOfFrameFromYellowToGrey() {
     const previosframeBeforeClick = document.getElementsByClassName('yellow-border')[0];
@@ -134,6 +142,10 @@ export default function actionWithFrames() {
       updateNumbersOfFrames(event);
     }
 
+    function swapFrames(event) {
+      moveFrame(event);
+    }
+
     function fixBugsWithDublicateWhenClickNotOnCurrentFrame(event) {
       if (event.path[2].classList.contains('gray-border')) {
         const dublicatedFrame = event.path[2].nextSibling;
@@ -164,6 +176,7 @@ export default function actionWithFrames() {
         fixBugsWithDublicateWhenClickNotOnCurrentFrame(event);
       }
     });
+    listOfFrames.addEventListener('mousedown', swapFrames);
   }
 
   function containFunctionsWhichUsedAbove() {
