@@ -52,7 +52,7 @@ export default function actionWithFrames() {
 
   function deleteFrame() {
     function deleteChosenFrame(event) {
-      if (event.target.className === 'fas fa-trash-alt') {
+      if (event.target.className === 'fas fa-trash-alt' && listOfFrames.children.length > 1) {
         countOfFrames -= 1;
         arrayOflistFrames.pop();
         event.path[3].removeChild(event.path[2]);
