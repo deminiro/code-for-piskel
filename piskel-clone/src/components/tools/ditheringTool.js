@@ -1,19 +1,20 @@
-export default function penAndEraserTools() {
+export default function ditheringTool() {
   const canvasWhichStateOnMiddleOfPage = document.getElementById('main-div--canvas');
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
   const submitCanvasSize = document.getElementById('submit-size-of-canvas');
   const divWithTools = document.getElementById('div-with-tools');
+  const colorLeftClick = document.getElementById('tools-choose-color--top');
+  const colorRightClick = document.getElementById('tools-choose-color--bottom');
+  const leftClick = 1;
+  const rightClick = 3;
   let units = 32;
   let amountOfDivisonsOfCanvas = 19;
-  const pen = document.getElementsByClassName('tools-which-change-canvas--pen')[0];
-  const eraser = document.getElementsByClassName('tools-which-change-canvas--eraser-tool')[0];
-  let toolPen = false;
-  let toolEraser = false;
-
-  divWithTools.addEventListener('mouseup', () => {
-    if (pen.classList.contains('active')) toolPen = true;
-    if (eraser.classList.contains('active')) toolEraser = true;
-  });
+  const dithering = document.getElementsByClassName('tools-which-change-canvas--dithering-tool')[0];
+  // 0 equal fillRect, 1 equal clearRect
+  let needToChangeFillAndClear = 0;
+  // need to change fill pixel to clear pixel
+  const coordsForFill = new Set();
+  const coordsForClear = new Set();
 
   function changeUnitsOfCanvas() {
     units = +document.querySelector('input[name="size"]:checked').value;
@@ -68,16 +69,25 @@ export default function penAndEraserTools() {
     function drawOnMiddleCanvas() {
       const x = coordinatesPerSquareOnMainCanvasX.filter(coordinate => coordinate >= event.offsetX);
       const y = coordinatesPerSquareOnMainCanvasY.filter(coordinate => coordinate >= event.offsetY);
-      if (toolPen) {
+      if (needToChangeFillAndClear === 0
+        && !coordsForClear.has(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas)) {
+        global.console.log(x[0], y[0]);
+        coordsForFill.add(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas);
+        if (event.which === rightClick) ctxOfMiddleCanvas.fillStyle = colorRightClick.value;
+        if (event.which === leftClick) ctxOfMiddleCanvas.fillStyle = colorLeftClick.value;
         ctxOfMiddleCanvas.fillRect(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas,
           amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas);
+        needToChangeFillAndClear += 1;
       }
-      if (toolEraser) {
-        ctxOfMiddleCanvas
-          .clearRect(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas,
-            amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas);
+      if (needToChangeFillAndClear === 1
+         && !coordsForFill.has(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas)) {
+        coordsForClear.add(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas);
+        if (event.which === leftClick) ctxOfMiddleCanvas.fillStyle = colorRightClick.value;
+        if (event.which === rightClick) ctxOfMiddleCanvas.fillStyle = colorLeftClick.value;
+        ctxOfMiddleCanvas.fillRect(x[0] - amountOfDivisonsOfCanvas,
+          y[0] - amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas);
+        needToChangeFillAndClear -= 1;
       }
-      ctxOfMiddleCanvas.fill();
     }
 
     makeCoordinatePerSquare();
@@ -90,11 +100,7 @@ export default function penAndEraserTools() {
   }
 
   function recognizeLeftOrRightClick(event) {
-    const colorLeftClick = document.getElementById('tools-choose-color--top');
-    const colorRightClick = document.getElementById('tools-choose-color--bottom');
     let currentColor;
-    const leftClick = 1;
-    const rightClick = 3;
     if (event.which === leftClick) {
       currentColor = colorLeftClick.value;
     }
@@ -105,26 +111,21 @@ export default function penAndEraserTools() {
     ctxOfMiddleCanvas.fillStyle = currentColor;
     makeDrawingWithMouse(event);
   }
+
   submitCanvasSize.addEventListener('click', changeUnitsOfCanvas);
   canvasWhichStateOnMiddleOfPage.addEventListener('click', (event) => {
     event.preventDefault();
   });
   canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', recognizeLeftOrRightClick);
-  canvasWhichStateOnMiddleOfPage.addEventListener('mouseup', (event) => {
-    event.preventDefault();
+  canvasWhichStateOnMiddleOfPage.addEventListener('mouseup', () => {
     canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', draw);
     canvasWhichStateOnMiddleOfPage.removeEventListener('mousemove', draw);
   });
 
 
   divWithTools.addEventListener('mouseup', () => {
-    if (!pen.classList.contains('active')) {
-      canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', makeDrawingWithMouse);
-      toolPen = false;
-    }
-    if (!eraser.classList.contains('active')) {
-      canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', makeDrawingWithMouse);
-      toolEraser = false;
+    if (!dithering.classList.contains('active')) {
+      canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', recognizeLeftOrRightClick);
     }
   });
 }

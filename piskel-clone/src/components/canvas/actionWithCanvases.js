@@ -5,6 +5,7 @@ import strokeTool from '../tools/strokeTool';
 import allPixelsSameColorTool from '../tools/allPixelsSameColorTool';
 import showCoordinate from './showCoordinate';
 import penMirrorTool from '../tools/penMirrorTool';
+import ditheringTool from '../tools/ditheringTool';
 // import moveFrame from '../actionWithFrames/moveFrame';
 // import actionWithFrames from '../actionWithFrames/actionWithFrames';
 // import paintBucketTool from '../tools/paintBucketTool';
@@ -213,6 +214,11 @@ export default function actionWithCanvases() {
      || event.target.classList.contains('fa-grip-lines-vertical')
      || previosActiveTool.children[0].classList.contains('fa-grip-lines-vertical')) {
       penMirrorTool(event);
+    }
+    if (event.target.classList.contains('tools-which-change-canvas--dithering-tool')
+     || event.target.classList.contains('dith')
+     || previosActiveTool.children[0].classList.contains('dith')) {
+      ditheringTool(event);
     }
     // if (activeTool.children[0].classList.contains('fa-fill-drip')) {
     //   paintBucketTool(event);
