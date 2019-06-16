@@ -4,6 +4,7 @@ import colorPickerTool from '../tools/colorPickerTool';
 import strokeTool from '../tools/strokeTool';
 import allPixelsSameColorTool from '../tools/allPixelsSameColorTool';
 import showCoordinate from './showCoordinate';
+import penMirrorTool from '../tools/penMirrorTool';
 // import moveFrame from '../actionWithFrames/moveFrame';
 // import actionWithFrames from '../actionWithFrames/actionWithFrames';
 // import paintBucketTool from '../tools/paintBucketTool';
@@ -194,6 +195,11 @@ export default function actionWithCanvases() {
     if (event.target.classList.contains('tools-which-change-canvas--rotate')
      || event.target.classList.contains('fa-redo')) {
       rotationTool(event);
+    }
+    if (event.target.classList.contains('tools-which-change-canvas--mirror-pen')
+     || event.target.classList.contains('fa-grip-lines-vertical')
+     || previosActiveTool.children[0].classList.contains('fa-grip-lines-vertical')) {
+      penMirrorTool(event);
     }
     // if (activeTool.children[0].classList.contains('fa-fill-drip')) {
     //   paintBucketTool(event);
