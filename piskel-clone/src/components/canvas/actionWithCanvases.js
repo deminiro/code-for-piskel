@@ -4,6 +4,7 @@ import colorPickerTool from '../tools/colorPickerTool';
 import strokeTool from '../tools/strokeTool';
 import allPixelsSameColorTool from '../tools/allPixelsSameColorTool';
 import showCoordinate from './showCoordinate';
+// import moveFrame from '../actionWithFrames/moveFrame';
 // import actionWithFrames from '../actionWithFrames/actionWithFrames';
 // import paintBucketTool from '../tools/paintBucketTool';
 
@@ -15,24 +16,42 @@ export default function actionWithCanvases() {
   const canvasWhichStateOnMiddleOfPage = document.getElementById('main-div--canvas');
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
   let imagesForPreviewAndFrames = new Map();
+  // switch images of frames in map after swap frames
+  // function switchImagesOfFrames() {
+  //   function swap() {
+  //     const numbersOfFramesAfterSwitch = moveFrame().arr;
+  //     const valueOfFirstSwap = imagesForPreviewAndFrames.get(numbersOfFramesAfterSwitch[0]);
+  //     const valueOfSecondSwap = imagesForPreviewAndFrames.get(numbersOfFramesAfterSwitch[1]);
+  //     imagesForPreviewAndFrames.delete(numbersOfFramesAfterSwitch[0]);
+  //     imagesForPreviewAndFrames.delete(numbersOfFramesAfterSwitch[1]);
+  //     imagesForPreviewAndFrames.set(numbersOfFramesAfterSwitch[0], valueOfSecondSwap);
+  //     imagesForPreviewAndFrames.set(numbersOfFramesAfterSwitch[1], valueOfFirstSwap);
+  //     const numbersOfFrames = Array.from(document.getElementsByClassName('number-of-frame'));
+  //     let number = 1;
+  //     numbersOfFrames.forEach((element) => {
+  //       // eslint-disable-next-line no-param-reassign
+  //       element.innerText = number;
+  //       number += 1;
+  //     });
+  //   }
+  //   listOfFrames.addEventListener('mouseup', swap);
+  // }
 
-  function saveDataUrls(event) {
-    const childsOfUl = Array.from(
-      event.path[2].children[1].children[0].children[0].children,
-    );
+  function saveDataUrls() {
+    const ul = document.getElementById('list-of-frames');
+    const childsOfUl = Array.from(ul.children);
     const arrayOfYellowBorder = [];
     childsOfUl.forEach((elem) => {
       if (elem.classList[1] === 'yellow-border') { arrayOfYellowBorder.push(elem); }
     });
-    const picture = event.path[0].toDataURL('image/png');
+    const picture = canvasWhichStateOnMiddleOfPage.toDataURL('image/png');
     const numberOfCurrentFrame = Number(arrayOfYellowBorder[0].innerText);
     imagesForPreviewAndFrames.set(numberOfCurrentFrame, picture);
   }
 
-  function changeCanvasOfPreviewAndFrameAfterDrawing(event) {
-    const childsOfUl = Array.from(
-      event.path[2].children[1].children[0].children[0].children,
-    );
+  function changeCanvasOfPreviewAndFrameAfterDrawing() {
+    const ul = document.getElementById('list-of-frames');
+    const childsOfUl = Array.from(ul.children);
     const arrayOfYellowBorder = [];
     childsOfUl.forEach((elem) => {
       if (elem.classList[1] === 'yellow-border') arrayOfYellowBorder.push(+elem.innerText);
@@ -139,6 +158,22 @@ export default function actionWithCanvases() {
   }
 
   // function below needs to change current tool
+  function rotationTool() {
+    function rotation(event) {
+      event.stopPropagation();
+      const numberOfCurrentFrame = +document
+        .getElementsByClassName('yellow-frame-items')[0].innerText;
+      const image = new Image();
+      image.src = imagesForPreviewAndFrames.get(numberOfCurrentFrame);
+      ctxOfMiddleCanvas.clearRect(0, 0, 608, 608);
+      ctxOfMiddleCanvas.drawImage(image, 0, 0);
+      ctxOfMiddleCanvas.rotate(90 * Math.PI / 180);
+      ctxOfMiddleCanvas.translate(0, -canvasWhichStateOnMiddleOfPage.width);
+      const picture = canvasWhichStateOnMiddleOfPage.toDataURL('image/png');
+      imagesForPreviewAndFrames.set(numberOfCurrentFrame, picture);
+    }
+    divWithTools.addEventListener('mousedown', rotation);
+  }
   function tools(event) {
     const previosActiveTool = document.getElementsByClassName('active')[0];
     activateNoActivateTools(event);
@@ -155,6 +190,10 @@ export default function actionWithCanvases() {
        || previosActiveTool.classList
          .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')) {
       allPixelsSameColorTool(event);
+    }
+    if (event.target.classList.contains('tools-which-change-canvas--rotate')
+     || event.target.classList.contains('fa-redo')) {
+      rotationTool(event);
     }
     // if (activeTool.children[0].classList.contains('fa-fill-drip')) {
     //   paintBucketTool(event);
@@ -186,6 +225,7 @@ export default function actionWithCanvases() {
   disableSaveImageRightClick();
   useEventListeners();
   showCoordinate();
+  // switchImagesOfFrames();
 
   // local storage
   function storage() {
@@ -251,7 +291,8 @@ export default function actionWithCanvases() {
           // change image of frames
           Array.from(listOfFrames.children).forEach((element) => {
             const keyOfMap = +element.children[0].innerText;
-            if (imagesForPreviewAndFrames.has(keyOfMap)) {
+            if (imagesForPreviewAndFrames.has(keyOfMap)
+            && imagesForPreviewAndFrames.get(keyOfMap) !== null) {
               const image = imagesForPreviewAndFrames.get(keyOfMap);
               // eslint-disable-next-line no-param-reassign
               element.children[4].innerHTML = '<img class="image-frame" width="50" height="46">';

@@ -67,14 +67,14 @@
         <button class="tools-which-change-canvas tools-which-change-canvas--rectangle-selection no-active">
 
         </button>
-        <button class="tools-which-change-canvas tools-which-change-canvas--lasso-selection no-active">
-
+        <button class="tools-which-change-canvas tools-which-change-canvas--rotate no-active">
+          <i class="white-color fas fa-redo"></i>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--lighten no-active">
 
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--dithering-tool no-active">
-
+          <i class="far white-color">dith</i>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--color-picker no-active">
             <i class="white-color fas fa-eye-dropper"></i>
@@ -91,7 +91,7 @@
     <div class="main-div-of-frames">
         <div class="block-frames-inner">
             <ul class="ul-of-frames" id="list-of-frames">
-                <li class="li-frame yellow-border" id="frame">
+                <li class="li-frame yellow-border" id="frame" draggable="true">
                     <div class="text-center frame-top-left-item yellow-frame-items" id="frame-top-left-item">
                       <p class="number-of-frame">1</p>
                     </div>
@@ -104,7 +104,7 @@
                     <div class="text-center frame-bottom-right-item yellow-frame-items" id="frame-bottom-right-item">
                       <i class="fas fa-copy"></i>
                     </div>
-                    <p class="canvas-frame" id="canvas-frame" width="50" height="46"></p>
+                    <p class="canvas-frame" id="canvas-frame" width="50" height="46" draggable="true" ondragstart="drag(event)"></p>
                 </li>
             </ul>
             <button class="button-add-new-frame" id="button-add-new-frame">
@@ -177,5 +177,5 @@
     </div>
   </main>
 </body>
-<script src="../app.js"></script>
+<script src="../app.js" type="module"></script>
 </html>

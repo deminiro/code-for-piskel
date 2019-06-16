@@ -46,7 +46,9 @@ export default function actionWithFrames() {
   function updateNumbersOfFrames(event) {
     const childrensOfUl = Array.from(event.path[3].children);
     for (let i = 0; i < childrensOfUl.length; i += 1) {
-      childrensOfUl[i].children[0].children[0].innerHTML = i + 1;
+      if (childrensOfUl[i].children[0].localname === 'div') {
+        childrensOfUl[i].children[0].children[0].innerHTML = i + 1;
+      }
     }
   }
 
@@ -143,7 +145,10 @@ export default function actionWithFrames() {
     }
 
     function swapFrames(event) {
-      moveFrame(event);
+      if (event.target.classList.contains('fa-arrows-alt')) {
+        moveFrame(event);
+        updateNumbersOfFrames(event);
+      }
     }
 
     function fixBugsWithDublicateWhenClickNotOnCurrentFrame(event) {
@@ -177,6 +182,7 @@ export default function actionWithFrames() {
       }
     });
     listOfFrames.addEventListener('mousedown', swapFrames);
+    listOfFrames.addEventListener('mouseup', updateNumbersOfFrames);
   }
 
   function containFunctionsWhichUsedAbove() {
