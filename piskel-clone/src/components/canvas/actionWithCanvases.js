@@ -37,6 +37,10 @@ export default function actionWithCanvases() {
   //   }
   //   listOfFrames.addEventListener('mouseup', swap);
   // }
+  function deleteNullFromImagesMap() {
+    global.console.log(imagesForPreviewAndFrames.has(null));
+    if (imagesForPreviewAndFrames.has(null)) imagesForPreviewAndFrames.delete(null);
+  }
 
   function saveDataUrls() {
     const ul = document.getElementById('list-of-frames');
@@ -107,11 +111,13 @@ export default function actionWithCanvases() {
         const value = imagesForPreviewAndFrames.get(key);
         imagesForPreviewAndFrames.delete(key);
         imagesForPreviewAndFrames.set(key + 1, value);
+        global.console.log(value);
       }
     }
     imagesForPreviewAndFrames
       .set(numberOfDublicateFrame, imagesForPreviewAndFrames.get(numberOfDublicateFrame - 1));
-
+    global.console.log(numberOfDublicateFrame);
+    global.console.log(imagesForPreviewAndFrames);
     imagesForPreviewAndFrames = new Map([...imagesForPreviewAndFrames.entries()].sort());
   }
 
@@ -127,6 +133,7 @@ export default function actionWithCanvases() {
   }
 
   function animationOnPreview() {
+    deleteNullFromImagesMap();
     let number = 0;
     let fpsOnPreview = Number(inputRangeOnPreview.value);
 
