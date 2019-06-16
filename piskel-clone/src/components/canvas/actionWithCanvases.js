@@ -62,7 +62,7 @@ export default function actionWithCanvases() {
       if (elem.classList[1] === 'yellow-border') arrayOfYellowBorder.push(+elem.innerText);
     });
     const image = imagesForPreviewAndFrames.get(arrayOfYellowBorder[0]);
-    preview.innerHTML = '<img id="image-preview" width="101" height="100">';
+    preview.innerHTML = '<img id="image-preview" width="202" height="200">';
     document
       .getElementById('image-preview')
       .setAttribute('src', image);
@@ -147,7 +147,7 @@ export default function actionWithCanvases() {
       const interval = setInterval(() => {
         if (number === amountImages) number = 0;
         setTimeout(() => {
-          document.getElementById('canvas-preview').innerHTML = '<img id="image-preview" width="101" height="100">';
+          document.getElementById('canvas-preview').innerHTML = '<img id="image-preview" width="202" height="200">';
           document
             .getElementById('image-preview')
             .setAttribute('src', imagesForPreviewAndFrames.get(keysOfImages[number - 1]));
@@ -163,6 +163,12 @@ export default function actionWithCanvases() {
         forAnimation();
       }
     });
+    function fullScreenPreview() {
+      preview.addEventListener('dblclick', () => {
+        preview.requestFullscreen();
+      });
+    }
+    fullScreenPreview();
   }
 
   // function below needs to change current tool
@@ -322,7 +328,7 @@ export default function actionWithCanvases() {
             image.src = imagesForPreviewAndFrames.get(1);
             ctxOfMiddleCanvas.clearRect(0, 0, 640, 608);
             ctxOfMiddleCanvas.drawImage(image, 0, 0);
-            previewImage.innerHTML = '<img id="image-preview" width="101" height="100">';
+            previewImage.innerHTML = '<img id="image-preview" width="202" height="200">';
             document.getElementById('image-preview')
               .setAttribute('src', imageForPreview);
           }

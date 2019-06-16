@@ -180,7 +180,7 @@ export default function actionWithFrames() {
       }
     });
     listOfFrames.addEventListener('mousedown', swapFrames);
-    listOfFrames.addEventListener('mouseup', updateNumbersOfFrames);
+    // listOfFrames.addEventListener('mouseup', updateNumbersOfFrames);
   }
 
   function containFunctionsWhichUsedAbove() {

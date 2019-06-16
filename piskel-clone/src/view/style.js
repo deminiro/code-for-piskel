@@ -343,6 +343,10 @@ export default function styles() {
   padding-top: 20%;
 }
 
+.canvas-preview {
+  cursor: pointer;
+}
+
 .preview--fps-with-onion {
   display: grid;
   grid-template-columns: 20% 80%;
