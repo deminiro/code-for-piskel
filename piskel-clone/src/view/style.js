@@ -340,7 +340,6 @@ export default function styles() {
 .canvas-preview {
   background-image: url('../src/view/assets/setka.png');
   text-align: center;
-  padding-top: 20%;
 }
 
 .canvas-preview {
