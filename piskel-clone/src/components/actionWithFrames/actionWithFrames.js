@@ -46,9 +46,7 @@ export default function actionWithFrames() {
   function updateNumbersOfFrames(event) {
     const childrensOfUl = Array.from(event.path[3].children);
     for (let i = 0; i < childrensOfUl.length; i += 1) {
-      if (childrensOfUl[i].children[0].localname === 'div') {
-        childrensOfUl[i].children[0].children[0].innerHTML = i + 1;
-      }
+      childrensOfUl[i].children[0].children[0].innerHTML = i + 1;
     }
   }
 
