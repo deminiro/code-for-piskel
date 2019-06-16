@@ -216,8 +216,8 @@ export default function actionWithCanvases() {
       penMirrorTool(event);
     }
     if (event.target.classList.contains('tools-which-change-canvas--dithering-tool')
-     || event.target.classList.contains('dith')
-     || previosActiveTool.children[0].classList.contains('dith')) {
+     || event.target.classList.contains('fa-chess-board')
+     || previosActiveTool.children[0].classList.contains('fa-chess-board')) {
       ditheringTool(event);
     }
     // if (activeTool.children[0].classList.contains('fa-fill-drip')) {
