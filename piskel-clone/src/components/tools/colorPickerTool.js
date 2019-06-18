@@ -11,7 +11,6 @@ export default function colorPickerTool() {
   function rgb2hex(rgb) {
     // eslint-disable-next-line no-param-reassign
     rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-    global.console.log(rgb);
     const result = `#${
       (`0${parseInt(rgb[1], 10).toString(16)}`).slice(-2)
     }${(`0${parseInt(rgb[2], 10).toString(16)}`).slice(-2)
@@ -29,14 +28,13 @@ export default function colorPickerTool() {
     const colorB = colorImageData.data[2];
 
     const rgb = `rgb(${colorR}, ${colorG}, ${colorB})`;
-    global.console.log(typeof colorR);
     rgb2hex(rgb);
   }
 
   function leftOfRightClick(event) {
+    pickColorFromPixel(event);
     if (event.which === 1) colorTop.value = colorForLeftOrRightClick;
     if (event.which === 3) colorBottom.value = colorForLeftOrRightClick;
-    pickColorFromPixel(event);
   }
 
   divWithTools.addEventListener('mouseup', () => {
