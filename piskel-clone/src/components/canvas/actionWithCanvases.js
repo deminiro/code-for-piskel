@@ -8,7 +8,7 @@ import penMirrorTool from '../tools/penMirrorTool';
 import ditheringTool from '../tools/ditheringTool';
 // import moveFrame from '../actionWithFrames/moveFrame';
 // import actionWithFrames from '../actionWithFrames/actionWithFrames';
-// import paintBucketTool from '../tools/paintBucketTool';
+import paintBucketTool from '../tools/paintBucketTool';
 
 export default function actionWithCanvases() {
   const divWithTools = document.getElementById('div-with-tools');
@@ -164,13 +164,25 @@ export default function actionWithCanvases() {
         forAnimation();
       }
     });
-    function fullScreenPreview() {
-      preview.addEventListener('dblclick', () => {
-        preview.requestFullscreen();
-      });
-    }
-    fullScreenPreview();
   }
+  function fullScreenPreview() {
+    function removePadding(event) {
+      const pressEsc = 27;
+      if (event.keyCode === pressEsc) preview.style.paddingTop = '0%';
+    }
+
+    function toggleFullScreen() {
+      if (!preview.fullscreenElement) {
+        preview.requestFullscreen();
+        preview.style.paddingTop = '20%';
+      }
+    }
+    preview.addEventListener('dblclick', toggleFullScreen);
+    document.addEventListener('fullscreenchange', () => {
+      document.addEventListener('keydown', removePadding);
+    });
+  }
+  fullScreenPreview();
 
   // function below needs to change current tool
   function rotationTool() {
@@ -220,9 +232,9 @@ export default function actionWithCanvases() {
      || previosActiveTool.children[0].classList.contains('fa-chess-board')) {
       ditheringTool(event);
     }
-    // if (activeTool.children[0].classList.contains('fa-fill-drip')) {
-    //   paintBucketTool(event);
-    // }
+    if (activeTool.children[0].classList.contains('fa-fill-drip')) {
+      paintBucketTool(event);
+    }
   }
 
   function disableSaveImageRightClick() {
