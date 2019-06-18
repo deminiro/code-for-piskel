@@ -131,6 +131,10 @@ export default function styles() {
   background-color: #3A3A3A;
 }
 
+.tools-which-change-canvas--lighten>i {
+  transform: rotate(180deg);
+}
+
 .no-active {
   border: 4px solid #3A3A3A;
 }
