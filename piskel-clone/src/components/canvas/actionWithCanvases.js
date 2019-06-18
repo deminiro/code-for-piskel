@@ -1,6 +1,6 @@
 import activateNoActivateTools from '../tools/activeNoActiveTools';
 import penAndEraserTools from '../tools/penAndEraserTools';
-import colorPickerTool from '../tools/colorPickerTool';
+import colorPickerTool from '../tools/colorPickerToolAndBrightness';
 import strokeTool from '../tools/strokeTool';
 import allPixelsSameColorTool from '../tools/allPixelsSameColorTool';
 import showCoordinate from './showCoordinate';
@@ -209,7 +209,8 @@ export default function actionWithCanvases() {
      || previosActiveTool.children[0].classList.contains('fa-pencil-alt')
      || activeTool.children[0].classList.contains('fa-eraser')
      || previosActiveTool.children[0].classList.contains('fa-eraser')) penAndEraserTools(event);
-    if (activeTool.children[0].classList.contains('fa-eye-dropper')) colorPickerTool(event);
+    if (activeTool.children[0].classList.contains('fa-eye-dropper')
+     || activeTool.children[0].classList.contains('fa-adjust')) colorPickerTool(event);
     if (activeTool.children[0].classList.contains('fa-slash')
      || previosActiveTool.children[0].classList.contains('fa-slash')) strokeTool(event);
     if (activeTool.classList
