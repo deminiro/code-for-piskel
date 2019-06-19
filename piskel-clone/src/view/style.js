@@ -350,16 +350,9 @@ export default function styles() {
   cursor: pointer;
 }
 
-.preview--fps-with-onion {
+.preview--fps {
   display: grid;
-  grid-template-columns: 20% 80%;
-}
-
-.preview--onion {
-  background-image: url('/src/view/assets/onion.png');
-  background-repeat: no-repeat;
-  background-size: 100%;
-  height: 26px;
+  grid-template-columns: 30% 70%;
 }
 
 .preview--fps {
