@@ -10,6 +10,7 @@ import ditheringTool from '../tools/ditheringTool';
 // import actionWithFrames from '../actionWithFrames/actionWithFrames';
 import paintBucketTool from '../tools/paintBucketTool';
 import moveTool from '../tools/moveTool';
+import shapeSelectionTool from '../tools/shapeSelectionTool';
 
 export default function actionWithCanvases() {
   const divWithTools = document.getElementById('div-with-tools');
@@ -88,13 +89,12 @@ export default function actionWithCanvases() {
     }, 10);
   }
 
-  function changeKeysAfterDeleteFrame(event) {
-    const numberOfDeleteFrame = +event.path[2].children[0].children[0].innerText;
-    const listFrames = document.getElementById('list-of-frames');
+  function changeKeysAfterDeleteFrame() {
+    const numberOfDeleteFrame = +listOfFrames.children[0].children[0].children[0].innerText;
     imagesForPreviewAndFrames.delete(numberOfDeleteFrame);
-    for (let key = numberOfDeleteFrame; key < listFrames.children.length; key += 1) {
+    for (let key = numberOfDeleteFrame; key < listOfFrames.children.length; key += 1) {
       if (imagesForPreviewAndFrames.has(key + 1)) {
-        const numberOfFrame = +listFrames.children[key - 1].children[0].children[0].innerText;
+        const numberOfFrame = +listOfFrames.children[key - 1].children[0].children[0].innerText;
         const value = imagesForPreviewAndFrames.get(key + 1);
         imagesForPreviewAndFrames.delete(key + 1);
         imagesForPreviewAndFrames.set(numberOfFrame, value);
@@ -237,6 +237,9 @@ export default function actionWithCanvases() {
     if (activeTool.children[0].classList.contains('fa-hand-paper')) {
       moveTool(event);
     }
+    if (activeTool.children[0].classList.contains('fa-magic')) {
+      shapeSelectionTool(event);
+    }
   }
 
   function disableSaveImageRightClick() {
@@ -252,8 +255,10 @@ export default function actionWithCanvases() {
     });
 
     listOfFrames.addEventListener('click', (event) => {
+      const deleteKeyCode = 46;
       changeMainCanvasAfterSwitchCurrentFrame(event);
-      if (event.target.className === 'fas fa-trash-alt') changeKeysAfterDeleteFrame(event);
+      if (event.keyCode === deleteKeyCode
+        || event.target.className === 'fas fa-trash-alt') changeKeysAfterDeleteFrame(event);
       if (event.target.className === 'fas fa-copy') changeKeysAfterDublicateFrame(event);
       if (event.target.className === 'fas fa-copy') changeMainCanvasAfterDublicateFrame(event);
     });

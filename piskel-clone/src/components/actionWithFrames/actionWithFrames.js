@@ -1,4 +1,4 @@
-import moveFrame from './moveFrame';
+// import moveFrame from './moveFrame';
 
 export default function actionWithFrames() {
   const listOfFrames = document.getElementById('list-of-frames');
@@ -7,6 +7,12 @@ export default function actionWithFrames() {
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
   let countOfFrames = 1;
   const arrayOflistFrames = [1];
+
+  function changeCountOfFramesAfterReloadPage() {
+    const images = JSON.parse(localStorage.getItem('images'));
+    countOfFrames = images.length - 1;
+  }
+  changeCountOfFramesAfterReloadPage();
 
   // change count of frames, if frames were upload from local storage
   // function changeCountOfFrames() {
@@ -27,6 +33,13 @@ export default function actionWithFrames() {
     });
   }
 
+  function updateNumbersOfFrames() {
+    const childrensOfUl = Array.from(listOfFrames.children);
+    for (let i = 0; i < childrensOfUl.length; i += 1) {
+      childrensOfUl[i].children[0].children[0].innerHTML = i + 1;
+    }
+  }
+
   function addNewFrame() {
     const newLi = listOfFrames.innerHTML;
     function addFrame() {
@@ -43,23 +56,24 @@ export default function actionWithFrames() {
     buttonAddFrame.addEventListener('click', addFrame);
   }
 
-  function updateNumbersOfFrames(event) {
-    const childrensOfUl = Array.from(event.path[3].children);
-    for (let i = 0; i < childrensOfUl.length; i += 1) {
-      childrensOfUl[i].children[0].children[0].innerHTML = i + 1;
-    }
-  }
-
   function deleteFrame() {
     function deleteChosenFrame(event) {
-      if (event.target.className === 'fas fa-trash-alt' && listOfFrames.children.length > 1) {
+      const buttonDelete = 46;
+      if ((event.keyCode === buttonDelete
+          || event.target.className === 'fas fa-trash-alt') && listOfFrames.children.length > 1) {
         countOfFrames -= 1;
         arrayOflistFrames.pop();
-        event.path[3].removeChild(event.path[2]);
-        updateNumbersOfFrames(event);
-        // if was delete current frame(with yellow color)
-        if (event.path[1].classList.contains('yellow-frame-items')) {
-          const currentFrameAfterDelete = event.path[3].children[countOfFrames - 1];
+        let currentLi;
+        if (event.keyCode !== buttonDelete && event.path[2].classList.contains('gray-border')) {
+          // eslint-disable-next-line prefer-destructuring
+          currentLi = event.path[2];
+          listOfFrames.removeChild(currentLi);
+        } else {
+          // if was delete current frame(with yellow color)
+          // eslint-disable-next-line prefer-destructuring
+          currentLi = document.getElementsByClassName('yellow-border')[0];
+          listOfFrames.removeChild(currentLi);
+          const currentFrameAfterDelete = listOfFrames.children[countOfFrames - 1];
           currentFrameAfterDelete.classList.remove('gray-border');
           currentFrameAfterDelete.classList.add('yellow-border');
 
@@ -70,10 +84,12 @@ export default function actionWithFrames() {
             }
           });
         }
+        updateNumbersOfFrames(event);
       }
     }
 
     listOfFrames.addEventListener('click', deleteChosenFrame);
+    document.addEventListener('keydown', deleteChosenFrame);
   }
 
   function chooseCurrentFrame() {
@@ -142,12 +158,12 @@ export default function actionWithFrames() {
       updateNumbersOfFrames(event);
     }
 
-    function swapFrames(event) {
-      if (event.target.classList.contains('fa-arrows-alt')) {
-        moveFrame(event);
-        updateNumbersOfFrames(event);
-      }
-    }
+    // function swapFrames(event) {
+    //   if (event.target.classList.contains('fa-arrows-alt')) {
+    //     moveFrame(event);
+    //     updateNumbersOfFrames(event);
+    //   }
+    // }
 
     function fixBugsWithDublicateWhenClickNotOnCurrentFrame(event) {
       if (event.path[2].classList.contains('gray-border')) {
@@ -179,7 +195,7 @@ export default function actionWithFrames() {
         fixBugsWithDublicateWhenClickNotOnCurrentFrame(event);
       }
     });
-    listOfFrames.addEventListener('mousedown', swapFrames);
+    // listOfFrames.addEventListener('mousedown', swapFrames);
     // listOfFrames.addEventListener('mouseup', updateNumbersOfFrames);
   }
 
