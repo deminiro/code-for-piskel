@@ -9,6 +9,7 @@ import ditheringTool from '../tools/ditheringTool';
 // import moveFrame from '../actionWithFrames/moveFrame';
 // import actionWithFrames from '../actionWithFrames/actionWithFrames';
 import paintBucketTool from '../tools/paintBucketTool';
+import moveTool from '../tools/moveTool';
 
 export default function actionWithCanvases() {
   const divWithTools = document.getElementById('div-with-tools');
@@ -39,7 +40,6 @@ export default function actionWithCanvases() {
   //   listOfFrames.addEventListener('mouseup', swap);
   // }
   function deleteNullFromImagesMap() {
-    global.console.log(imagesForPreviewAndFrames.has(null));
     if (imagesForPreviewAndFrames.has(null)) imagesForPreviewAndFrames.delete(null);
   }
 
@@ -112,13 +112,10 @@ export default function actionWithCanvases() {
         const value = imagesForPreviewAndFrames.get(key);
         imagesForPreviewAndFrames.delete(key);
         imagesForPreviewAndFrames.set(key + 1, value);
-        global.console.log(value);
       }
     }
     imagesForPreviewAndFrames
       .set(numberOfDublicateFrame, imagesForPreviewAndFrames.get(numberOfDublicateFrame - 1));
-    global.console.log(numberOfDublicateFrame);
-    global.console.log(imagesForPreviewAndFrames);
     imagesForPreviewAndFrames = new Map([...imagesForPreviewAndFrames.entries()].sort());
   }
 
@@ -210,7 +207,8 @@ export default function actionWithCanvases() {
      || activeTool.children[0].classList.contains('fa-eraser')
      || previosActiveTool.children[0].classList.contains('fa-eraser')) penAndEraserTools(event);
     if (activeTool.children[0].classList.contains('fa-eye-dropper')
-     || activeTool.children[0].classList.contains('fa-adjust')) colorPickerTool(event);
+     || activeTool.children[0].classList.contains('lighten')
+     || activeTool.children[0].classList.contains('darken')) colorPickerTool(event);
     if (activeTool.children[0].classList.contains('fa-slash')
      || previosActiveTool.children[0].classList.contains('fa-slash')) strokeTool(event);
     if (activeTool.classList
@@ -235,6 +233,9 @@ export default function actionWithCanvases() {
     }
     if (activeTool.children[0].classList.contains('fa-fill-drip')) {
       paintBucketTool(event);
+    }
+    if (activeTool.children[0].classList.contains('fa-hand-paper')) {
+      moveTool(event);
     }
   }
 
