@@ -1,47 +1,32 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable no-param-reassign */
 export default function paintBucketTool() {
   const canvasWhichStateOnMiddleOfPage = document.getElementById('main-div--canvas');
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
-  let units = 32;
-  let amountOfDivisonsOfCanvas = 19;
   const bucket = document.getElementsByClassName('tools-which-change-canvas--paint-bucket-tool')[0];
   const divWithTools = document.getElementById('div-with-tools');
+  const colorTop = document.getElementById('tools-choose-color--top');
+  const colorBottom = document.getElementById('tools-choose-color--bottom');
+  const submitCanvasSize = document.getElementById('submit-size-of-canvas');
+  let units = 32;
+  let amountOfDivisonsOfCanvas = 19;
 
   function changeUnitsOfCanvas() {
     units = +document.querySelector('input[name="size"]:checked').value;
     if (units === 32) {
       amountOfDivisonsOfCanvas = 19;
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-two')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-two');
-      }
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-four')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-four');
-      }
-      canvasWhichStateOnMiddleOfPage.classList.add('scaled-divide-by-one');
     }
     if (units === 64) {
       amountOfDivisonsOfCanvas = 9.5;
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-one')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-one');
-      }
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-four')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-four');
-      }
-      canvasWhichStateOnMiddleOfPage.classList.add('scaled-divide-by-two');
     }
     if (units === 128) {
       amountOfDivisonsOfCanvas = 4.75;
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-one')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-one');
-      }
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-two')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-two');
-      }
-      canvasWhichStateOnMiddleOfPage.classList.add('scaled-divide-by-four');
     }
   }
+  submitCanvasSize.addEventListener('click', changeUnitsOfCanvas);
 
 
-  function draw(event) {
+  function takeXAndYCoordinates(event) {
     const coordinatesPerSquareOnMainCanvasX = [];
     const coordinatesPerSquareOnMainCanvasY = [];
     function makeCoordinatePerSquare() {
@@ -54,139 +39,132 @@ export default function paintBucketTool() {
         devider += 1;
       }
     }
-    makeCoordinatePerSquare();
-    function getPixel() {
-      const startX = coordinatesPerSquareOnMainCanvasX
+
+
+    function xAndY() {
+      const newX = coordinatesPerSquareOnMainCanvasX
         .filter(coordinate => coordinate >= event.offsetX);
-      const startY = coordinatesPerSquareOnMainCanvasX
+      const newY = coordinatesPerSquareOnMainCanvasY
         .filter(coordinate => coordinate >= event.offsetY);
-      const colorOfFillPixel = ctxOfMiddleCanvas
-        .getImageData(startX[0] - amountOfDivisonsOfCanvas, startY[0] - amountOfDivisonsOfCanvas,
-          1, 1).data;
-      const coordsWhichNeedToFill = [];
-      let falseToStop = [];
-      coordsWhichNeedToFill.push(startX[0] - amountOfDivisonsOfCanvas,
-        startY[0] - amountOfDivisonsOfCanvas);
-      let lengthOfCoordsCollector = 2;
-      const pushFormuls = [];
-      let multiplyier = 1;
-      // this number need to change coordinates in x,y
-      let number = 0;
-      // collect coordinates, which need to fill
-      while (number <= lengthOfCoordsCollector) {
-        const x = coordsWhichNeedToFill[number];
-        const y = coordsWhichNeedToFill[number + 1];
-        multiplyier = Math.floor(x / amountOfDivisonsOfCanvas) + 1;
-        falseToStop = [];
-        number += 2;
-        if (x >= 19) {
-          const colorOfPixel = ctxOfMiddleCanvas
-            .getImageData(x - amountOfDivisonsOfCanvas, y,
-              1, 1).data;
-          multiplyier = Math.floor((x - amountOfDivisonsOfCanvas) / amountOfDivisonsOfCanvas) + 1;
-          const idFormula = `${(x - amountOfDivisonsOfCanvas) * multiplyier - (y)}x`;
-          if ((colorOfPixel[0] === colorOfFillPixel[0] && colorOfPixel[1] === colorOfFillPixel[1]
-            && colorOfPixel[2] === colorOfFillPixel[2] && colorOfPixel[3] === colorOfFillPixel[3])
-            && pushFormuls.indexOf(idFormula) === -1) {
-            coordsWhichNeedToFill.push(x - amountOfDivisonsOfCanvas);
-            coordsWhichNeedToFill.push(y);
-            lengthOfCoordsCollector += 2;
-            pushFormuls.push(idFormula);
-          } else {
-            falseToStop.push(false);
-          }
-        } else {
-          falseToStop.push(false);
-        }
-        if (x <= 608) {
-          const colorOfPixel = ctxOfMiddleCanvas
-            .getImageData(x + amountOfDivisonsOfCanvas, y, 1, 1).data;
-          multiplyier = Math.floor((x + amountOfDivisonsOfCanvas) / amountOfDivisonsOfCanvas) + 1;
-          const idFormula = `${(x + amountOfDivisonsOfCanvas) * multiplyier - (y)}x`;
-          if ((colorOfPixel[0] === colorOfFillPixel[0] && colorOfPixel[1] === colorOfFillPixel[1]
-            && colorOfPixel[2] === colorOfFillPixel[2] && colorOfPixel[3] === colorOfFillPixel[3])
-            && pushFormuls.indexOf(idFormula) === -1) {
-            coordsWhichNeedToFill.push(x + amountOfDivisonsOfCanvas);
-            coordsWhichNeedToFill.push(y);
-            lengthOfCoordsCollector += 2;
-            pushFormuls.push(idFormula);
-          } else {
-            falseToStop.push(false);
-          }
-        } else {
-          falseToStop.push(false);
-        }
-        if (y >= 19) {
-          const colorOfPixel = ctxOfMiddleCanvas
-            .getImageData(x,
-              y - amountOfDivisonsOfCanvas,
-              1, 1).data;
-          multiplyier = Math.floor(x / amountOfDivisonsOfCanvas) + 1;
-          const idFormula = `${(x) - ((y - amountOfDivisonsOfCanvas) * multiplyier)}y`;
-          if ((colorOfPixel[0] === colorOfFillPixel[0] && colorOfPixel[1] === colorOfFillPixel[1]
-            && colorOfPixel[2] === colorOfFillPixel[2] && colorOfPixel[3] === colorOfFillPixel[3])
-            && pushFormuls.indexOf(idFormula) === -1) {
-            coordsWhichNeedToFill.push(x);
-            coordsWhichNeedToFill.push(y - amountOfDivisonsOfCanvas);
-            lengthOfCoordsCollector += 2;
-            pushFormuls.push(idFormula);
-          } else {
-            falseToStop.push(false);
-          }
-        } else {
-          falseToStop.push(false);
-        }
-        if (y <= 608) {
-          const colorOfPixel = ctxOfMiddleCanvas
-            .getImageData(x, y + amountOfDivisonsOfCanvas, 1, 1).data;
-          multiplyier = Math.floor(x / amountOfDivisonsOfCanvas) + 1;
-          const idFormula = `${(x) - ((y + amountOfDivisonsOfCanvas) * multiplyier)}y`;
-          if ((colorOfPixel[0] === colorOfFillPixel[0] && colorOfPixel[1] === colorOfFillPixel[1]
-            && colorOfPixel[2] === colorOfFillPixel[2] && colorOfPixel[3] === colorOfFillPixel[3])
-            && pushFormuls.indexOf(idFormula) === -1) {
-            coordsWhichNeedToFill.push(x);
-            coordsWhichNeedToFill.push(y + amountOfDivisonsOfCanvas);
-            lengthOfCoordsCollector += 2;
-            pushFormuls.push(idFormula);
-          } else {
-            falseToStop.push(false);
-          }
-        } else {
-          falseToStop.push(false);
-        }
+      const x = newX[0];
+      const y = newY[0];
+      return { x, y };
+    }
+
+    makeCoordinatePerSquare();
+    return xAndY();
+  }
+
+  const getPixelPos = function qwe(x, y) {
+    return (y * canvasWhichStateOnMiddleOfPage.width + x) * 4;
+  };
+
+  const matchStartColor = function qwe(data, pos, startColor) {
+    return (data[pos] === startColor.r
+            && data[pos + 1] === startColor.g
+            && data[pos + 2] === startColor.b
+            && data[pos + 3] === startColor.a);
+  };
+
+  const colorPixel = function qwe(data, pos, color) {
+    data[pos] = color.r || 0;
+    data[pos + 1] = color.g || 0;
+    data[pos + 2] = color.b || 0;
+    // eslint-disable-next-line no-prototype-builtins
+    data[pos + 3] = color.hasOwnProperty('a') ? color.a : 255;
+  };
+
+  const floodFill = function qwe(startX, startY, fillColor) {
+    const dstImg = ctxOfMiddleCanvas.getImageData(0, 0,
+      canvasWhichStateOnMiddleOfPage.width, canvasWhichStateOnMiddleOfPage.height);
+    const dstData = dstImg.data;
+
+    const startPos = getPixelPos(startX, startY);
+    const startColor = {
+      r: dstData[startPos],
+      g: dstData[startPos + 1],
+      b: dstData[startPos + 2],
+      a: dstData[startPos + 3],
+    };
+    const todo = [[startX, startY]];
+
+    while (todo.length) {
+      const pos = todo.pop();
+      const x = pos[0];
+      let y = pos[1];
+      let currentPos = getPixelPos(x, y);
+
+      while ((y-- >= 0) && matchStartColor(dstData, currentPos, startColor)) {
+        currentPos -= canvasWhichStateOnMiddleOfPage.width * 4;
       }
-      while (coordsWhichNeedToFill.length > 0) {
-        const { length } = coordsWhichNeedToFill;
-        ctxOfMiddleCanvas
-          .fillRect(coordsWhichNeedToFill[length - 2], coordsWhichNeedToFill[length - 1],
-            amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas);
-        coordsWhichNeedToFill.pop();
-        coordsWhichNeedToFill.pop();
+
+      currentPos += canvasWhichStateOnMiddleOfPage.width * 4;
+      ++y;
+      let reachLeft = false;
+      let reachRight = false;
+
+      while ((y++ < canvasWhichStateOnMiddleOfPage.height - 1)
+      && matchStartColor(dstData, currentPos, startColor)) {
+        colorPixel(dstData, currentPos, fillColor);
+
+        if (x > 0) {
+          if (matchStartColor(dstData, currentPos - 4, startColor)) {
+            if (!reachLeft) {
+              todo.push([x - 1, y]);
+              reachLeft = true;
+            }
+          } else if (reachLeft) {
+            reachLeft = false;
+          }
+        }
+
+        if (x < canvasWhichStateOnMiddleOfPage.width - 1) {
+          if (matchStartColor(dstData, currentPos + 4, startColor)) {
+            if (!reachRight) {
+              todo.push([x + 1, y]);
+              reachRight = true;
+            }
+          } else if (reachRight) {
+            reachRight = false;
+          }
+        }
+
+        currentPos += canvasWhichStateOnMiddleOfPage.width * 4;
       }
     }
-    getPixel();
+
+    ctxOfMiddleCanvas.putImageData(dstImg, 0, 0);
+  };
+
+  function hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16),
+    } : null;
   }
-  changeUnitsOfCanvas();
-  function recognizeLeftOrRightClick(event) {
-    const colorLeftClick = document.getElementById('tools-choose-color--top');
-    const colorRightClick = document.getElementById('tools-choose-color--bottom');
+
+  function activate(event) {
+    const { x } = takeXAndYCoordinates(event);
+    const { y } = takeXAndYCoordinates(event);
+    const startX = x - amountOfDivisonsOfCanvas;
+    const startY = y - amountOfDivisonsOfCanvas;
     let currentColor;
+    const top = hexToRgb(colorTop.value);
+    const bottom = hexToRgb(colorBottom.value);
     const leftClick = 1;
     const rightClick = 3;
-    if (event.which === leftClick) {
-      currentColor = colorLeftClick.value;
-    }
-    if (event.which === rightClick) {
-      event.preventDefault();
-      currentColor = colorRightClick.value;
-    }
-    ctxOfMiddleCanvas.fillStyle = currentColor;
-    draw(event);
+    if (event.which === leftClick) currentColor = top;
+    if (event.which === rightClick) currentColor = bottom;
+    floodFill(startX, startY, currentColor);
   }
-  canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', recognizeLeftOrRightClick);
+
+  canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', activate);
+
   divWithTools.addEventListener('mouseup', () => {
     if (!bucket.classList.contains('active')) {
-      canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', recognizeLeftOrRightClick);
+      canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', activate);
     }
   });
 }
