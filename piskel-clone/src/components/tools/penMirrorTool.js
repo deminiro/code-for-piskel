@@ -62,8 +62,6 @@ export default function mirrorPenTool() {
       const y = coordinatesPerSquareOnMainCanvasY.filter(coordinate => coordinate >= event.offsetY);
       const maxCoordinate = coordinatesPerSquareOnMainCanvasX.reverse()[0];
       const xMirror = maxCoordinate - x[0];
-      // const yMirror = maxCoordinate - y[0];
-      global.console.log(xMirror);
       ctxOfMiddleCanvas.fillRect(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas,
         amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas);
       ctxOfMiddleCanvas.fillRect(xMirror,

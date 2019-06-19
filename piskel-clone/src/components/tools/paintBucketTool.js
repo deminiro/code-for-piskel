@@ -59,22 +59,22 @@ export default function paintBucketTool() {
     return (y * canvasWhichStateOnMiddleOfPage.width + x) * 4;
   };
 
-  const matchStartColor = function qwe(data, pos, startColor) {
+  function matchStartColor(data, pos, startColor) {
     return (data[pos] === startColor.r
             && data[pos + 1] === startColor.g
             && data[pos + 2] === startColor.b
             && data[pos + 3] === startColor.a);
-  };
+  }
 
-  const colorPixel = function qwe(data, pos, color) {
+  function colorPixel(data, pos, color) {
     data[pos] = color.r || 0;
     data[pos + 1] = color.g || 0;
     data[pos + 2] = color.b || 0;
     // eslint-disable-next-line no-prototype-builtins
     data[pos + 3] = color.hasOwnProperty('a') ? color.a : 255;
-  };
+  }
 
-  const floodFill = function qwe(startX, startY, fillColor) {
+  function floodFill(startX, startY, fillColor) {
     const dstImg = ctxOfMiddleCanvas.getImageData(0, 0,
       canvasWhichStateOnMiddleOfPage.width, canvasWhichStateOnMiddleOfPage.height);
     const dstData = dstImg.data;
@@ -134,7 +134,7 @@ export default function paintBucketTool() {
     }
 
     ctxOfMiddleCanvas.putImageData(dstImg, 0, 0);
-  };
+  }
 
   function hexToRgb(hex) {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
