@@ -44,18 +44,24 @@ export default function actionWithFrames() {
 
   function addNewFrame() {
     const newLi = listOfFrames.innerHTML;
-    function addFrame() {
-      changeColorOfFrameFromYellowToGrey();
-      listOfFrames.innerHTML += newLi;
-      ctxOfMiddleCanvas.clearRect(0, 0, 640, 608);
-      // change number of frame
-      countOfFrames += 1;
-      arrayOflistFrames.push(countOfFrames);
-      const numberOfFrame = document.getElementsByClassName('number-of-frame');
-      numberOfFrame[numberOfFrame.length - 1].innerText = countOfFrames;
+    const nKeyCode = 78;
+    function addFrame(event) {
+      if (event.keyCode === nKeyCode || event.target.classList.contains('fa-plus')
+      || event.target.classList.contains('button-frame-text')
+      || event.target.classList.contains('button-add-new-frame')) {
+        changeColorOfFrameFromYellowToGrey();
+        listOfFrames.innerHTML += newLi;
+        ctxOfMiddleCanvas.clearRect(0, 0, 640, 608);
+        // change number of frame
+        countOfFrames += 1;
+        arrayOflistFrames.push(countOfFrames);
+        const numberOfFrame = document.getElementsByClassName('number-of-frame');
+        numberOfFrame[numberOfFrame.length - 1].innerText = countOfFrames;
+      }
     }
 
     buttonAddFrame.addEventListener('click', addFrame);
+    document.addEventListener('keydown', addFrame);
   }
 
   function deleteFrame() {
