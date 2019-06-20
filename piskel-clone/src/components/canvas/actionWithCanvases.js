@@ -45,8 +45,7 @@ export default function actionWithCanvases() {
   }
 
   function saveDataUrls() {
-    const ul = document.getElementById('list-of-frames');
-    const childsOfUl = Array.from(ul.children);
+    const childsOfUl = Array.from(listOfFrames.children);
     const arrayOfYellowBorder = [];
     childsOfUl.forEach((elem) => {
       if (elem.classList[1] === 'yellow-border') { arrayOfYellowBorder.push(elem); }
@@ -142,17 +141,22 @@ export default function actionWithCanvases() {
       for (const key of imagesForPreviewAndFrames.keys()) {
         keysOfImages.push(key);
       }
-      const interval = setInterval(() => {
-        if (number === amountImages) number = 0;
-        setTimeout(() => {
-          document.getElementById('canvas-preview').innerHTML = '<img id="image-preview" width="202" height="200">';
-          document
-            .getElementById('image-preview')
-            .setAttribute('src', imagesForPreviewAndFrames.get(keysOfImages[number - 1]));
-          if (fpsOnPreview === 0) clearInterval(interval);
-        }, 1000);
-        number += 1;
-      }, 1000 / fpsOnPreview);
+      function step() {
+        if (fpsOnPreview !== 0) {
+          setTimeout(() => {
+            if (number === amountImages) number = 0;
+            if (imagesForPreviewAndFrames.get(keysOfImages[number - 1]) === undefined) number += 1;
+            requestAnimationFrame(step);
+            document.getElementById('canvas-preview').innerHTML = '<img id="image-preview" width="202" height="200">';
+            document
+              .getElementById('image-preview')
+              .setAttribute('src', imagesForPreviewAndFrames.get(keysOfImages[number - 1]));
+
+            number += 1;
+          }, 1000 / fpsOnPreview);
+        }
+      }
+      step();
     }
 
     inputRangeOnPreview.addEventListener('click', () => {
