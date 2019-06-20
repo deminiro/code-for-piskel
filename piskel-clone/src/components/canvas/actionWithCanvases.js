@@ -131,8 +131,10 @@ export default function actionWithCanvases() {
 
   function animationOnPreview() {
     deleteNullFromImagesMap();
+    const numberOfFpsElementHtml = document.getElementsByClassName('preview-fps--number-fps')[0];
     let number = 0;
     let fpsOnPreview = Number(inputRangeOnPreview.value);
+    numberOfFpsElementHtml.innerHTML = `${fpsOnPreview} fps`;
 
     function forAnimation() {
       const amountImages = imagesForPreviewAndFrames.size;
@@ -144,10 +146,16 @@ export default function actionWithCanvases() {
       function step() {
         if (fpsOnPreview !== 0) {
           setTimeout(() => {
+            requestAnimationFrame(step);
             if (number === amountImages) number = 0;
             if (imagesForPreviewAndFrames.get(keysOfImages[number - 1]) === undefined) number += 1;
-            requestAnimationFrame(step);
-            document.getElementById('canvas-preview').innerHTML = '<img id="image-preview" width="202" height="200">';
+            global.console.log(imagesForPreviewAndFrames);
+            if (document.fullscreenElement === null) {
+              document.getElementById('canvas-preview').innerHTML = '<img id="image-preview" width="202" height="200">';
+            }
+            if (document.fullscreenElement !== null) {
+              document.getElementById('canvas-preview').innerHTML = '<img id="image-preview" width="766" height="766">';
+            }
             document
               .getElementById('image-preview')
               .setAttribute('src', imagesForPreviewAndFrames.get(keysOfImages[number - 1]));
@@ -159,29 +167,25 @@ export default function actionWithCanvases() {
       step();
     }
 
-    inputRangeOnPreview.addEventListener('click', () => {
+    inputRangeOnPreview.addEventListener('click', (event) => {
       fpsOnPreview = Number(inputRangeOnPreview.value);
+      event.stopPropagation();
       if (fpsOnPreview > 0) {
         forAnimation();
       }
     });
+    inputRangeOnPreview.addEventListener('mousemove', () => {
+      fpsOnPreview = Number(inputRangeOnPreview.value);
+      numberOfFpsElementHtml.innerHTML = `${fpsOnPreview} fps`;
+    });
   }
   function fullScreenPreview() {
-    function removePadding(event) {
-      const pressEsc = 27;
-      if (event.keyCode === pressEsc) preview.style.paddingTop = '0%';
-    }
-
-    function toggleFullScreen() {
-      if (!preview.fullscreenElement) {
+    function toggleFullScreen(event) {
+      if (!preview.fullscreenElement && (event.target === preview || event.target.localName === 'img')) {
         preview.requestFullscreen();
-        preview.style.paddingTop = '20%';
       }
     }
-    preview.addEventListener('dblclick', toggleFullScreen);
-    document.addEventListener('fullscreenchange', () => {
-      document.addEventListener('keydown', removePadding);
-    });
+    document.addEventListener('dblclick', toggleFullScreen);
   }
   fullScreenPreview();
 

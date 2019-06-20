@@ -82,15 +82,29 @@ export default function actionWithFrames() {
           currentLi = document.getElementsByClassName('yellow-border')[0];
           listOfFrames.removeChild(currentLi);
           const currentFrameAfterDelete = listOfFrames.children[countOfFrames - 1];
-          currentFrameAfterDelete.classList.remove('gray-border');
-          currentFrameAfterDelete.classList.add('yellow-border');
+          if (currentLi.children[0].children[0].innerText === '1') {
+            updateNumbersOfFrames();
+            const newCurrentLi = listOfFrames.children[0];
+            newCurrentLi.classList.remove('gray-border');
+            newCurrentLi.classList.add('yellow-border');
 
-          Array.from(currentFrameAfterDelete.children).forEach((element) => {
-            if (element.classList.contains('gray-frame-items')) {
-              element.classList.remove('gray-frame-items');
-              element.classList.add('yellow-frame-items');
-            }
-          });
+            Array.from(newCurrentLi.children).forEach((element) => {
+              if (element.classList.contains('gray-frame-items')) {
+                element.classList.remove('gray-frame-items');
+                element.classList.add('yellow-frame-items');
+              }
+            });
+          } else {
+            currentFrameAfterDelete.classList.remove('gray-border');
+            currentFrameAfterDelete.classList.add('yellow-border');
+
+            Array.from(currentFrameAfterDelete.children).forEach((element) => {
+              if (element.classList.contains('gray-frame-items')) {
+                element.classList.remove('gray-frame-items');
+                element.classList.add('yellow-frame-items');
+              }
+            });
+          }
         }
         updateNumbersOfFrames(event);
       }
