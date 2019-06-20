@@ -10,7 +10,9 @@ export default function actionWithFrames() {
 
   function changeCountOfFramesAfterReloadPage() {
     const images = JSON.parse(localStorage.getItem('images'));
-    countOfFrames = images.length - 1;
+    if (images.length >= 2) {
+      countOfFrames = images.length - 1;
+    }
   }
   changeCountOfFramesAfterReloadPage();
 
