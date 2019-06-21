@@ -11,6 +11,7 @@ import ditheringTool from '../tools/ditheringTool';
 import paintBucketTool from '../tools/paintBucketTool';
 import moveTool from '../tools/moveTool';
 import shapeSelectionTool from '../tools/shapeSelectionTool';
+import rectangleTool from '../tools/rectangleTool';
 
 export default function actionWithCanvases() {
   const divWithTools = document.getElementById('div-with-tools');
@@ -20,6 +21,8 @@ export default function actionWithCanvases() {
   const canvasWhichStateOnMiddleOfPage = document.getElementById('main-div--canvas');
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
   let imagesForPreviewAndFrames = new Map();
+  const pressDublicateButton = 221;
+  // const pressDeleteButton = 68;
   // switch images of frames in map after swap frames
   // function switchImagesOfFrames() {
   //   function swap() {
@@ -103,9 +106,14 @@ export default function actionWithCanvases() {
   }
 
   function changeKeysAfterDublicateFrame(event) {
-    const frameOnWhichClickDublicate = event.path[2];
-    const numberOfDublicateFrame = +frameOnWhichClickDublicate
+    let frameOnWhichClickDublicate = event.path[2];
+    let numberOfDublicateFrame = +frameOnWhichClickDublicate
       .children[0].children[0].innerText + 1;
+    if (event.keyCode === pressDublicateButton) {
+      // eslint-disable-next-line prefer-destructuring
+      frameOnWhichClickDublicate = document.getElementsByClassName('yellow-border')[0];
+      numberOfDublicateFrame = +document.getElementsByClassName('yellow-frame-items')[0].innerText;
+    }
     for (let key = imagesForPreviewAndFrames.size; key >= numberOfDublicateFrame; key -= 1) {
       if (imagesForPreviewAndFrames.has(key)) {
         const value = imagesForPreviewAndFrames.get(key);
@@ -119,7 +127,10 @@ export default function actionWithCanvases() {
   }
 
   function changeMainCanvasAfterDublicateFrame(event) {
-    const frameNumberOnWhichClickDublicate = +event.path[2].innerText;
+    let frameNumberOnWhichClickDublicate = +event.path[2].innerText;
+    if (event.keyCode === pressDublicateButton) {
+      frameNumberOnWhichClickDublicate = +document.getElementsByClassName('yellow-frame-items')[0].innerText;
+    }
     if (imagesForPreviewAndFrames.has(frameNumberOnWhichClickDublicate)) {
       const imageOfCurrentFrame = imagesForPreviewAndFrames.get(frameNumberOnWhichClickDublicate);
       const image = new Image();
@@ -149,7 +160,6 @@ export default function actionWithCanvases() {
             requestAnimationFrame(step);
             if (number === amountImages) number = 0;
             if (imagesForPreviewAndFrames.get(keysOfImages[number - 1]) === undefined) number += 1;
-            global.console.log(imagesForPreviewAndFrames);
             if (document.fullscreenElement === null) {
               document.getElementById('canvas-preview').innerHTML = '<img id="image-preview" width="202" height="200">';
             }
@@ -248,6 +258,9 @@ export default function actionWithCanvases() {
     if (activeTool.children[0].classList.contains('fa-magic')) {
       shapeSelectionTool(event);
     }
+    if (activeTool.children[0].classList.contains('fa-square')) {
+      rectangleTool(event);
+    }
   }
 
   function disableSaveImageRightClick() {
@@ -267,8 +280,10 @@ export default function actionWithCanvases() {
       changeMainCanvasAfterSwitchCurrentFrame(event);
       if (event.keyCode === deleteKeyCode
         || event.target.className === 'fas fa-trash-alt') changeKeysAfterDeleteFrame(event);
-      if (event.target.className === 'fas fa-copy') changeKeysAfterDublicateFrame(event);
-      if (event.target.className === 'fas fa-copy') changeMainCanvasAfterDublicateFrame(event);
+      if (event.target.className === 'fas fa-copy'
+        || event.keyCode === pressDublicateButton) changeKeysAfterDublicateFrame(event);
+      if (event.target.className === 'fas fa-copy'
+        || event.keyCode === pressDublicateButton) changeMainCanvasAfterDublicateFrame(event);
     });
 
     inputRangeOnPreview.addEventListener('mouseup', animationOnPreview);
