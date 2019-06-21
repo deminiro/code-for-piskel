@@ -59,16 +59,8 @@ export default function rectangleToolFunction() {
 
   function takeImage() {
     if (rectangleTool.classList.contains('active')) {
-      if (localStorage.getItem('images') !== null) {
-        const numberOfCurrentFrame = +document.getElementsByClassName('yellow-frame-items')[0].innerText;
-        const images = JSON.parse(localStorage.getItem('images'));
-        const { length } = images;
-        if (images[length - 1] !== undefined) {
-          const arrayWithImages = images[length - 1].arrayOfKeys;
-          const currentImage = arrayWithImages[numberOfCurrentFrame - 1][1];
-          image.src = currentImage;
-        }
-      }
+      const currentImage = canvasWhichStateOnMiddleOfPage.toDataURL('image/png');
+      image.src = currentImage;
     }
   }
 
@@ -105,7 +97,7 @@ export default function rectangleToolFunction() {
     canvasWhichStateOnMiddleOfPage.addEventListener('mousemove', drawRectangle);
   }
 
-  function mouseUp() {
+  function stopDrawing() {
     canvasWhichStateOnMiddleOfPage.removeEventListener('mousemove', drawRectangle);
     const picture = canvasWhichStateOnMiddleOfPage.toDataURL('image/png');
     image.src = picture;
@@ -114,14 +106,14 @@ export default function rectangleToolFunction() {
   function activate() {
     if (rectangleTool.classList.contains('active')) {
       canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', takeStartPoint);
-      canvasWhichStateOnMiddleOfPage.addEventListener('mouseup', mouseUp);
+      canvasWhichStateOnMiddleOfPage.addEventListener('mouseup', stopDrawing);
     }
   }
 
   function deactivate() {
     if (!rectangleTool.classList.contains('active')) {
       canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', takeStartPoint);
-      canvasWhichStateOnMiddleOfPage.removeEventListener('mouseup', mouseUp);
+      canvasWhichStateOnMiddleOfPage.removeEventListener('mouseup', stopDrawing);
     }
   }
 
