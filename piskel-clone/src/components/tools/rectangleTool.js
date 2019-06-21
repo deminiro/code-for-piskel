@@ -126,5 +126,5 @@ export default function rectangleToolFunction() {
   }
 
   divWithTools.addEventListener('mouseup', activate);
-  deactivate();
+  divWithTools.addEventListener('mouseup', deactivate);
 }
