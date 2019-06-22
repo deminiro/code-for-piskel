@@ -12,6 +12,7 @@ import paintBucketTool from '../tools/paintBucketTool';
 import moveTool from '../tools/moveTool';
 import shapeSelectionTool from '../tools/shapeSelectionTool';
 import rectangleTool from '../tools/rectangleTool';
+import undoTool from '../tools/undoTool';
 
 export default function actionWithCanvases() {
   const divWithTools = document.getElementById('div-with-tools');
@@ -92,7 +93,8 @@ export default function actionWithCanvases() {
   }
 
   function changeKeysAfterDeleteFrame() {
-    const numberOfDeleteFrame = +listOfFrames.children[0].children[0].children[0].innerText;
+    const currentFrame = document.getElementsByClassName('yellow-border')[0];
+    const numberOfDeleteFrame = +currentFrame.children[0].children[0].innerText;
     imagesForPreviewAndFrames.delete(numberOfDeleteFrame);
     for (let key = numberOfDeleteFrame; key < listOfFrames.children.length; key += 1) {
       if (imagesForPreviewAndFrames.has(key + 1)) {
@@ -103,6 +105,7 @@ export default function actionWithCanvases() {
       }
     }
     imagesForPreviewAndFrames = new Map([...imagesForPreviewAndFrames.entries()].sort());
+    global.console.log(imagesForPreviewAndFrames);
   }
 
   function changeKeysAfterDublicateFrame(event) {
@@ -288,6 +291,7 @@ export default function actionWithCanvases() {
 
     inputRangeOnPreview.addEventListener('mouseup', animationOnPreview);
     divWithTools.addEventListener('mousedown', tools);
+    document.addEventListener('keypress', undoTool);
   }
   disableSaveImageRightClick();
   useEventListeners();

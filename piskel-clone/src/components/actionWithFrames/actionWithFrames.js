@@ -10,8 +10,11 @@ export default function actionWithFrames() {
 
   function changeCountOfFramesAfterReloadPage() {
     const images = JSON.parse(localStorage.getItem('images'));
-    if (images.length >= 2) {
-      countOfFrames = images.length - 1;
+    global.console.log(images);
+    if (images !== null) {
+      if (images.length >= 2) {
+        countOfFrames = images.length - 1;
+      }
     }
   }
   changeCountOfFramesAfterReloadPage();
@@ -109,9 +112,10 @@ export default function actionWithFrames() {
         updateNumbersOfFrames(event);
       }
     }
-
-    listOfFrames.addEventListener('click', deleteChosenFrame);
-    document.addEventListener('keydown', deleteChosenFrame);
+    setTimeout(() => {
+      listOfFrames.addEventListener('click', deleteChosenFrame);
+      document.addEventListener('keydown', deleteChosenFrame);
+    }, 0);
   }
 
   function chooseCurrentFrame() {
@@ -141,12 +145,17 @@ export default function actionWithFrames() {
   }
 
   function dublicateFrame() {
+    const dublicateButton = 221;
     function dublicate(event) {
       countOfFrames += 1;
       arrayOflistFrames.push(countOfFrames);
 
-      const frameElement = event.target.parentElement.parentElement;
-      const frameElementClone = event.target.parentElement.parentElement.cloneNode(
+      let frameElement = event.target.parentElement.parentElement;
+      if (event.keyCode === dublicateButton) {
+        // eslint-disable-next-line prefer-destructuring
+        frameElement = document.getElementsByClassName('yellow-border')[0];
+      }
+      const frameElementClone = frameElement.cloneNode(
         true,
       );
       frameElement.parentNode.insertBefore(
@@ -215,6 +224,11 @@ export default function actionWithFrames() {
       if (event.target.className === 'fas fa-copy') {
         dublicate(event);
         fixBugsWithDublicateWhenClickNotOnCurrentFrame(event);
+      }
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.keyCode === dublicateButton) {
+        dublicate(event);
       }
     });
     // listOfFrames.addEventListener('mousedown', swapFrames);
