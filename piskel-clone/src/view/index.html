@@ -13,7 +13,7 @@
     <p class="header-headline--new white-color">New Piskel</p>
     <div class="header-block--buttons">
       <button class="header-buttons header-button--create-sprite">Create Sprite</button>
-      <button class="header-buttons header-button--sign-in">Sign in</button>
+      <button class="header-buttons header-button--sign-in" id="sign-in">Sign in</button>
     </div>
   </header>
   <main class="main">
@@ -96,27 +96,144 @@
         <input type="color" name="" class="tools--choose-color tools-choose-color--bottom" id="tools-choose-color--bottom" value="#e66465">
       </div>
       <div class="main-tools--keyboard">
-          <i class="fas fa-keyboard"></i>
-          <!-- window with shotcuts -->
-        <!-- <div class="window-shotcuts">
-          <h1 class="shotcuts-tools-headline"></h1>
-          <button class="shotcut-tool--"></button>
-          <button class="shotcut-tool--"></button>
-          <button class="shotcut-tool--"></button>
-          <button class="shotcut-tool--"></button>
-          <button class="shotcut-tool--"></button>
-          <button class="shotcut-tool--"></button>
-          <button class="shotcut-tool--"></button>
-          <button class="shotcut-tool--"></button>
-          <button class="shotcut-tool--"></button>
-          <button class="shotcut-tool--"></button>
-          <button class="shotcut-tool--"></button>
-          <button class="shotcut-tool--"></button>
-          <button class="shotcut-tool--"></button>
-          <button class="shotcut-tool--"></button>
-          <button class="shotcut-tool--"></button>
-          <button class="shotcut-tool--"></button>
-        </div> -->
+          <i class="fas fa-keyboard main-tools-keyboard--i" id="keyboard"></i>
+          <!-- window with shortcuts -->
+        <div class="window-shortcuts display-none">
+          <div class="headline-and-close-keyboard-shortcuts">
+            <h1 class="shortcuts-tools-headline">Keyboard shortcuts</h1>
+            <p class="close-shortcut-window">X</p>
+          </div>
+          <div class="shortcuts">
+            <div class="shortcuts-for-tools">
+              <h2 class="white-color headline-for-tool-shortcuts">Tool shortcuts</h2>
+              <ul class="list-of-tools-shortcuts">
+                <li class="list-of-tools-shotcut--element">
+                  <span class="keyboard-shortcuts-icon white-color fas fa-pencil-alt"></span>
+                  <span class="shortcuts-letter">P</span>
+                  <span class="shortcuts-name">Pen tool</span>
+                </li>
+                <li class="list-of-tools-shotcut--element">
+                  <span class="keyboard-shortcuts-icon white-color fas fa-grip-lines-vertical"></span>
+                  <span class="shortcuts-letter">V</span>
+                  <span class="shortcuts-name">Pen mirror tool</span>
+                </li>
+                <li class="list-of-tools-shotcut--element">
+                  <span class="keyboard-shortcuts-icon white-color fas fa-fill-drip"></span>
+                  <span class="shortcuts-letter">B</span>
+                  <span class="shortcuts-name">Paint bucket tool</span>
+                </li>
+                <li class="list-of-tools-shotcut--element">
+                  <span class="keyboard-shortcuts-icon keyboard-shortcuts--all-pixels">
+                    <i class="white-color fab fa-500px"></i>
+                    <i class=" white-color fas fa-fill-drip"></i>
+                  </span>
+                  <span class="shortcuts-letter">A</span>
+                  <span class="shortcuts-name">Paint all pixels with same color</span>
+                </li>
+                <li class="list-of-tools-shotcut--element">
+                  <span class="keyboard-shortcuts-icon white-color fas fa-eraser"></span>
+                  <span class="shortcuts-letter">E</span>
+                  <span class="shortcuts-name">Eraser</span>
+                </li>
+                <li class="list-of-tools-shotcut--element">
+                  <span class="keyboard-shortcuts-icon white-color fas fa-slash"></span>
+                  <span class="shortcuts-letter">L</span>
+                  <span class="shortcuts-name">Stroke tool</span>
+                </li>
+                <li class="list-of-tools-shotcut--element">
+                  <span class="keyboard-shortcuts-icon white-color far fa-square"></span>
+                  <span class="shortcuts-letter">R</span>
+                  <span class="shortcuts-name">Rectangle tool</span>
+                </li>
+                <li class="list-of-tools-shotcut--element">
+                  <span class="keyboard-shortcuts-icon white-color far fa-circle"></span>
+                  <span class="shortcuts-letter">C</span>
+                  <span class="shortcuts-name">Circle tool</span>
+                </li>
+                <li class="list-of-tools-shotcut--element">
+                  <span class="keyboard-shortcuts-icon white-color fas fa-hand-paper"></span>
+                  <span class="shortcuts-letter">M</span>
+                  <span class="shortcuts-name">Move tool</span>
+                </li>
+                <li class="list-of-tools-shotcut--element">
+                  <span class="keyboard-shortcuts-icon white-color fas fa-magic"></span>
+                  <span class="shortcuts-letter">Z</span>
+                  <span class="shortcuts-name">Shape selection</span>
+                </li>
+                <li class="list-of-tools-shotcut--element">
+                  <span class="keyboard-shortcuts-icon white-color fas fa-chess-board"></span>
+                  <span class="shortcuts-letter">T</span>
+                  <span class="shortcuts-name">Dithering tool</span>
+                </li>
+                <li class="list-of-tools-shotcut--element">
+                  <span class="keyboard-shortcuts-icon white-color fas fa-redo"></span>
+                  <span class="shortcuts-letter">D</span>
+                  <span class="shortcuts-name">Rotate tool</span>
+                </li>
+                <li class="list-of-tools-shotcut--element">
+                  <span class="keyboard-shortcuts-icon white-color fas fa-adjust lighten"></span>
+                  <span class="shortcuts-letter">U</span>
+                  <span class="shortcuts-name">Lighten</span>
+                </li>
+                <li class="list-of-tools-shotcut--element">
+                  <span class="keyboard-shortcuts-icon white-color fas fa-adjust darken"></span>
+                  <span class="shortcuts-letter">I</span>
+                  <span class="shortcuts-name">Darken</span>
+                </li>
+                <li class="list-of-tools-shotcut--element">
+                  <span class="keyboard-shortcuts-icon white-color fas fa-eye-dropper"></span>
+                  <span class="shortcuts-letter">O</span>
+                  <span class="shortcuts-name">Color picker tool</span>
+                </li>
+                <li class="list-of-tools-shotcut--element">
+                  <span class="shortcuts-letter shortcuts-letter-ctrl">CTRL+Z</span>
+                  <span class="shortcuts-name">Return previos frame image</span>
+                </li>
+              </ul>
+            </div>
+            <div class="shortcuts-for-frames">
+              <h2 class="headline-for-frame-shortcuts white-color">Frame shortcuts</h2>
+              <ul class="list-of-frames-shortcuts">
+                <li class="list-of-frames-shortcuts--element">
+                  <span class="frame-shortcuts white-color keyboard-shortcuts-icon fas fa-trash-alt"></span>
+                  <span class="shortcuts-letter">DEL</span>
+                  <span class="shortcuts-name">Delete frame</span>
+                </li>
+                <li class="list-of-frames-shortcuts--element">
+                  <span class="frame-shortcuts white-color keyboard-shortcuts-icon fas fa-copy"></span>
+                  <span class="shortcuts-letter">]</span>
+                  <span class="shortcuts-name">Copy frame</span>
+                </li>
+                <li class="list-of-frames-shortcuts--element">
+                  <span class="frame-shortcuts white-color keyboard-shortcuts-icon fas fa-plus"></span>
+                  <span class="shortcuts-letter">N</span>
+                  <span class="shortcuts-name">Add new frame</span>
+                </li>
+              </ul>
+              <h2 class="white-color shortcuts-for-open-it">Other shortcuts</h2>
+              <ul>
+                <li>
+                  <div class="list-of-frames-shortcuts--element other-shortcuts">
+                    <span class="keyboard-shortcuts-icon other-shortcuts--keyboard frame-shortcuts fas fa-keyboard white-color"></span>
+                    <span class="other-shortcuts--letter shortcuts-letter">/</span>
+                    <span class="shortcuts-name">Open/close window with shortcuts</span>
+                  </div>
+                </li>
+                <li>
+                    <div class="list-of-frames-shortcuts--element other-shortcuts">
+                      <span class="other-shortcuts--letter shortcuts-letter">'</span>
+                      <span class="shortcuts-name restore-shortcuts-name">Restore shortcuts</span>
+                    </div>
+                  </li>
+              </ul>
+            </div>
+          </div>
+          <div class="bottom-of-window-with-shortcuts">
+              <p class="bottom-shortcuts--text">Customize shortcuts?</p>
+              <p class="customize-shortcuts--tooltip">Click on the shortcuts to change a key. When the shortcut blinks, press the key on your keyboard to assign it. "Restore shortcuts" button to make default shortcuts.</p>
+              <button class="bottom-shortcuts--restore" id="restore-shortcuts">Restore shortcuts to default</button>
+            </div>
+        </div>
       </div>
     </div>
     <div class="main-div-of-frames">

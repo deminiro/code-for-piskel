@@ -1,9 +1,11 @@
 import css from '../view/style';
-import canvas from './canvas/actionWithCanvases';
+import actionWithCanvas from './canvas/actionWithCanvases';
 import actionWithFrames from './actionWithFrames/actionWithFrames';
+import shortCuts from './shortcuts/shortcut';
 
 export default function app() {
   css();
-  canvas();
+  actionWithCanvas();
   actionWithFrames();
+  shortCuts();
 }

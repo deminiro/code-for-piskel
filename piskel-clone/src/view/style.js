@@ -145,7 +145,7 @@ export default function styles() {
 
 /* choose color */
 .main-tools--choose-color {
-  height: 100px;
+  height: 82px;
   padding: 20px 0 0 7px;
   display: flex;
 }
@@ -173,8 +173,9 @@ export default function styles() {
   text-align: center;
 }
 
-.fa-keyboard {
+.main-tools-keyboard--i {
   color: #FFD700;
+  font-size: 200%;
 }
 
 /* frames */
@@ -434,6 +435,172 @@ button:hover, input:hover {
 
 .text-center:hover>span {
   display: block;
+}
+
+.image-frame {
+  z-index: 1
+}
+
+.window-shortcuts {
+  width: 1000px;
+  height: 550px;
+  top: 10%;
+  left: 15%;
+  position: absolute;
+  background-color: #ffd700;
+  z-index: 2;
+  display: grid;
+  grid-template-rows: 10% 80% 10%;
+  border-radius: 10px;
+}
+
+.display-none {
+  display: none;
+}
+
+.headline-and-close-keyboard-shortcuts {
+  display: flex;
+}
+
+.shortcuts-tools-headline {
+  width: 90%;
+  margin: 5px 0 0 10px;
+  text-align: left;
+  font-size: 165%;
+  color: #000;
+}
+
+.close-shortcut-window {
+  height: 33px;
+  text-align: right;
+  font-size: 170%;
+  margin: 5px 0px 0 50px;
+  cursor: pointer;
+}
+
+.shortcuts {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  background-color: #000;
+  width: 99%;
+  margin-left: 4px;
+}
+
+.list-of-tools-shortcuts {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: repeat(8, 12.5%);
+}
+
+.list-of-tools-shotcut--element {
+  list-style: none;
+  text-align: left;
+  margin-bottom: 13px;
+  display: flex;
+}
+
+.keyboard-shortcuts-icon {
+  background-color: #3B3B3B;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  padding-top: 5px;
+  border-radius: 5px
+}
+
+.shortcuts-letter {
+  width: 30px;
+  height: 25px;
+  color: #ffd700;
+  margin-left: 10px;
+  margin-top: 1px;
+  padding-top: 2px;
+  text-align: center;
+  border: 2px solid #ffd700;
+}
+
+.keyboard-shortcuts--all-pixels {
+  display: grid;
+  grid-template-rows: 50% 50%
+}
+
+.shortcuts-letter-ctrl {
+  width: 65px;
+  height: 25px;
+  margin-left: 0;
+}
+
+.shortcuts-name {
+  margin-top: 5px;
+  margin-left: 15px;
+  color: #EBEBEB;
+}
+
+.list-of-frames-shortcuts--element {
+  list-style: none;
+  text-align: left;
+  margin-bottom: 13px;
+  display: flex;
+}
+
+.bottom-of-window-with-shortcuts {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 75% 25%;
+}
+
+.bottom-shortcuts--text {
+  margin: 15px 0 0 15px;
+  text-align: left;
+}
+
+.bottom-shortcuts--restore {
+  text-align: right;
+  width: 180px;
+  height: 20px;
+  margin: 15px 0 0 15px;
+  background-color: #D0D5D0;
+  border-radius: 5px;
+  border: 2px solid #B6BCB6;
+}
+
+.other-shortcuts {
+  margin-bottom: 0;
+  height: 50px
+}
+
+.other-shortcuts--keyboard {
+  margin-top: 11px
+}
+
+.other-shortcuts--letter {
+  margin-top: 10px
+}
+
+.restore-shortcuts-name {
+  margin-top: 12px;
+}
+
+.customize-shortcuts--tooltip {
+  display: none;
+  position: absolute;
+  color: #fff;
+  background-color: #000;
+  border-radius: 5px;
+  margin-top: 400px;
+  padding-top: 10px;
+  font-size: 80%;
+  width: 250px;
+  height: 90px;
+}
+
+.bottom-shortcuts--text:hover+.customize-shortcuts--tooltip {
+  display: block;
+}
+
+.bottom-shortcuts--text:hover {
+  cursor: pointer;
 }
 </style>`;
 }
