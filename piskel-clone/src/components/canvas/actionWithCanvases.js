@@ -305,6 +305,13 @@ export default function actionWithCanvases() {
       const deleteKeyCode = 46;
       if (event.keyCode === deleteKeyCode) changeKeysAfterDeleteFrame(event);
     });
+    document.addEventListener('keyup', (event) => {
+      if (event.keyCode === pressDublicateButton) {
+        changeMainCanvasAfterSwitchCurrentFrame(event);
+        changeKeysAfterDublicateFrame(event);
+        changeMainCanvasAfterDublicateFrame(event);
+      }
+    });
 
     inputRangeOnPreview.addEventListener('mouseup', animationOnPreview);
     divWithTools.addEventListener('mousedown', tools);

@@ -82,7 +82,7 @@ export default function shotcutsFunction() {
           moveTool.classList.add('active');
           changeTool = true;
         }
-        if (event.keyCode === shapeSelectionToolKeyCode && shapeSelectionTool.classList.contains('no-active')) {
+        if (event.keyCode === shapeSelectionToolKeyCode && !event.ctrlKey && shapeSelectionTool.classList.contains('no-active')) {
           shapeSelectionTool.classList.remove('no-active');
           shapeSelectionTool.classList.add('active');
           changeTool = true;
