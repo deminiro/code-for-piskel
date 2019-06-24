@@ -10,7 +10,7 @@ import ditheringTool from '../tools/ditheringTool';
 // import actionWithFrames from '../actionWithFrames/actionWithFrames';
 import paintBucketTool from '../tools/paintBucketTool';
 import moveTool from '../tools/moveTool';
-import shapeSelectionTool from '../tools/shapeSelectionTool';
+// import shapeSelectionTool from '../tools/shapeSelectionTool';
 import rectangleTool from '../tools/rectangleTool';
 import undoTool from '../tools/undoTool';
 
@@ -175,7 +175,7 @@ export default function actionWithCanvases() {
           setTimeout(() => {
             requestAnimationFrame(step);
             if (number === amountImages) number = 0;
-            if (imagesForPreviewAndFrames.get(keysOfImages[number - 1]) === undefined) number += 1;
+            if (imagesForPreviewAndFrames.get(keysOfImages[number]) === undefined) number += 1;
             if (document.fullscreenElement === null) {
               document.getElementById('canvas-preview').innerHTML = '<img id="image-preview" width="202" height="200">';
             }
@@ -184,10 +184,11 @@ export default function actionWithCanvases() {
             }
             document
               .getElementById('image-preview')
-              .setAttribute('src', imagesForPreviewAndFrames.get(keysOfImages[number - 1]));
+              .setAttribute('src', imagesForPreviewAndFrames.get(keysOfImages[number]));
 
             number += 1;
           }, 1000 / fpsOnPreview);
+          global.console.log(imagesForPreviewAndFrames);
         }
       }
       step();
@@ -273,9 +274,9 @@ export default function actionWithCanvases() {
     if (activeTool.children[0].classList.contains('fa-hand-paper')) {
       moveTool(event);
     }
-    if (activeTool.children[0].classList.contains('fa-magic')) {
-      shapeSelectionTool(event);
-    }
+    // if (activeTool.children[0].classList.contains('fa-magic')) {
+    //   shapeSelectionTool(event);
+    // }
     if (activeTool.children[0].classList.contains('fa-square')) {
       rectangleTool(event);
     }
