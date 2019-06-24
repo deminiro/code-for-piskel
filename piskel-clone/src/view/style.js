@@ -399,6 +399,41 @@ export default function styles() {
 
 button:hover, input:hover {
   cursor: pointer;
-} </style>
-`;
+}
+/* tooltips */
+.tools-tooltips {
+  display: none;
+}
+
+.tools-which-change-canvas:hover>span {
+  display: block;
+  position: absolute;
+  background-color: #000;
+  color: #fff;
+  font-size: 90%;
+}
+
+.tools-tooltips {
+  margin-top: -15px;
+  margin-left: 45px;
+}
+
+.yellow-color {
+  color: #ffd700;
+}
+
+.tool-tip-frame {
+  display: none;
+  color: #fff;
+  position: absolute;
+  background-color: #000;
+  margin-top: -17px;
+  margin-left: 25px;
+  font-size: 80%;
+}
+
+.text-center:hover>span {
+  display: block;
+}
+</style>`;
 }

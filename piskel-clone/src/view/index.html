@@ -35,57 +35,88 @@
       <div class="main-tools--tools-which-change-canvas" id="div-with-tools">
         <button class="tools-which-change-canvas tools-which-change-canvas--pen active">
             <i class="white-color fas fa-pencil-alt"></i>
+            <span class="tools-tooltips">Pen tool <span class="yellow-color">(P)</span></span>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--mirror-pen no-active">
           <i class="white-color fas fa-grip-lines-vertical"></i>
+          <span class="tools-tooltips">Mirror pen <span class="yellow-color">(V)</span></span>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--paint-bucket-tool no-active">
             <i class="white-color fas fa-fill-drip"></i>
+            <span class="tools-tooltips">Paint bucket tool <span class="yellow-color">(B)</span></span>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--paint-all-pixels-of-the-same-color no-active">
             <i class="white-color fab fa-500px"></i>
+            <span class="tools-tooltips">Paint all pixels with same color <span class="yellow-color">(A)</span></span>
             <i class="white-color fas fa-fill-drip"></i>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--eraser-tool no-active">
             <i class="white-color fas fa-eraser"></i>
+            <span class="tools-tooltips">Eraser tool <span class="yellow-color">(E)</span></span>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--stroke-tool no-active">
             <i class="white-color fas fa-slash"></i>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--rectangle-tool no-active">
             <i class="white-color far fa-square"></i>
+            <span class="tools-tooltips">Rectangle tool <span class="yellow-color">(R)</span></span>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--circle-tool no-active">
             <i class="white-color far fa-circle"></i>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--move-tool no-active">
             <i class="white-color fas fa-hand-paper"></i>
+            <span class="tools-tooltips">Move tool <span class="yellow-color">(M)</span></span>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--shape-selection no-active">
             <i class="white-color fas fa-magic"></i>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--dithering-tool no-active">
           <i class="white-color fas fa-chess-board"></i>
+          <span class="tools-tooltips">Dithering tool <span class="yellow-color">(T)</span></span>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--rotate no-active">
           <i class="white-color fas fa-redo"></i>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--lighten no-active">
           <i class="white-color fas fa-adjust lighten"></i>
+          <span class="tools-tooltips">Lighten <span class="yellow-color">(U)</span></span>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--darken no-active">
           <i class="white-color fas fa-adjust darken"></i>
+          <span class="tools-tooltips">Darken <span class="yellow-color">(I)</span></span>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--color-picker no-active">
-            <i class="white-color fas fa-eye-dropper"></i>
+          <i class="white-color fas fa-eye-dropper"></i>
+          <span class="tools-tooltips">Color picker tool <span class="yellow-color">(O)</span></span>
         </button>
       </div>
       <div class="main-tools--choose-color">
-        <input type="color" name="" class="tools-choose-color--top" id="tools-choose-color--top">
-        <input type="color" name="" class="tools-choose-color--bottom" id="tools-choose-color--bottom" value="#e66465">
+        <input type="color" name="" class="tools--choose-color tools-choose-color--top" id="tools-choose-color--top">
+        <input type="color" name="" class="tools--choose-color tools-choose-color--bottom" id="tools-choose-color--bottom" value="#e66465">
       </div>
       <div class="main-tools--keyboard">
           <i class="fas fa-keyboard"></i>
+          <!-- window with shotcuts -->
+        <!-- <div class="window-shotcuts">
+          <h1 class="shotcuts-tools-headline"></h1>
+          <button class="shotcut-tool--"></button>
+          <button class="shotcut-tool--"></button>
+          <button class="shotcut-tool--"></button>
+          <button class="shotcut-tool--"></button>
+          <button class="shotcut-tool--"></button>
+          <button class="shotcut-tool--"></button>
+          <button class="shotcut-tool--"></button>
+          <button class="shotcut-tool--"></button>
+          <button class="shotcut-tool--"></button>
+          <button class="shotcut-tool--"></button>
+          <button class="shotcut-tool--"></button>
+          <button class="shotcut-tool--"></button>
+          <button class="shotcut-tool--"></button>
+          <button class="shotcut-tool--"></button>
+          <button class="shotcut-tool--"></button>
+          <button class="shotcut-tool--"></button>
+        </div> -->
       </div>
     </div>
     <div class="main-div-of-frames">
@@ -97,12 +128,14 @@
                     </div>
                     <div class="text-center frame-top-right-item yellow-frame-items" id="frame-top-right-item">
                       <i class="fas fa-trash-alt"></i>
+                      <span class="tool-tip-frame">Delete frame<span class="yellow-color">(del)</span></span>
                     </div>
                     <div class="text-center frame-bottom-left-item yellow-frame-items" id="frame-bottom-left-item">
                       <i class="fas fa-arrows-alt"></i>
                     </div>
                     <div class="text-center frame-bottom-right-item yellow-frame-items" id="frame-bottom-right-item">
                       <i class="fas fa-copy"></i>
+                      <span class="tool-tip-frame">Copy frame<span class="yellow-color">(del)</span></span>
                     </div>
                     <p class="canvas-frame" id="canvas-frame" width="50" height="46" draggable="true" ondragstart="drag(event)"></p>
                 </li>
