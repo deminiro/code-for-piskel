@@ -92,16 +92,24 @@ export default function actionWithCanvases() {
     }, 10);
   }
 
-  function changeKeysAfterDeleteFrame() {
-    const currentFrame = document.getElementsByClassName('yellow-border')[0];
-    const numberOfDeleteFrame = +currentFrame.children[0].children[0].innerText;
+  function changeKeysAfterDeleteFrame(event) {
+    const deleteKeyCode = 46;
+    let numberOfDeleteFrame;
+    if (event.keyCode === deleteKeyCode) {
+      numberOfDeleteFrame = +document.getElementsByClassName('yellow-frame-items')[0].innerText + 1;
+      global.alert('dsq');
+    } else {
+      numberOfDeleteFrame = +event.path[2].innerText;
+    }
+    global.console.log(numberOfDeleteFrame);
     imagesForPreviewAndFrames.delete(numberOfDeleteFrame);
-    for (let key = numberOfDeleteFrame; key < listOfFrames.children.length; key += 1) {
+    let numberWhichChangeNumberOfFrame = numberOfDeleteFrame;
+    for (let key = numberOfDeleteFrame; key <= listOfFrames.children.length; key += 1) {
       if (imagesForPreviewAndFrames.has(key + 1)) {
-        const numberOfFrame = +listOfFrames.children[key - 1].children[0].children[0].innerText;
         const value = imagesForPreviewAndFrames.get(key + 1);
         imagesForPreviewAndFrames.delete(key + 1);
-        imagesForPreviewAndFrames.set(numberOfFrame, value);
+        imagesForPreviewAndFrames.set(numberWhichChangeNumberOfFrame, value);
+        numberWhichChangeNumberOfFrame += 1;
       }
     }
     imagesForPreviewAndFrames = new Map([...imagesForPreviewAndFrames.entries()].sort());
@@ -223,6 +231,7 @@ export default function actionWithCanvases() {
     const previosActiveTool = document.getElementsByClassName('active')[0];
     activateNoActivateTools(event);
     const activeTool = document.getElementsByClassName('active')[0];
+    undoTool(event);
     if (activeTool.children[0].classList.contains('fa-pencil-alt')
      || previosActiveTool.children[0].classList.contains('fa-pencil-alt')
      || activeTool.children[0].classList.contains('fa-eraser')
@@ -279,19 +288,20 @@ export default function actionWithCanvases() {
     });
 
     listOfFrames.addEventListener('click', (event) => {
-      const deleteKeyCode = 46;
       changeMainCanvasAfterSwitchCurrentFrame(event);
-      if (event.keyCode === deleteKeyCode
-        || event.target.className === 'fas fa-trash-alt') changeKeysAfterDeleteFrame(event);
+      if (event.target.className === 'fas fa-trash-alt') changeKeysAfterDeleteFrame(event);
       if (event.target.className === 'fas fa-copy'
         || event.keyCode === pressDublicateButton) changeKeysAfterDublicateFrame(event);
       if (event.target.className === 'fas fa-copy'
         || event.keyCode === pressDublicateButton) changeMainCanvasAfterDublicateFrame(event);
     });
+    document.addEventListener('keyup', (event) => {
+      const deleteKeyCode = 46;
+      if (event.keyCode === deleteKeyCode) changeKeysAfterDeleteFrame(event);
+    });
 
     inputRangeOnPreview.addEventListener('mouseup', animationOnPreview);
     divWithTools.addEventListener('mousedown', tools);
-    document.addEventListener('keypress', undoTool);
   }
   disableSaveImageRightClick();
   useEventListeners();
