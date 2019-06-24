@@ -13,7 +13,7 @@ export default function actionWithFrames() {
     global.console.log(images);
     if (images !== null) {
       if (images.length >= 2) {
-        countOfFrames = images.length - 1;
+        countOfFrames = images.length;
       }
     }
   }
@@ -112,10 +112,8 @@ export default function actionWithFrames() {
         updateNumbersOfFrames(event);
       }
     }
-    setTimeout(() => {
-      listOfFrames.addEventListener('click', deleteChosenFrame);
-      document.addEventListener('keydown', deleteChosenFrame);
-    }, 0);
+    listOfFrames.addEventListener('click', deleteChosenFrame);
+    document.addEventListener('keydown', deleteChosenFrame);
   }
 
   function chooseCurrentFrame() {

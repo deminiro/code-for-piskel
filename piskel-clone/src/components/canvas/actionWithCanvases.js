@@ -94,14 +94,15 @@ export default function actionWithCanvases() {
 
   function changeKeysAfterDeleteFrame(event) {
     const deleteKeyCode = 46;
+    let numberOfCurrentFrame;
     let numberOfDeleteFrame;
     if (event.keyCode === deleteKeyCode) {
-      numberOfDeleteFrame = +document.getElementsByClassName('yellow-frame-items')[0].innerText + 1;
-      global.alert('dsq');
+      numberOfCurrentFrame = +document.getElementsByClassName('yellow-frame-items')[0].innerText;
+      numberOfDeleteFrame = numberOfCurrentFrame + 1;
     } else {
       numberOfDeleteFrame = +event.path[2].innerText;
+      numberOfCurrentFrame = numberOfDeleteFrame - 1;
     }
-    global.console.log(numberOfDeleteFrame);
     imagesForPreviewAndFrames.delete(numberOfDeleteFrame);
     let numberWhichChangeNumberOfFrame = numberOfDeleteFrame;
     for (let key = numberOfDeleteFrame; key <= listOfFrames.children.length; key += 1) {
@@ -113,7 +114,11 @@ export default function actionWithCanvases() {
       }
     }
     imagesForPreviewAndFrames = new Map([...imagesForPreviewAndFrames.entries()].sort());
-    global.console.log(imagesForPreviewAndFrames);
+    const image = new Image();
+    image.src = imagesForPreviewAndFrames.get(numberOfCurrentFrame);
+    ctxOfMiddleCanvas.clearRect(0, 0, canvasWhichStateOnMiddleOfPage.width,
+      canvasWhichStateOnMiddleOfPage.height);
+    ctxOfMiddleCanvas.drawImage(image, 0, 0);
   }
 
   function changeKeysAfterDublicateFrame(event) {
@@ -228,6 +233,7 @@ export default function actionWithCanvases() {
     divWithTools.addEventListener('mousedown', rotation);
   }
   function tools(event) {
+    event.stopPropagation();
     const previosActiveTool = document.getElementsByClassName('active')[0];
     activateNoActivateTools(event);
     const activeTool = document.getElementsByClassName('active')[0];
