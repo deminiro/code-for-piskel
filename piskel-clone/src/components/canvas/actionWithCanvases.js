@@ -80,8 +80,11 @@ export default function actionWithCanvases() {
   }
 
   function changeMainCanvasAfterSwitchCurrentFrame(event) {
+    const keyboardButtonUp = 38;
+    const keyboardButtonDown = 40;
     setTimeout(() => {
-      if (event.target.className === 'canvas-frame' || event.target.className === 'image-frame') {
+      if (event.target.className === 'canvas-frame' || event.target.className === 'image-frame'
+       || event.keyCode === keyboardButtonDown || event.keyCode === keyboardButtonUp) {
         const numberOfCurrentFrame = +document.getElementsByClassName('yellow-frame-items')[0]
           .children[0].innerText;
         const imageOfCurrentFrame = imagesForPreviewAndFrames.get(numberOfCurrentFrame);
@@ -351,6 +354,7 @@ export default function actionWithCanvases() {
       if (event.target.className === 'fas fa-copy'
         || event.keyCode === pressDublicateButton) changeMainCanvasAfterDublicateFrame(event);
     });
+    document.addEventListener('keydown', changeMainCanvasAfterSwitchCurrentFrame);
     document.addEventListener('keyup', (event) => {
       const deleteKeyCode = 46;
       if (event.keyCode === deleteKeyCode) changeKeysAfterDeleteFrame(event);
