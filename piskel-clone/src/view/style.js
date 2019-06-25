@@ -7,6 +7,7 @@ export default function styles() {
  padding: 0;
  background-color: #1D1D1D;
  font-family: 'Righteous', cursive;
+ overflow: hidden
 }
 
 .white-color {
@@ -483,7 +484,31 @@ button:hover, input:hover {
   grid-template-columns: 70% 30%;
   background-color: #000;
   width: 99%;
+  height: 440px;
+  overflow-y: scroll;
   margin-left: 4px;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px #C8B571;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: #C8B571;
+  -webkit-box-shadow: inset 0 0 6px #C8B571;
+}
+::-webkit-scrollbar-thumb:window-inactive {
+background: #C8B571;
 }
 
 .list-of-tools-shortcuts {
@@ -553,6 +578,8 @@ button:hover, input:hover {
 .bottom-shortcuts--text {
   margin: 15px 0 0 15px;
   text-align: left;
+  width: 169px;
+  height: 22px;
 }
 
 .bottom-shortcuts--restore {
