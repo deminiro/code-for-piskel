@@ -160,55 +160,64 @@ export default function actionWithCanvases() {
     }
   }
 
-  function animationOnPreview() {
-    deleteNullFromImagesMap();
-    const numberOfFpsElementHtml = document.getElementsByClassName('preview-fps--number-fps')[0];
-    let number = 0;
-    let fpsOnPreview = Number(inputRangeOnPreview.value);
-    numberOfFpsElementHtml.innerHTML = `${fpsOnPreview} fps`;
-
-    function forAnimation() {
-      const amountImages = imagesForPreviewAndFrames.size;
-      const keysOfImages = [];
-      // eslint-disable-next-line no-restricted-syntax
-      for (const key of imagesForPreviewAndFrames.keys()) {
-        keysOfImages.push(key);
-      }
-      function step() {
-        if (fpsOnPreview !== 0) {
-          setTimeout(() => {
-            requestAnimationFrame(step);
-            if (number === amountImages) number = 0;
-            if (imagesForPreviewAndFrames.get(keysOfImages[number]) === undefined) number += 1;
-            if (document.fullscreenElement === null) {
-              document.getElementById('canvas-preview').innerHTML = '<img id="image-preview" width="202" height="200">';
-            }
-            if (document.fullscreenElement !== null) {
-              document.getElementById('canvas-preview').innerHTML = '<img id="image-preview" width="766" height="766">';
-            }
-            document
-              .getElementById('image-preview')
-              .setAttribute('src', imagesForPreviewAndFrames.get(keysOfImages[number]));
-
-            number += 1;
-          }, 1000 / fpsOnPreview);
-          global.console.log(imagesForPreviewAndFrames);
-        }
-      }
-      step();
-    }
-
-    inputRangeOnPreview.addEventListener('click', (event) => {
-      fpsOnPreview = Number(inputRangeOnPreview.value);
-      event.stopPropagation();
-      if (fpsOnPreview > 0) {
-        forAnimation();
-      }
-    });
-    inputRangeOnPreview.addEventListener('mousemove', () => {
-      fpsOnPreview = Number(inputRangeOnPreview.value);
+  function animationOnPreview(event) {
+    const keyboardButtonLeft = 37;
+    const keyboardButtonRight = 39;
+    if (event.keyCode === keyboardButtonLeft || event.keyCode === keyboardButtonRight
+      || event.target.classList.contains('choose-fps')) {
+      deleteNullFromImagesMap();
+      const numberOfFpsElementHtml = document.getElementsByClassName('preview-fps--number-fps')[0];
+      let number = 0;
+      let fpsOnPreview = Number(inputRangeOnPreview.value);
       numberOfFpsElementHtml.innerHTML = `${fpsOnPreview} fps`;
-    });
+
+      const forAnimation = () => {
+        const amountImages = imagesForPreviewAndFrames.size;
+        const keysOfImages = [];
+        // eslint-disable-next-line no-restricted-syntax
+        for (const key of imagesForPreviewAndFrames.keys()) {
+          keysOfImages.push(key);
+        }
+        function step() {
+          if (fpsOnPreview !== 0) {
+            setTimeout(() => {
+              requestAnimationFrame(step);
+              if (number === amountImages) number = 0;
+              if (imagesForPreviewAndFrames.get(keysOfImages[number]) === undefined) number += 1;
+              if (document.fullscreenElement === null) {
+                document.getElementById('canvas-preview').innerHTML = '<img id="image-preview" width="202" height="200">';
+              }
+              if (document.fullscreenElement !== null) {
+                document.getElementById('canvas-preview').innerHTML = '<img id="image-preview" width="766" height="766">';
+              }
+              document
+                .getElementById('image-preview')
+                .setAttribute('src', imagesForPreviewAndFrames.get(keysOfImages[number]));
+
+              number += 1;
+            }, 1000 / fpsOnPreview);
+            global.console.log(imagesForPreviewAndFrames);
+          }
+        }
+        step();
+      };
+
+      const activateAnimation = () => {
+        if (event.keyCode === keyboardButtonLeft || event.keyCode === keyboardButtonRight
+          || event.target.classList.contains('choose-fps')) {
+          fpsOnPreview = 0;
+          fpsOnPreview = Number(inputRangeOnPreview.value);
+          event.stopPropagation();
+          if (fpsOnPreview > 0) {
+            forAnimation();
+          }
+        }
+      };
+
+      inputRangeOnPreview.addEventListener('click', activateAnimation);
+      inputRangeOnPreview.addEventListener('mousemove', activateAnimation);
+      document.addEventListener('keyup', activateAnimation);
+    }
   }
   function fullScreenPreview() {
     function toggleFullScreen(event) {
@@ -237,6 +246,7 @@ export default function actionWithCanvases() {
     }
     divWithTools.addEventListener('mousedown', rotation);
   }
+
   function tools(event) {
     event.stopPropagation();
     const previosActiveTool = document.getElementsByClassName('active')[0];
@@ -367,7 +377,8 @@ export default function actionWithCanvases() {
       }
     });
 
-    inputRangeOnPreview.addEventListener('mouseup', animationOnPreview);
+    inputRangeOnPreview.addEventListener('mousedown', animationOnPreview);
+    document.addEventListener('keydown', animationOnPreview);
     divWithTools.addEventListener('mousedown', tools);
     document.addEventListener('keyup', toolsForKeyboardUse);
   }

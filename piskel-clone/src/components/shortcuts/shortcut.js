@@ -163,7 +163,7 @@ export default function shortcutsFunction() {
     document.addEventListener('keydown', activateNeedableToolByKeyboard);
   }
 
-  function shortutsForChangeCurrentTool() {
+  function shortcutsForChangeCurrentTool() {
     const listOfFrames = document.getElementById('list-of-frames');
     const keyboardButtonUp = 38;
     const keyboardButtonDown = 40;
@@ -210,7 +210,31 @@ export default function shortcutsFunction() {
     document.addEventListener('keydown', changeCurrentFrameWithKeyboard);
   }
 
+  function shortcutsChangeFpsOfPreview() {
+    const keyboardButtonLeft = 37;
+    const keyboardButtonRight = 39;
+    function changeFpsWithKeyboard(event) {
+      if (event.keyCode === keyboardButtonLeft || event.keyCode === keyboardButtonRight) {
+        const numberOfFps = document.getElementsByClassName('preview-fps--number-fps')[0];
+        const inputWithRangeFps = document.getElementById('preview-fps--choose-fps');
+        let valueOfInputRange = +inputWithRangeFps.value;
+        if (event.keyCode === keyboardButtonLeft && inputWithRangeFps.value >= 0) {
+          inputWithRangeFps.value = +valueOfInputRange - 1;
+          valueOfInputRange = inputWithRangeFps.value;
+          numberOfFps.innerHTML = `${valueOfInputRange} fps`;
+        } else if (event.keyCode === keyboardButtonRight && inputWithRangeFps.value <= 24) {
+          inputWithRangeFps.value = +valueOfInputRange + 1;
+          valueOfInputRange = inputWithRangeFps.value;
+          numberOfFps.innerHTML = `${valueOfInputRange} fps`;
+        }
+      }
+    }
+
+    document.addEventListener('keydown', changeFpsWithKeyboard);
+  }
+
   // shortcuts with frames use in file './actionWithFrames/actionWithFrames'
   shortcutsForTools();
-  shortutsForChangeCurrentTool();
+  shortcutsForChangeCurrentTool();
+  shortcutsChangeFpsOfPreview();
 }
