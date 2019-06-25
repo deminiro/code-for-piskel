@@ -163,6 +163,54 @@ export default function shortcutsFunction() {
     document.addEventListener('keydown', activateNeedableToolByKeyboard);
   }
 
+  function shortutsForChangeCurrentTool() {
+    const listOfFrames = document.getElementById('list-of-frames');
+    const keyboardButtonUp = 38;
+    const keyboardButtonDown = 40;
+
+    function changeCurrentFrameWithKeyboard(event) {
+      if (event.keyCode === keyboardButtonDown || event.keyCode === keyboardButtonUp) {
+        const numberOfCurrentFrame = +document.getElementsByClassName('yellow-frame-items')[0].innerText;
+        const currentFrame = document.getElementsByClassName('yellow-border')[0];
+        const childsOfCurrentFrame = Array.from(currentFrame.children);
+        const amountOfFrames = listOfFrames.children.length;
+        let nextFrame;
+        const makeYellowFrameToGray = () => {
+          currentFrame.classList.remove('yellow-border');
+          currentFrame.classList.add('gray-border');
+          childsOfCurrentFrame.forEach((element) => {
+            if (element.classList.contains('yellow-frame-items')) {
+              element.classList.remove('yellow-frame-items');
+              element.classList.add('gray-frame-items');
+            }
+          });
+        };
+        if (event.keyCode === keyboardButtonDown && numberOfCurrentFrame !== amountOfFrames) {
+          makeYellowFrameToGray();
+          nextFrame = listOfFrames.children[numberOfCurrentFrame];
+          global.console.log(nextFrame, listOfFrames.children, numberOfCurrentFrame);
+        }
+        if (event.keyCode === keyboardButtonUp && numberOfCurrentFrame !== 1) {
+          makeYellowFrameToGray();
+          nextFrame = listOfFrames.children[numberOfCurrentFrame - 2];
+          global.console.log('ds');
+        }
+
+        nextFrame.classList.remove('gray-border');
+        nextFrame.classList.add('yellow-border');
+        Array.from(nextFrame.children).forEach((element) => {
+          if (element.classList.contains('gray-frame-items')) {
+            element.classList.remove('gray-frame-items');
+            element.classList.add('yellow-frame-items');
+          }
+        });
+      }
+    }
+
+    document.addEventListener('keydown', changeCurrentFrameWithKeyboard);
+  }
+
   // shortcuts with frames use in file './actionWithFrames/actionWithFrames'
   shortcutsForTools();
+  shortutsForChangeCurrentTool();
 }
