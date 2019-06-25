@@ -58,7 +58,7 @@ export default function shortcutsFunction() {
     const shapeSelectionTool = document.getElementsByClassName('tools-which-change-canvas--shape-selection')[0];
     const ditheringToolKeyCode = 84;
     const ditheringTool = document.getElementsByClassName('tools-which-change-canvas--dithering-tool')[0];
-    const rotateToolKeyCode = 81;
+    const rotateToolKeyCode = 68;
     const rotateTool = document.getElementsByClassName('tools-which-change-canvas--rotate')[0];
     const lightenToolKeyCode = 85;
     const lightenTool = document.getElementsByClassName('tools-which-change-canvas--lighten')[0];

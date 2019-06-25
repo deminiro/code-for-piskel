@@ -101,9 +101,12 @@ export default function mirrorPenTool() {
     canvasWhichStateOnMiddleOfPage.removeEventListener('mousemove', draw);
   });
 
-  divWithTools.addEventListener('mouseup', () => {
+  function deactivate() {
     if (!mirrorPen.classList.contains('active')) {
       canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', recognizeLeftOrRightClick);
     }
-  });
+  }
+
+  divWithTools.addEventListener('mouseup', deactivate);
+  document.addEventListener('keyup', deactivate);
 }

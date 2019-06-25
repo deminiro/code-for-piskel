@@ -23,6 +23,7 @@ export default function actionWithCanvases() {
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
   let imagesForPreviewAndFrames = new Map();
   const pressDublicateButton = 221;
+  let changeToolAfterKeyboardUse = document.getElementsByClassName('active')[0];
   // const pressDeleteButton = 68;
   // switch images of frames in map after swap frames
   // function switchImagesOfFrames() {
@@ -237,7 +238,7 @@ export default function actionWithCanvases() {
     event.stopPropagation();
     const previosActiveTool = document.getElementsByClassName('active')[0];
     activateNoActivateTools(event);
-    const activeTool = document.getElementsByClassName('active')[0];
+    const activeTool = document.getElementsByClassName('active')[0] || previosActiveTool;
     undoTool(event);
     if (activeTool.children[0].classList.contains('fa-pencil-alt')
      || previosActiveTool.children[0].classList.contains('fa-pencil-alt')
@@ -282,6 +283,54 @@ export default function actionWithCanvases() {
     }
   }
 
+  function toolsForKeyboardUse(event) {
+    event.stopPropagation();
+    const activeTool = document.getElementsByClassName('active')[0];
+    undoTool(event);
+    if (activeTool.children[0].classList.contains('fa-pencil-alt')
+     || changeToolAfterKeyboardUse.children[0].classList.contains('fa-pencil-alt')
+     || activeTool.children[0].classList.contains('fa-eraser')
+     || changeToolAfterKeyboardUse.children[0].classList.contains('fa-eraser')) penAndEraserTools(event);
+    if (activeTool.children[0].classList.contains('fa-eye-dropper')
+     || activeTool.children[0].classList.contains('lighten')
+     || activeTool.children[0].classList.contains('darken')) colorPickerTool(event);
+    if (activeTool.children[0].classList.contains('fa-slash')
+     || changeToolAfterKeyboardUse.children[0].classList.contains('fa-slash')) strokeTool(event);
+    if (activeTool.classList
+      .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')
+       || changeToolAfterKeyboardUse.classList
+         .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')) {
+      allPixelsSameColorTool(event);
+    }
+    if (event.target.classList.contains('tools-which-change-canvas--rotate')
+     || event.target.classList.contains('fa-redo')) {
+      rotationTool(event);
+    }
+    if (event.target.classList.contains('tools-which-change-canvas--mirror-pen')
+     || event.target.classList.contains('fa-grip-lines-vertical')
+     || changeToolAfterKeyboardUse.children[0].classList.contains('fa-grip-lines-vertical')) {
+      penMirrorTool(event);
+    }
+    if (event.target.classList.contains('tools-which-change-canvas--dithering-tool')
+     || event.target.classList.contains('fa-chess-board')
+     || changeToolAfterKeyboardUse.children[0].classList.contains('fa-chess-board')) {
+      ditheringTool(event);
+    }
+    if (activeTool.children[0].classList.contains('fa-fill-drip')) {
+      paintBucketTool(event);
+    }
+    if (activeTool.children[0].classList.contains('fa-hand-paper')) {
+      moveTool(event);
+    }
+    // if (activeTool.children[0].classList.contains('fa-magic')) {
+    //   shapeSelectionTool(event);
+    // }
+    if (activeTool.children[0].classList.contains('fa-square')) {
+      rectangleTool(event);
+    }
+    changeToolAfterKeyboardUse = activeTool;
+  }
+
   function disableSaveImageRightClick() {
     document.body.addEventListener('contextmenu', (event) => {
       event.preventDefault();
@@ -316,6 +365,7 @@ export default function actionWithCanvases() {
 
     inputRangeOnPreview.addEventListener('mouseup', animationOnPreview);
     divWithTools.addEventListener('mousedown', tools);
+    document.addEventListener('keyup', toolsForKeyboardUse);
   }
   disableSaveImageRightClick();
   useEventListeners();

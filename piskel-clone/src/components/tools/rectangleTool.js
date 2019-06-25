@@ -69,8 +69,8 @@ export default function rectangleToolFunction() {
     const { x, y } = takeXAndYCoordinates(event);
     const leftClick = 1;
     const rightClick = 3;
-    endPointX = x - Math.floor(amountOfDivisonsOfCanvas / 2);
-    endPointY = y - Math.floor(amountOfDivisonsOfCanvas / 2);
+    endPointX = x - amountOfDivisonsOfCanvas;
+    endPointY = y - amountOfDivisonsOfCanvas;
     ctxOfMiddleCanvas.clearRect(0, 0, canvasWhichStateOnMiddleOfPage.width,
       canvasWhichStateOnMiddleOfPage.height);
     ctxOfMiddleCanvas.drawImage(image, 0, 0);
@@ -92,8 +92,8 @@ export default function rectangleToolFunction() {
     event.preventDefault();
     takeImage();
     const { x, y } = takeXAndYCoordinates(event);
-    startPointX = x - Math.floor(amountOfDivisonsOfCanvas / 2);
-    startPointY = y - Math.floor(amountOfDivisonsOfCanvas / 2);
+    startPointX = x - amountOfDivisonsOfCanvas;
+    startPointY = y - amountOfDivisonsOfCanvas;
     canvasWhichStateOnMiddleOfPage.addEventListener('mousemove', drawRectangle);
   }
 
@@ -119,4 +119,6 @@ export default function rectangleToolFunction() {
 
   divWithTools.addEventListener('mouseup', activate);
   divWithTools.addEventListener('mouseup', deactivate);
+  document.addEventListener('keyup', activate);
+  document.addEventListener('keyup', deactivate);
 }

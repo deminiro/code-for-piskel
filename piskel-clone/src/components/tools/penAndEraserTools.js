@@ -7,12 +7,19 @@ export default function penAndEraserTools() {
   let amountOfDivisonsOfCanvas = 19;
   const pen = document.getElementsByClassName('tools-which-change-canvas--pen')[0];
   const eraser = document.getElementsByClassName('tools-which-change-canvas--eraser-tool')[0];
+  const keyboardButtonE = 69;
+  const keyboardButtonP = 80;
   let toolPen = false;
   let toolEraser = false;
 
   divWithTools.addEventListener('mouseup', () => {
     if (pen.classList.contains('active')) toolPen = true;
     if (eraser.classList.contains('active')) toolEraser = true;
+  });
+
+  document.addEventListener('keyup', (event) => {
+    if (event.keyCode === keyboardButtonP) toolPen = true;
+    if (event.keyCode === keyboardButtonE) toolEraser = true;
   });
 
   function changeUnitsOfCanvas() {
@@ -81,7 +88,7 @@ export default function penAndEraserTools() {
     }
 
     makeCoordinatePerSquare();
-    drawOnMiddleCanvas(event);
+    drawOnMiddleCanvas();
   }
 
   function makeDrawingWithMouse(event) {
@@ -105,6 +112,7 @@ export default function penAndEraserTools() {
     ctxOfMiddleCanvas.fillStyle = currentColor;
     makeDrawingWithMouse(event);
   }
+
   submitCanvasSize.addEventListener('click', changeUnitsOfCanvas);
   canvasWhichStateOnMiddleOfPage.addEventListener('click', (event) => {
     event.preventDefault();
@@ -127,4 +135,20 @@ export default function penAndEraserTools() {
       toolEraser = false;
     }
   });
+
+  function toActivateWithKeyboard(event) {
+    if (event.keyCode !== keyboardButtonP) {
+      canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', makeDrawingWithMouse);
+      canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', draw);
+      canvasWhichStateOnMiddleOfPage.removeEventListener('mousemove', draw);
+      toolPen = false;
+    }
+    if (event.keyCode !== keyboardButtonE) {
+      canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', makeDrawingWithMouse);
+      canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', draw);
+      canvasWhichStateOnMiddleOfPage.removeEventListener('mousemove', draw);
+      toolEraser = false;
+    }
+  }
+  document.addEventListener('keyup', toActivateWithKeyboard);
 }
