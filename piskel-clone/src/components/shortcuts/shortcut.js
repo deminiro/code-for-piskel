@@ -1,11 +1,45 @@
 export default function shortcutsFunction() {
-  function openShortCutsWindow() {
+  const toolsWhichUse = [];
+  const shortcutPen = document.getElementById('shortcut-letter-pen');
+  const shortcutMirror = document.getElementById('shortcut-letter-mirror');
+  const shortcutBucket = document.getElementById('shortcut-letter-bucket');
+  const shortcutAllPixels = document.getElementById('shortcut-letter-all-pixels');
+  const shortcutEraser = document.getElementById('shortcut-letter-eraser');
+  const shortcutRectangle = document.getElementById('shortcut-letter-rectangle');
+  const shortcutMove = document.getElementById('shortcut-letter-move');
+  const shortcutDithering = document.getElementById('shortcut-letter-dithering');
+  const shortcutRotate = document.getElementById('shortcut-letter-rotate');
+  const shortcutLighten = document.getElementById('shortcut-letter-lighten');
+  const shortcutDarken = document.getElementById('shortcut-letter-darken');
+  const shortcutColorPicker = document.getElementById('shortcut-letter-color-picker');
+  toolsWhichUse.push(shortcutPen, shortcutMirror, shortcutBucket, shortcutAllPixels,
+    shortcutEraser, shortcutRectangle, shortcutMove, shortcutDithering, shortcutRotate,
+    shortcutLighten, shortcutDarken, shortcutColorPicker);
+
+  function saveShortcutsAfterReloadingPage() {
+    const buttonForShortCuts = [];
+    toolsWhichUse.forEach((element) => {
+      buttonForShortCuts.push(element.innerHTML);
+    });
+    localStorage.setItem('shortcuts', buttonForShortCuts);
+  }
+  function takeShortcutsFromLocalStorage() {
+    if (localStorage.getItem('shortcuts') !== null) {
+      const shortcutsStr = localStorage.getItem('shortcuts').toString();
+      const shortcutsArr = shortcutsStr.replace(/,/gi, '');
+      global.console.log(shortcutsArr);
+      toolsWhichUse.forEach((element, index) => {
+        // eslint-disable-next-line no-param-reassign
+        element.innerHTML = shortcutsArr[index];
+      });
+    }
+  }
+
+  function openShortcutsWindow() {
     const keyboardIcon = document.getElementById('keyboard');
     const windowShortCuts = document.getElementsByClassName('window-shortcuts')[0];
     const buttonCloseWindowShortCut = document.getElementsByClassName('close-shortcut-window')[0];
     const keyBoardButtonToOpenShortCuts = 191;
-    const keyboardButtonRestoreShortCuts = 222;
-    const restore = document.getElementById('restore-shortcuts');
     function showWindowWithShortCuts(event) {
       if (event.target.classList.contains('fa-keyboard') || event.keyCode === keyBoardButtonToOpenShortCuts) {
         event.preventDefault();
@@ -20,51 +54,43 @@ export default function shortcutsFunction() {
       }
     }
 
-    function notifyWithRestore(event) {
-      if (event.target.classList.contains('bottom-shortcuts--restore') || event.keyCode === keyboardButtonRestoreShortCuts) {
-        global.confirm('Replace all custom shortcuts by the default Piskel shortcuts ?');
-      }
-    }
-
     keyboardIcon.addEventListener('click', showWindowWithShortCuts);
     buttonCloseWindowShortCut.addEventListener('click', closeWindow);
     document.addEventListener('keyup', showWindowWithShortCuts);
-    document.addEventListener('keyup', notifyWithRestore);
-    restore.addEventListener('click', notifyWithRestore);
   }
-  openShortCutsWindow();
 
   // numbers equal to key code
   function shortcutsForTools() {
-    const penToolKeyCode = 80;
+    const penToolKeyCode = shortcutPen.innerHTML.toLocaleUpperCase().charCodeAt(0);
     const penTool = document.getElementsByClassName('tools-which-change-canvas--pen')[0];
-    const mirrorPenToolKeyCode = 86;
+    const mirrorPenToolKeyCode = shortcutMirror.innerHTML.toLocaleUpperCase().charCodeAt(0);
     const mirrorPenTool = document.getElementsByClassName('tools-which-change-canvas--mirror-pen')[0];
-    const paintBucketToolKeyCode = 66;
+    const paintBucketToolKeyCode = shortcutBucket.innerHTML.toLocaleUpperCase().charCodeAt(0);
     const paintBucketTool = document.getElementsByClassName('tools-which-change-canvas--paint-bucket-tool')[0];
-    const paintAllPixelsSameColorToolKeyCode = 65;
+    const paintAllPixelsSameColorToolKeyCode = shortcutAllPixels.innerHTML
+      .toLocaleUpperCase().charCodeAt(0);
     const paintAllPixelsSameColorTool = document.getElementsByClassName('tools-which-change-canvas--paint-all-pixels-of-the-same-color')[0];
-    const eraserToolKeyCode = 69;
+    const eraserToolKeyCode = shortcutEraser.innerHTML.toLocaleUpperCase().charCodeAt(0);
     const eraserTool = document.getElementsByClassName('tools-which-change-canvas--eraser-tool')[0];
     const strokeToolKeyCode = 76;
     const strokeTool = document.getElementsByClassName('tools-which-change-canvas--stroke-tool')[0];
-    const rectangleToolKeyCode = 82;
+    const rectangleToolKeyCode = shortcutRectangle.innerHTML.toLocaleUpperCase().charCodeAt(0);
     const rectangleTool = document.getElementsByClassName('tools-which-change-canvas--rectangle-tool')[0];
     const circleToolKeyCode = 67;
     const circleTool = document.getElementsByClassName('tools-which-change-canvas--circle-tool')[0];
-    const moveToolKeyCode = 77;
+    const moveToolKeyCode = shortcutMove.innerHTML.toLocaleUpperCase().charCodeAt(0);
     const moveTool = document.getElementsByClassName('tools-which-change-canvas--move-tool')[0];
     const shapeSelectionToolKeyCode = 90;
     const shapeSelectionTool = document.getElementsByClassName('tools-which-change-canvas--shape-selection')[0];
-    const ditheringToolKeyCode = 84;
+    const ditheringToolKeyCode = shortcutDithering.innerHTML.toLocaleUpperCase().charCodeAt(0);
     const ditheringTool = document.getElementsByClassName('tools-which-change-canvas--dithering-tool')[0];
-    const rotateToolKeyCode = 68;
+    const rotateToolKeyCode = shortcutRotate.innerHTML.toLocaleUpperCase().charCodeAt(0);
     const rotateTool = document.getElementsByClassName('tools-which-change-canvas--rotate')[0];
-    const lightenToolKeyCode = 85;
+    const lightenToolKeyCode = shortcutLighten.innerHTML.toLocaleUpperCase().charCodeAt(0);
     const lightenTool = document.getElementsByClassName('tools-which-change-canvas--lighten')[0];
-    const darkenToolKeyCode = 73;
+    const darkenToolKeyCode = shortcutDarken.innerHTML.toLocaleUpperCase().charCodeAt(0);
     const darkenTool = document.getElementsByClassName('tools-which-change-canvas--darken')[0];
-    const colorPickerToolKeyCode = 79;
+    const colorPickerToolKeyCode = shortcutColorPicker.innerHTML.toLocaleUpperCase().charCodeAt(0);
     const colorPickerTool = document.getElementsByClassName('tools-which-change-canvas--color-picker')[0];
 
     function activateNeedableToolByKeyboard(event) {
@@ -188,12 +214,10 @@ export default function shortcutsFunction() {
         if (event.keyCode === keyboardButtonDown && numberOfCurrentFrame !== amountOfFrames) {
           makeYellowFrameToGray();
           nextFrame = listOfFrames.children[numberOfCurrentFrame];
-          global.console.log(nextFrame, listOfFrames.children, numberOfCurrentFrame);
         }
         if (event.keyCode === keyboardButtonUp && numberOfCurrentFrame !== 1) {
           makeYellowFrameToGray();
           nextFrame = listOfFrames.children[numberOfCurrentFrame - 2];
-          global.console.log('ds');
         }
 
         nextFrame.classList.remove('gray-border');
@@ -233,8 +257,95 @@ export default function shortcutsFunction() {
     document.addEventListener('keydown', changeFpsWithKeyboard);
   }
 
+  function changeKeyboardShortcuts() {
+    const shortcutWindow = document.getElementsByClassName('window-shortcuts')[0];
+    const btnDeleteFrame = 46;
+    const btnCopyFrame = 221;
+    const btnAddNewFrame = 78;
+    const btnOpenShortcutWindow = 191;
+    const btnChangeToPreviousFrame = 38;
+    const btnChangeToNextFrame = 40;
+    const btnDecreaseFps = 37;
+    const btnInecreaseFps = 39;
+    const btnFullscreenPreview = 70;
+    let element;
+    function change(event) {
+      if (event.type === 'click' && event.target.classList.contains('tool')) {
+        const previousItem = document.getElementsByClassName('opacity-half')[0] || 0;
+        if (previousItem !== 0) {
+          previousItem.classList.remove('opacity-half');
+        }
+        const shortcutName = event.target.classList.contains('shortcuts-name');
+        const shortcutLetter = event.target.classList.contains('shortcuts-letter');
+        const shortcutIcon = event.target.classList.contains('keyboard-shortcuts-icon');
+        if (shortcutName) {
+          element = event.target.previousElementSibling;
+        } else if (shortcutLetter) {
+          element = event.target;
+        } else if (shortcutIcon) {
+          element = event.target.nextElementSibling;
+        }
+        if (!element.classList.contains('white-button')) element.classList.add('opacity-half');
+      } else if (event.type === 'keydown' && document.getElementsByClassName('opacity-half').length === 1
+      && event.keyCode !== btnDeleteFrame && event.keyCode !== btnCopyFrame
+      && event.keyCode !== btnAddNewFrame && event.keyCode !== btnOpenShortcutWindow
+      && event.keyCode !== btnChangeToNextFrame && event.keyCode !== btnChangeToPreviousFrame
+      && event.keyCode !== btnDecreaseFps && event.keyCode !== btnInecreaseFps
+      && event.keyCode !== btnFullscreenPreview) {
+        toolsWhichUse.forEach((elem) => {
+          if (elem.innerHTML === String.fromCharCode(event.keyCode)) {
+            // eslint-disable-next-line no-param-reassign
+            elem.innerHTML = '???';
+          }
+        });
+        // eslint-disable-next-line prefer-destructuring
+        element = document.getElementsByClassName('opacity-half')[0];
+        element.innerHTML = String.fromCharCode(event.keyCode);
+        element.classList.remove('opacity-half');
+        shortcutsForTools();
+        saveShortcutsAfterReloadingPage();
+      }
+    }
+    shortcutWindow.addEventListener('click', change);
+    document.addEventListener('keydown', change);
+  }
+
+  function restoreKeyboardShortcuts() {
+    const buttonRestore = document.getElementById('restore-shortcuts');
+    const keyboardButtonRestoreShortCuts = 222;
+    const restore = document.getElementById('restore-shortcuts');
+    function notifyWithRestore(event) {
+      if (event.target.classList.contains('bottom-shortcuts--restore') || event.keyCode === keyboardButtonRestoreShortCuts) {
+        if (global.confirm('Replace all custom shortcuts by the default Piskel shortcuts ?')) {
+          shortcutPen.innerHTML = 'P';
+          shortcutMirror.innerHTML = 'V';
+          shortcutBucket.innerHTML = 'B';
+          shortcutAllPixels.innerHTML = 'A';
+          shortcutEraser.innerHTML = 'E';
+          shortcutRectangle.innerHTML = 'R';
+          shortcutMove.innerHTML = 'M';
+          shortcutDithering.innerHTML = 'T';
+          shortcutRotate.innerHTML = 'D';
+          shortcutLighten.innerHTML = 'U';
+          shortcutDarken.innerHTML = 'I';
+          shortcutColorPicker.innerHTML = 'O';
+          shortcutsForTools();
+          saveShortcutsAfterReloadingPage();
+        }
+      }
+    }
+
+    buttonRestore.addEventListener('click', restore);
+    document.addEventListener('keyup', notifyWithRestore);
+    restore.addEventListener('click', notifyWithRestore);
+  }
+
   // shortcuts with frames use in file './actionWithFrames/actionWithFrames'
+  openShortcutsWindow();
   shortcutsForTools();
   shortcutsForChangeCurrentTool();
   shortcutsChangeFpsOfPreview();
+  changeKeyboardShortcuts();
+  restoreKeyboardShortcuts();
+  takeShortcutsFromLocalStorage();
 }

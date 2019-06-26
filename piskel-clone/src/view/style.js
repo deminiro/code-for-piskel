@@ -191,6 +191,7 @@ export default function styles() {
 
 .block-frames-inner {
   padding: 0;
+  height: 611px;
 }
 
 .ul-of-frames {
@@ -439,7 +440,7 @@ button:hover, input:hover {
 }
 
 .image-frame {
-  z-index: 1
+  position: static;
 }
 
 .window-shortcuts {
@@ -615,11 +616,11 @@ background: #C8B571;
   color: #fff;
   background-color: #000;
   border-radius: 5px;
-  margin-top: 400px;
+  margin-top: 380px;
   padding-top: 10px;
   font-size: 80%;
   width: 250px;
-  height: 90px;
+  height: 100px;
 }
 
 .bottom-shortcuts--text:hover+.customize-shortcuts--tooltip {
@@ -628,6 +629,15 @@ background: #C8B571;
 
 .bottom-shortcuts--text:hover {
   cursor: pointer;
+}
+
+.opacity-half {
+  opacity: .5;
+}
+
+.white-button {
+  color: #CBCBCB;
+  border: 2px solid #CBCBCB;
 }
 </style>`;
 }
