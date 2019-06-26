@@ -1,5 +1,4 @@
 export default function shortcutsFunction() {
-  const toolsWhichUse = [];
   const shortcutPen = document.getElementById('shortcut-letter-pen');
   const shortcutMirror = document.getElementById('shortcut-letter-mirror');
   const shortcutBucket = document.getElementById('shortcut-letter-bucket');
@@ -12,6 +11,7 @@ export default function shortcutsFunction() {
   const shortcutLighten = document.getElementById('shortcut-letter-lighten');
   const shortcutDarken = document.getElementById('shortcut-letter-darken');
   const shortcutColorPicker = document.getElementById('shortcut-letter-color-picker');
+  const toolsWhichUse = [];
   toolsWhichUse.push(shortcutPen, shortcutMirror, shortcutBucket, shortcutAllPixels,
     shortcutEraser, shortcutRectangle, shortcutMove, shortcutDithering, shortcutRotate,
     shortcutLighten, shortcutDarken, shortcutColorPicker);
@@ -23,6 +23,7 @@ export default function shortcutsFunction() {
     });
     localStorage.setItem('shortcuts', buttonForShortCuts);
   }
+
   function takeShortcutsFromLocalStorage() {
     if (localStorage.getItem('shortcuts') !== null) {
       const shortcutsStr = localStorage.getItem('shortcuts').toString();
@@ -33,6 +34,20 @@ export default function shortcutsFunction() {
         element.innerHTML = shortcutsArr[index];
       });
     }
+  }
+
+  function changeToolTips() {
+    document.getElementById('tool-tip-pen').innerHTML = `(${shortcutPen.innerHTML})`;
+    document.getElementById('tool-tip-mirror').innerHTML = `(${shortcutMirror.innerHTML})`;
+    document.getElementById('tool-tip-bucket').innerHTML = `(${shortcutBucket.innerHTML})`;
+    document.getElementById('tool-tip-all-pixels').innerHTML = `(${shortcutAllPixels.innerHTML})`;
+    document.getElementById('tool-tip-eraser').innerHTML = `(${shortcutEraser.innerHTML})`;
+    document.getElementById('tool-tip-rectangle').innerHTML = `(${shortcutRectangle.innerHTML})`;
+    document.getElementById('tool-tip-move').innerHTML = `(${shortcutMove.innerHTML})`;
+    document.getElementById('tool-tip-dithering').innerHTML = `(${shortcutDithering.innerHTML})`;
+    document.getElementById('tool-tip-lighten').innerHTML = `(${shortcutLighten.innerHTML})`;
+    document.getElementById('tool-tip-darken').innerHTML = `(${shortcutDarken.innerHTML})`;
+    document.getElementById('tool-tip-color-picker').innerHTML = `(${shortcutColorPicker.innerHTML})`;
   }
 
   function openShortcutsWindow() {
@@ -304,6 +319,7 @@ export default function shortcutsFunction() {
         element.classList.remove('opacity-half');
         shortcutsForTools();
         saveShortcutsAfterReloadingPage();
+        changeToolTips();
       }
     }
     shortcutWindow.addEventListener('click', change);
@@ -331,6 +347,7 @@ export default function shortcutsFunction() {
           shortcutColorPicker.innerHTML = 'O';
           shortcutsForTools();
           saveShortcutsAfterReloadingPage();
+          changeToolTips();
         }
       }
     }
@@ -341,11 +358,12 @@ export default function shortcutsFunction() {
   }
 
   // shortcuts with frames use in file './actionWithFrames/actionWithFrames'
+  takeShortcutsFromLocalStorage();
+  changeToolTips();
   openShortcutsWindow();
   shortcutsForTools();
   shortcutsForChangeCurrentTool();
   shortcutsChangeFpsOfPreview();
   changeKeyboardShortcuts();
   restoreKeyboardShortcuts();
-  takeShortcutsFromLocalStorage();
 }
