@@ -5,9 +5,108 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Piskel App</title>
+  <link rel="stylesheet" href="landingpage.html">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
 <body class="body">
+  <div class="white-color" id="landing-page">
+      <header class="header landing-page--header">
+          <a href="#" class="header--headline-of-page white-color">PISKEL APP</a>
+          <p class="header-headline--new white-color"></p>
+          <div class="header-block--buttons">
+            <button class="header-buttons header-button--create-sprite" id="create-sprite">Create Sprite</button>
+            <button class="header-buttons header-button--sign-in" id="sign-in">Sign in</button>
+          </div>
+      </header>
+      <main class="landing-page-main">
+        <div class="landing-page-main--examples">
+          <div class="landing-page-examples--preview box-shadow">
+            <h2 class="landing-page-preview--headline box-shadow color-black">Preview App</h2>
+            <img class="box-shadow landing-page-preview--image" src="../../src/view/assets/piskel.png" width="760" height="350" alt="">
+          </div>
+          <div class="landing-page--examples box-shadow">
+            <h2 class="landing-page-examples--headline box-shadow color-black">Examples of animation</h2>
+            <ul class="landing-page-examples box-shadow">
+              <li class="examples-list--element">
+                <img class="gif-example" src="../../src/view/assets/example_1.gif" width="150" height="150" alt="">
+              </li>
+              <li class="examples-list--element">
+                  <img class="gif-example" src="../../src/view/assets/example_2.gif" width="150" height="150" alt="">
+              </li>
+              <li class="examples-list--element">
+                  <img class="gif-example" src="../../src/view/assets/example_3.gif" width="150" height="150" alt="">
+              </li>
+            </ul>
+          </div>
+        </div>
+          <div class="landing-page-functionality-and-about-me">
+          <div class="landing-page-functionality box-shadow">
+          <h2 class="landing-page-functionality--headline box-shadow color-black">Functionality:</h2>
+          <div class="landing-page-functionality--about">
+            <div class="landing-page-functionality-about--tools box-shadow">
+            <h3 class="landing-page-functionality-about--headline box-shadow color-black">Tools:</h3>
+              <ul class="landing-page-functionality--list">
+                <li class="functionality-list--element">Pen tool</li>
+                <li class="functionality-list--element">Mirror pen tool</li>
+                <li class="functionality-list--element">Paint bucket tool</li>
+                <li class="functionality-list--element">Paint all pixels with same color</li>
+                <li class="functionality-list--element">Eraser tool</li>
+                <li class="functionality-list--element">Rectangle</li>
+                <li class="functionality-list--element">Move tool</li>
+                <li class="functionality-list--element">Dithering tool</li>
+                <li class="functionality-list--element">Lighten tool</li>
+                <li class="functionality-list--element">Darken tool</li>
+                <li class="functionality-list--element">Color picker tool</li>
+                <li class="functionality-list--element">First and secondary colors</li>
+                <li class="functionality-list--element">Return previous image after draw</li>
+              </ul>
+            </div>
+            <div class="landing-page-functionality-about--other box-shadow">
+              <h3 class="landing-page-functionality-about--headline box-shadow color-black">Other:</h3>
+              <ul class="landing-page-functionality-about--other">
+                <li class="functionality-list--element">Draw on middle canvas</li>
+                <li class="functionality-list--element">Animation preview</li>
+                <li class="functionality-list--element">Fullscreen preview</li>
+                <li class="functionality-list--element">Add/delete/copy frame</li>
+                <li class="functionality-list--element">Local storage, which save frames, shortcuts settings</li>
+                <li class="functionality-list--element">Shortcuts</li>
+                <li class="functionality-list--element">Window to change shortcuts</li>
+                <li class="functionality-list--element">Show coordinates of cursor</li>
+              </ul>
+            </div>
+          </div>
+          </div>
+          <div class="landing-page-about-me box-shadow">
+              <h2 class="about-me-headline box-shadow color-black">About me:</h2>
+              <ul class="about-me-list box-shadow">
+                <li class="functionality-list--element">Creator: Denis Mironov</li>
+                <li class="functionality-list--element">Nickname: deminiro</li>
+                <li class="functionality-list--element">
+                    <a target="_blank" href="tel: +375293479181" class="about-me-list-element--link">
+                      <i class="fas fa-mobile color-black"></i> +375(29)347-91-81
+                    </a>
+                  </li>
+                <li class="functionality-list--element">
+                  <a target="_blank" href="https://github.com/deminiro" class="about-me-list-element--link">
+                    <i class="fab fa-github color-black"></i> github.com/deminiro
+                  </a>
+                </li>
+                <li class="functionality-list--element">
+                  <a target="_blank" href="https://vk.com/denismironoff" class="about-me-list-element--link">
+                    <i class="fab fa-vk color-blue"></i> vk.com/denimironoff
+                  </a>
+                </li>
+                <li class="functionality-list--element">
+                  <a target="_blank" href="mailto:den.mironov2001@yandex.by" class="about-me-list-element--link">
+                      <i class="fas fa-envelope white-color"></i> den.mironov2001@yandex.by
+                    </a>
+                  </li>
+              </ul>
+          </div>
+        </div>
+      </main>
+  </div>
+  <div id="piskel" style="display:none">
   <header class="header">
     <a href="#" class="header--headline-of-page white-color">PISKEL APP</a>
     <p class="header-headline--new white-color">New Piskel</p>
@@ -35,60 +134,80 @@
       <div class="main-tools--tools-which-change-canvas" id="div-with-tools">
         <button class="tools-which-change-canvas tools-which-change-canvas--pen active">
             <i class="white-color fas fa-pencil-alt"></i>
-            <span class="tools-tooltips">Pen tool <span class="yellow-color">(P)</span></span>
+            <span class="tools-tooltips">Pen tool
+              <span class="yellow-color" id="tool-tip-pen">(P)</span>
+            </span>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--mirror-pen no-active">
           <i class="white-color fas fa-grip-lines-vertical"></i>
-          <span class="tools-tooltips">Mirror pen <span class="yellow-color">(V)</span></span>
+          <span class="tools-tooltips">Mirror pen
+            <span class="yellow-color" id="tool-tip-mirror">(V)</span>
+          </span>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--paint-bucket-tool no-active">
             <i class="white-color fas fa-fill-drip"></i>
-            <span class="tools-tooltips">Paint bucket tool <span class="yellow-color">(B)</span></span>
+            <span class="tools-tooltips">Paint bucket tool
+              <span class="yellow-color" id="tool-tip-bucket">(B)</span>
+            </span>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--paint-all-pixels-of-the-same-color no-active">
             <i class="white-color fab fa-500px"></i>
-            <span class="tools-tooltips">Paint all pixels with same color <span class="yellow-color">(A)</span></span>
+            <span class="tools-tooltips">Paint all pixels with same color
+              <span class="yellow-color" id="tool-tip-all-pixels">(A)</span>
+            </span>
             <i class="white-color fas fa-fill-drip"></i>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--eraser-tool no-active">
             <i class="white-color fas fa-eraser"></i>
-            <span class="tools-tooltips">Eraser tool <span class="yellow-color">(E)</span></span>
+            <span class="tools-tooltips">Eraser tool
+              <span class="yellow-color" id="tool-tip-eraser">(E)</span>
+            </span>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--stroke-tool no-active">
             <i class="white-color fas fa-slash"></i>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--rectangle-tool no-active">
             <i class="white-color far fa-square"></i>
-            <span class="tools-tooltips">Rectangle tool <span class="yellow-color">(R)</span></span>
+            <span class="tools-tooltips">Rectangle tool
+               <span class="yellow-color" id="tool-tip-rectangle">(R)</span>
+            </span>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--circle-tool no-active">
             <i class="white-color far fa-circle"></i>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--move-tool no-active">
             <i class="white-color fas fa-hand-paper"></i>
-            <span class="tools-tooltips">Move tool <span class="yellow-color">(M)</span></span>
+            <span class="tools-tooltips">Move tool <span class="yellow-color" id="tool-tip-move">(M)</span></span>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--shape-selection no-active">
             <i class="white-color fas fa-magic"></i>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--dithering-tool no-active">
           <i class="white-color fas fa-chess-board"></i>
-          <span class="tools-tooltips">Dithering tool <span class="yellow-color">(T)</span></span>
+          <span class="tools-tooltips">Dithering tool
+            <span class="yellow-color" id="tool-tip-dithering">(T)</span>
+          </span>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--rotate no-active">
           <i class="white-color fas fa-redo"></i>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--lighten no-active">
           <i class="white-color fas fa-adjust lighten"></i>
-          <span class="tools-tooltips">Lighten <span class="yellow-color">(U)</span></span>
+          <span class="tools-tooltips">Lighten
+            <span class="yellow-color" id="tool-tip-lighten">(U)</span>
+          </span>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--darken no-active">
           <i class="white-color fas fa-adjust darken"></i>
-          <span class="tools-tooltips">Darken <span class="yellow-color">(I)</span></span>
+          <span class="tools-tooltips">Darken
+            <span class="yellow-color" id="tool-tip-darken">(I)</span>
+          </span>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--color-picker no-active">
           <i class="white-color fas fa-eye-dropper"></i>
-          <span class="tools-tooltips">Color picker tool <span class="yellow-color">(O)</span></span>
+          <span class="tools-tooltips">Color picker tool
+            <span class="yellow-color" id="tool-tip-color-picker">(O)</span>
+          </span>
         </button>
       </div>
       <div class="main-tools--choose-color">
@@ -335,6 +454,7 @@
           <p class="under-preview-coordinates">Coordinates on canvas</p>
           <p class="under-preview-coordinates" id="place-for-show-coordinates"></p>
         </div>
+      <canvas width="100" height="100" id="test-canvas"></canvas>
       </div>
       <div class="main-preview--right-column">
         <button class="main-preview-right--buttons main-preview-right--prefences">
@@ -355,6 +475,7 @@
       </div>
     </div>
   </main>
+</div>
 </body>
 <script src="../app.js" type="module"></script>
 </html>

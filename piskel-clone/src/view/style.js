@@ -7,7 +7,7 @@ export default function styles() {
  padding: 0;
  background-color: #1D1D1D;
  font-family: 'Righteous', cursive;
- overflow: hidden
+ overflow-x: hidden
 }
 
 .white-color {
@@ -638,6 +638,128 @@ background: #C8B571;
 .white-button {
   color: #CBCBCB;
   border: 2px solid #CBCBCB;
+}
+
+/* landing page */
+.landing-page--header {
+  position: fixed;
+}
+.box-shadow {
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+.landing-page-main {
+  background-color: #706976;
+}
+.landing-page-main--examples {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 65% 25%;
+  justify-content: center;
+}
+
+.landing-page-examples--preview {
+  margin-top: 10px;
+  padding: 40px;
+}
+
+.landing-page-preview--headline {
+  margin-top: 0;
+  text-align: center;
+}
+
+.landing-page-preview--image {
+  padding:20px
+}
+
+.landing-page-examples {
+  list-style: none;
+}
+
+.landing-page--examples {
+  display: grid;
+  justify-content: center;
+  margin-top: 10px;
+  margin-left: 15px;
+  padding: 20px;
+}
+
+.gif-example {
+  background-color: #5E561C;
+  border: 3px double #000;
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+
+.landing-page-functionality-and-about-me {
+  display: grid;
+  grid-template-columns: 65% 32%;
+}
+
+.landing-page-functionality {
+  /* border: 5px solid #8C7B05;
+   border-radius: 7px; */
+  margin-top: 10px;
+  margin-left: 15px;
+  margin-bottom: 15px;
+  padding: 27px;
+}
+
+.landing-page-functionality--headline {
+  text-align: center;
+  margin: 0;
+}
+
+.landing-page-functionality--about {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  margin-top: 10px;
+}
+
+.landing-page-functionality-about--headline {
+  padding-left: 50px;
+}
+
+.color-black {
+  color: #000;
+}
+
+.color-blue {
+  color: #0743B5
+}
+
+.color-red {
+  color: #B90707;
+}
+
+.functionality-list--element {
+  color: #D1BA23;
+}
+
+.about-me-headline {
+  text-align: right;
+  padding-right: 80px;
+}
+
+.landing-page-about-me {
+  margin: 10px 0 170px 10px;
+  padding: 27px;
+}
+
+.about-me-list {
+  list-style: none;
+}
+
+.about-me-list>li {
+  text-align: right;
+  padding-right: 80px;
+}
+
+.about-me-list-element--link {
+  color: #D1BA23;
+}
+
+.about-me-list-element--link {
+  text-decoration: none;
 }
 </style>`;
 }
