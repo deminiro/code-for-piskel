@@ -403,6 +403,48 @@ export default function styles() {
 button:hover, input:hover {
   cursor: pointer;
 }
+
+.save-gif {
+  position: absolute;
+  right: 0px;
+  width: 180px;
+  height: 100px;
+  display: none;
+  grid-template-rows: 33% 33% 33%;
+  background-color: #222222;
+  justify-content: right;
+  color: #ffd700;
+  border-radius: 5px;
+}
+
+.main-preview-right--save:hover>p {
+  display: block;
+}
+
+.download-gif-tooltip {
+  display: none;
+  color: #ffd700;
+  position: absolute;
+  margin-bottom: 10px;
+  right: 50px;
+  right: 51px;
+  margin-top: -18px;
+}
+
+.save-gif--input-text {
+  width: 30%;
+  height: 40%;
+  margin: 13px 60px;
+  border: 0;
+  background-color: #ffd700;
+}
+
+.save-gif--input-submit {
+  width: 50%;
+  margin: auto;
+  border: 0;
+  background-color: #ffd700;
+}
 /* tooltips */
 .tools-tooltips {
   display: none;

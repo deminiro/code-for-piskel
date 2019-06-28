@@ -20,11 +20,11 @@
       </header>
       <main class="landing-page-main">
         <div class="landing-page-main--examples">
-          <div class="landing-page-examples--preview box-shadow">
+          <div class="landing-page-examples--preview">
             <h2 class="landing-page-preview--headline box-shadow color-black">Preview App</h2>
             <img class="box-shadow landing-page-preview--image" src="../../src/view/assets/piskel.png" width="760" height="350" alt="">
           </div>
-          <div class="landing-page--examples box-shadow">
+          <div class="landing-page--examples">
             <h2 class="landing-page-examples--headline box-shadow color-black">Examples of animation</h2>
             <ul class="landing-page-examples box-shadow">
               <li class="examples-list--element">
@@ -40,7 +40,7 @@
           </div>
         </div>
           <div class="landing-page-functionality-and-about-me">
-          <div class="landing-page-functionality box-shadow">
+          <div class="landing-page-functionality">
           <h2 class="landing-page-functionality--headline box-shadow color-black">Functionality:</h2>
           <div class="landing-page-functionality--about">
             <div class="landing-page-functionality-about--tools box-shadow">
@@ -76,7 +76,7 @@
             </div>
           </div>
           </div>
-          <div class="landing-page-about-me box-shadow">
+          <div class="landing-page-about-me">
               <h2 class="about-me-headline box-shadow color-black">About me:</h2>
               <ul class="about-me-list box-shadow">
                 <li class="functionality-list--element">Creator: Denis Mironov</li>
@@ -465,6 +465,12 @@
         </button>
         <button class="main-preview-right--buttons main-preview-right--save">
           <i class="white-color far fa-save"></i>
+          <div class="save-gif" id="window-with-save-gif">
+            <h4 class="save-gif--name">Choose name to gif file</h4>
+            <input type="text" class="save-gif--input-text" id="save-gif--input-text">
+            <input type="submit" id="save-gif--input-submit" class="save-gif--input-submit" value="Download">
+          </div>
+          <p class="download-gif-tooltip">Download gif to file system</p>
         </button>
         <button class="main-preview-right--buttons main-preview-right--export">
           <i class="white-color far fa-file-image"></i>
