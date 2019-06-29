@@ -6,13 +6,11 @@ import allPixelsSameColorTool from '../tools/allPixelsSameColorTool';
 import showCoordinate from './showCoordinate';
 import penMirrorTool from '../tools/penMirrorTool';
 import ditheringTool from '../tools/ditheringTool';
-// import moveFrame from '../actionWithFrames/moveFrame';
-// import actionWithFrames from '../actionWithFrames/actionWithFrames';
 import paintBucketTool from '../tools/paintBucketTool';
 import moveTool from '../tools/moveTool';
-// import shapeSelectionTool from '../tools/shapeSelectionTool';
 import rectangleTool from '../tools/rectangleTool';
 import undoTool from '../tools/undoTool';
+import GIF from './gif';
 
 export default function actionWithCanvases() {
   const divWithTools = document.getElementById('div-with-tools');
@@ -24,27 +22,6 @@ export default function actionWithCanvases() {
   let imagesForPreviewAndFrames = new Map();
   const pressDublicateButton = 221;
   let changeToolAfterKeyboardUse = document.getElementsByClassName('active')[0];
-  // const pressDeleteButton = 68;
-  // switch images of frames in map after swap frames
-  // function switchImagesOfFrames() {
-  //   function swap() {
-  //     const numbersOfFramesAfterSwitch = moveFrame().arr;
-  //     const valueOfFirstSwap = imagesForPreviewAndFrames.get(numbersOfFramesAfterSwitch[0]);
-  //     const valueOfSecondSwap = imagesForPreviewAndFrames.get(numbersOfFramesAfterSwitch[1]);
-  //     imagesForPreviewAndFrames.delete(numbersOfFramesAfterSwitch[0]);
-  //     imagesForPreviewAndFrames.delete(numbersOfFramesAfterSwitch[1]);
-  //     imagesForPreviewAndFrames.set(numbersOfFramesAfterSwitch[0], valueOfSecondSwap);
-  //     imagesForPreviewAndFrames.set(numbersOfFramesAfterSwitch[1], valueOfFirstSwap);
-  //     const numbersOfFrames = Array.from(document.getElementsByClassName('number-of-frame'));
-  //     let number = 1;
-  //     numbersOfFrames.forEach((element) => {
-  //       // eslint-disable-next-line no-param-reassign
-  //       element.innerText = number;
-  //       number += 1;
-  //     });
-  //   }
-  //   listOfFrames.addEventListener('mouseup', swap);
-  // }
   function deleteNullFromImagesMap() {
     if (imagesForPreviewAndFrames.has(null)) imagesForPreviewAndFrames.delete(null);
   }
@@ -90,7 +67,8 @@ export default function actionWithCanvases() {
         const imageOfCurrentFrame = imagesForPreviewAndFrames.get(numberOfCurrentFrame);
         const image = new Image();
         image.src = imageOfCurrentFrame;
-        ctxOfMiddleCanvas.clearRect(0, 0, 640, 608);
+        ctxOfMiddleCanvas.clearRect(0, 0, canvasWhichStateOnMiddleOfPage.width,
+          canvasWhichStateOnMiddleOfPage.height);
         ctxOfMiddleCanvas.drawImage(image, 0, 0);
       }
     }, 10);
@@ -155,7 +133,8 @@ export default function actionWithCanvases() {
       const imageOfCurrentFrame = imagesForPreviewAndFrames.get(frameNumberOnWhichClickDublicate);
       const image = new Image();
       image.src = imageOfCurrentFrame;
-      ctxOfMiddleCanvas.clearRect(0, 0, 640, 608);
+      ctxOfMiddleCanvas.clearRect(0, 0, canvasWhichStateOnMiddleOfPage.width,
+        canvasWhichStateOnMiddleOfPage.height);
       ctxOfMiddleCanvas.drawImage(image, 0, 0);
     }
   }
@@ -196,7 +175,6 @@ export default function actionWithCanvases() {
 
               number += 1;
             }, 1000 / fpsOnPreview);
-            global.console.log(imagesForPreviewAndFrames);
           }
         }
         step();
@@ -221,11 +199,12 @@ export default function actionWithCanvases() {
   }
   function fullScreenPreview() {
     function toggleFullScreen(event) {
-      if (!preview.fullscreenElement && (event.target === preview || event.target.localName === 'img')) {
+      if (!preview.fullscreenElement && (event.target === preview || event.target.localName === 'img' || event.which === 70)) {
         preview.requestFullscreen();
       }
     }
     document.addEventListener('dblclick', toggleFullScreen);
+    document.addEventListener('keyup', toggleFullScreen);
   }
   fullScreenPreview();
 
@@ -237,7 +216,8 @@ export default function actionWithCanvases() {
         .getElementsByClassName('yellow-frame-items')[0].innerText;
       const image = new Image();
       image.src = imagesForPreviewAndFrames.get(numberOfCurrentFrame);
-      ctxOfMiddleCanvas.clearRect(0, 0, 608, 608);
+      ctxOfMiddleCanvas.clearRect(0, 0, canvasWhichStateOnMiddleOfPage.width,
+        canvasWhichStateOnMiddleOfPage.height);
       ctxOfMiddleCanvas.drawImage(image, 0, 0);
       ctxOfMiddleCanvas.rotate(90 * Math.PI / 180);
       ctxOfMiddleCanvas.translate(0, -canvasWhichStateOnMiddleOfPage.width);
@@ -467,7 +447,8 @@ export default function actionWithCanvases() {
             const imageForPreview = imagesForPreviewAndFrames.get(1);
             const image = new Image();
             image.src = imagesForPreviewAndFrames.get(1);
-            ctxOfMiddleCanvas.clearRect(0, 0, 640, 608);
+            ctxOfMiddleCanvas.clearRect(0, 0, canvasWhichStateOnMiddleOfPage.width,
+              canvasWhichStateOnMiddleOfPage.height);
             ctxOfMiddleCanvas.drawImage(image, 0, 0);
             previewImage.innerHTML = '<img id="image-preview" width="202" height="200">';
             document.getElementById('image-preview')
@@ -478,4 +459,49 @@ export default function actionWithCanvases() {
     };
   }
   storage();
+
+  function downloadGif() {
+    const iconWithDownloadGif = document.getElementsByClassName('fa-save')[0];
+    const gifWindow = document.getElementById('window-with-save-gif');
+    const nameByUserToGif = document.getElementById('save-gif--input-text');
+    const submitNameToGif = document.getElementById('save-gif--input-submit');
+
+    function downloadGifToFileSystem() {
+    // eslint-disable-next-line global-require
+      const download = require('downloadjs');
+      const valueOfFps = document.getElementById('preview-fps--choose-fps').value;
+      const delayForFrames = Math.floor(1000 / valueOfFps);
+      const gif = new GIF({
+        workers: 2,
+        workerScript: '../../../src/components/canvas/gif.worker.js',
+        background: '#fff',
+        quality: 10,
+      });
+
+      // add an image element
+      // eslint-disable-next-line no-restricted-syntax
+      for (const value of imagesForPreviewAndFrames.values()) {
+        const image = new Image();
+        image.src = value;
+
+        gif.addFrame(image, { delay: delayForFrames });
+      }
+      gif.on('finished', (blob) => {
+        download(blob, nameByUserToGif.value, 'image/gif');
+      });
+      gif.render();
+    }
+
+    function openCloseDownloadGifWindow() {
+      if (!gifWindow.hasAttribute('style')) {
+        gifWindow.setAttribute('style', 'display: grid');
+      } else {
+        gifWindow.removeAttribute('style', 'display: grid');
+      }
+    }
+    iconWithDownloadGif.addEventListener('click', openCloseDownloadGifWindow);
+    submitNameToGif.addEventListener('click', downloadGifToFileSystem);
+  }
+
+  downloadGif();
 }
