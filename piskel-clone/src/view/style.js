@@ -697,6 +697,7 @@ background: #C8B571;
   display: grid;
   grid-template-columns: 65% 25%;
   justify-content: center;
+  height: 494px
 }
 
 .landing-page-examples--preview {
@@ -739,7 +740,7 @@ background: #C8B571;
 
 .landing-page-functionality {
   /* border: 5px solid #8C7B05;
-   border-radius: 7px; */
+  border-radius: 7px; */
   margin-top: 10px;
   margin-left: 15px;
   margin-bottom: 15px;
@@ -783,7 +784,7 @@ background: #C8B571;
 }
 
 .landing-page-about-me {
-  margin: 10px 0 170px 10px;
+  margin: 136px 0 170px 10px;
   padding: 27px;
 }
 

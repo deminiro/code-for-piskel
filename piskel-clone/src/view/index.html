@@ -5,10 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Piskel App</title>
-  <link rel="stylesheet" href="landingpage.html">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
-<body class="body">
+<body class="body" style="background-color: #706976">
   <div class="white-color" id="landing-page">
       <header class="header landing-page--header">
           <a href="#" class="header--headline-of-page white-color">PISKEL APP</a>
@@ -72,6 +71,7 @@
                 <li class="functionality-list--element">Shortcuts</li>
                 <li class="functionality-list--element">Window to change shortcuts</li>
                 <li class="functionality-list--element">Show coordinates of cursor</li>
+                <li class="functionality-list--element">Export gif to file system</li>
               </ul>
             </div>
           </div>
@@ -163,24 +163,15 @@
               <span class="yellow-color" id="tool-tip-eraser">(E)</span>
             </span>
         </button>
-        <button class="tools-which-change-canvas tools-which-change-canvas--stroke-tool no-active">
-            <i class="white-color fas fa-slash"></i>
-        </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--rectangle-tool no-active">
             <i class="white-color far fa-square"></i>
             <span class="tools-tooltips">Rectangle tool
                <span class="yellow-color" id="tool-tip-rectangle">(R)</span>
             </span>
         </button>
-        <button class="tools-which-change-canvas tools-which-change-canvas--circle-tool no-active">
-            <i class="white-color far fa-circle"></i>
-        </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--move-tool no-active">
             <i class="white-color fas fa-hand-paper"></i>
             <span class="tools-tooltips">Move tool <span class="yellow-color" id="tool-tip-move">(M)</span></span>
-        </button>
-        <button class="tools-which-change-canvas tools-which-change-canvas--shape-selection no-active">
-            <i class="white-color fas fa-magic"></i>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--dithering-tool no-active">
           <i class="white-color fas fa-chess-board"></i>
@@ -255,29 +246,14 @@
                   <span class="shortcuts-name tool">Eraser</span>
                 </li>
                 <li class="list-of-tools-shotcut--element">
-                  <span class="keyboard-shortcuts-icon tool white-color fas fa-slash"></span>
-                  <span class="shortcuts-letter tool white-button" id="shortcut-letter-stroke">L</span>
-                  <span class="shortcuts-name tool">Stroke tool</span>
-                </li>
-                <li class="list-of-tools-shotcut--element">
                   <span class="keyboard-shortcuts-icon tool white-color far fa-square"></span>
                   <span class="shortcuts-letter tool" id="shortcut-letter-rectangle">R</span>
                   <span class="shortcuts-name tool">Rectangle tool</span>
                 </li>
                 <li class="list-of-tools-shotcut--element">
-                  <span class="keyboard-shortcuts-icon tool white-color far fa-circle"></span>
-                  <span class="shortcuts-letter tool white-button" id="shortcut-letter-circle">C</span>
-                  <span class="shortcuts-name tool">Circle tool</span>
-                </li>
-                <li class="list-of-tools-shotcut--element">
                   <span class="keyboard-shortcuts-icon tool white-color fas fa-hand-paper"></span>
                   <span class="shortcuts-letter tool" id="shortcut-letter-move">M</span>
                   <span class="shortcuts-name tool">Move tool</span>
-                </li>
-                <li class="list-of-tools-shotcut--element">
-                  <span class="keyboard-shortcuts-icon tool white-color fas fa-magic"></span>
-                  <span class="shortcuts-letter tool white-button" id="shortcut-letter-shape-selection">Z</span>
-                  <span class="shortcuts-name tool">Shape selection</span>
                 </li>
                 <li class="list-of-tools-shotcut--element">
                   <span class="keyboard-shortcuts-icon tool white-color fas fa-chess-board"></span>
@@ -364,7 +340,7 @@
                 </li>
                 <li>
                   <div class="list-of-frames-shortcuts--element other-shortcuts">
-                    <span class="other-shortcuts--letter shortcuts-letter white-button">F</i></span>
+                    <span class="other-shortcuts--letter shortcuts-letter white-button">F</span>
                     <span class="shortcuts-name restore-shortcuts-name">Fullscreen of preview</span>
                   </div>
                 </li>

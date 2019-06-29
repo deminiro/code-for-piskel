@@ -87,16 +87,10 @@ export default function shortcutsFunction() {
     const paintAllPixelsSameColorTool = document.getElementsByClassName('tools-which-change-canvas--paint-all-pixels-of-the-same-color')[0];
     const eraserToolKeyCode = shortcutEraser.innerHTML.toLocaleUpperCase().charCodeAt(0);
     const eraserTool = document.getElementsByClassName('tools-which-change-canvas--eraser-tool')[0];
-    const strokeToolKeyCode = 76;
-    const strokeTool = document.getElementsByClassName('tools-which-change-canvas--stroke-tool')[0];
     const rectangleToolKeyCode = shortcutRectangle.innerHTML.toLocaleUpperCase().charCodeAt(0);
     const rectangleTool = document.getElementsByClassName('tools-which-change-canvas--rectangle-tool')[0];
-    const circleToolKeyCode = 67;
-    const circleTool = document.getElementsByClassName('tools-which-change-canvas--circle-tool')[0];
     const moveToolKeyCode = shortcutMove.innerHTML.toLocaleUpperCase().charCodeAt(0);
     const moveTool = document.getElementsByClassName('tools-which-change-canvas--move-tool')[0];
-    const shapeSelectionToolKeyCode = 90;
-    const shapeSelectionTool = document.getElementsByClassName('tools-which-change-canvas--shape-selection')[0];
     const ditheringToolKeyCode = shortcutDithering.innerHTML.toLocaleUpperCase().charCodeAt(0);
     const ditheringTool = document.getElementsByClassName('tools-which-change-canvas--dithering-tool')[0];
     const rotateToolKeyCode = shortcutRotate.innerHTML.toLocaleUpperCase().charCodeAt(0);
@@ -138,29 +132,14 @@ export default function shortcutsFunction() {
           eraserTool.classList.add('active');
           changeTool = true;
         }
-        if (event.keyCode === strokeToolKeyCode && strokeTool.classList.contains('no-active')) {
-          strokeTool.classList.remove('no-active');
-          strokeTool.classList.add('active');
-          changeTool = true;
-        }
         if (event.keyCode === rectangleToolKeyCode && rectangleTool.classList.contains('no-active')) {
           rectangleTool.classList.remove('no-active');
           rectangleTool.classList.add('active');
           changeTool = true;
         }
-        if (event.keyCode === circleToolKeyCode && circleTool.classList.contains('no-active')) {
-          circleTool.classList.remove('no-active');
-          circleTool.classList.add('active');
-          changeTool = true;
-        }
         if (event.keyCode === moveToolKeyCode && moveTool.classList.contains('no-active')) {
           moveTool.classList.remove('no-active');
           moveTool.classList.add('active');
-          changeTool = true;
-        }
-        if (event.keyCode === shapeSelectionToolKeyCode && !event.ctrlKey && shapeSelectionTool.classList.contains('no-active')) {
-          shapeSelectionTool.classList.remove('no-active');
-          shapeSelectionTool.classList.add('active');
           changeTool = true;
         }
         if (event.keyCode === ditheringToolKeyCode && ditheringTool.classList.contains('no-active')) {
