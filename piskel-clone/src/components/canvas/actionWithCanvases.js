@@ -1,7 +1,6 @@
 import activateNoActivateTools from '../tools/activeNoActiveTools';
 import penAndEraserTools from '../tools/penAndEraserTools';
 import colorPickerTool from '../tools/colorPickerToolAndBrightness';
-import strokeTool from '../tools/strokeTool';
 import allPixelsSameColorTool from '../tools/allPixelsSameColorTool';
 import showCoordinate from './showCoordinate';
 import penMirrorTool from '../tools/penMirrorTool';
@@ -240,8 +239,6 @@ export default function actionWithCanvases() {
     if (activeTool.children[0].classList.contains('fa-eye-dropper')
      || activeTool.children[0].classList.contains('lighten')
      || activeTool.children[0].classList.contains('darken')) colorPickerTool(event);
-    if (activeTool.children[0].classList.contains('fa-slash')
-     || previosActiveTool.children[0].classList.contains('fa-slash')) strokeTool(event);
     if (activeTool.classList
       .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')
        || previosActiveTool.classList
@@ -287,8 +284,6 @@ export default function actionWithCanvases() {
     if (activeTool.children[0].classList.contains('fa-eye-dropper')
      || activeTool.children[0].classList.contains('lighten')
      || activeTool.children[0].classList.contains('darken')) colorPickerTool(event);
-    if (activeTool.children[0].classList.contains('fa-slash')
-     || changeToolAfterKeyboardUse.children[0].classList.contains('fa-slash')) strokeTool(event);
     if (activeTool.classList
       .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')
        || changeToolAfterKeyboardUse.classList
@@ -465,31 +460,39 @@ export default function actionWithCanvases() {
     const gifWindow = document.getElementById('window-with-save-gif');
     const nameByUserToGif = document.getElementById('save-gif--input-text');
     const submitNameToGif = document.getElementById('save-gif--input-submit');
+    const keyboardButtonL = 76;
 
-    function downloadGifToFileSystem() {
-    // eslint-disable-next-line global-require
-      const download = require('downloadjs');
-      const valueOfFps = document.getElementById('preview-fps--choose-fps').value;
-      const delayForFrames = Math.floor(1000 / valueOfFps);
-      const gif = new GIF({
-        workers: 2,
-        workerScript: '../../../src/components/canvas/gif.worker.js',
-        background: '#fff',
-        quality: 10,
-      });
+    function downloadGifToFileSystem(event) {
+      if (event.keyCode === keyboardButtonL || event.type === 'click') {
+        // eslint-disable-next-line global-require
+        const download = require('downloadjs');
+        const valueOfFps = document.getElementById('preview-fps--choose-fps').value;
+        const delayForFrames = Math.floor(1000 / valueOfFps);
+        const gif = new GIF({
+          workers: 2,
+          workerScript: '../../../src/components/canvas/gif.worker.js',
+          background: '#fff',
+          quality: 10,
+        });
 
-      // add an image element
-      // eslint-disable-next-line no-restricted-syntax
-      for (const value of imagesForPreviewAndFrames.values()) {
-        const image = new Image();
-        image.src = value;
+        // add an image element
+        // eslint-disable-next-line no-restricted-syntax
+        for (const value of imagesForPreviewAndFrames.values()) {
+          const image = new Image();
+          image.src = value;
 
-        gif.addFrame(image, { delay: delayForFrames });
+          gif.addFrame(image, { delay: delayForFrames });
+        }
+        gif.on('finished', (blob) => {
+          if (event.keyCode === keyboardButtonL) {
+            const nameOfGif = global.prompt('Choose name of gif', 'animation');
+            download(blob, nameOfGif, 'image/gif');
+          } else {
+            download(blob, nameByUserToGif.value, 'image/gif');
+          }
+        });
+        gif.render();
       }
-      gif.on('finished', (blob) => {
-        download(blob, nameByUserToGif.value, 'image/gif');
-      });
-      gif.render();
     }
 
     function openCloseDownloadGifWindow() {
@@ -501,6 +504,7 @@ export default function actionWithCanvases() {
     }
     iconWithDownloadGif.addEventListener('click', openCloseDownloadGifWindow);
     submitNameToGif.addEventListener('click', downloadGifToFileSystem);
+    document.addEventListener('keyup', downloadGifToFileSystem);
   }
 
   downloadGif();
