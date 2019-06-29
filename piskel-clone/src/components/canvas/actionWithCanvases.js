@@ -141,13 +141,12 @@ export default function actionWithCanvases() {
   function animationOnPreview(event) {
     const keyboardButtonLeft = 37;
     const keyboardButtonRight = 39;
+    const numberOfFpsElementHtml = document.getElementsByClassName('preview-fps--number-fps')[0];
     if (event.keyCode === keyboardButtonLeft || event.keyCode === keyboardButtonRight
       || event.target.classList.contains('choose-fps')) {
       deleteNullFromImagesMap();
-      const numberOfFpsElementHtml = document.getElementsByClassName('preview-fps--number-fps')[0];
       let number = 0;
       let fpsOnPreview = Number(inputRangeOnPreview.value);
-      numberOfFpsElementHtml.innerHTML = `${fpsOnPreview} fps`;
 
       const forAnimation = () => {
         const amountImages = imagesForPreviewAndFrames.size;
@@ -182,9 +181,11 @@ export default function actionWithCanvases() {
       const activateAnimation = () => {
         if (event.keyCode === keyboardButtonLeft || event.keyCode === keyboardButtonRight
           || event.target.classList.contains('choose-fps')) {
-          fpsOnPreview = 0;
-          fpsOnPreview = Number(inputRangeOnPreview.value);
           event.stopPropagation();
+          fpsOnPreview = 0;
+          forAnimation();
+          fpsOnPreview = Number(inputRangeOnPreview.value);
+          numberOfFpsElementHtml.innerHTML = `${fpsOnPreview} fps`;
           if (fpsOnPreview > 0) {
             forAnimation();
           }
@@ -310,9 +311,6 @@ export default function actionWithCanvases() {
     if (activeTool.children[0].classList.contains('fa-hand-paper')) {
       moveTool(event);
     }
-    // if (activeTool.children[0].classList.contains('fa-magic')) {
-    //   shapeSelectionTool(event);
-    // }
     if (activeTool.children[0].classList.contains('fa-square')) {
       rectangleTool(event);
     }
@@ -360,7 +358,6 @@ export default function actionWithCanvases() {
   disableSaveImageRightClick();
   useEventListeners();
   showCoordinate();
-  // switchImagesOfFrames();
 
   // local storage
   function storage() {
