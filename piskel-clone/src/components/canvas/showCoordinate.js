@@ -7,15 +7,9 @@ export default function showCoordinate() {
 
   function changeUnitsOfCanvas() {
     units = +document.querySelector('input[name="size"]:checked').value;
-    if (units === 32) {
-      amountOfDivisonsOfCanvas = 19;
-    }
-    if (units === 64) {
-      amountOfDivisonsOfCanvas = 9.5;
-    }
-    if (units === 128) {
-      amountOfDivisonsOfCanvas = 4.75;
-    }
+    if (units === 32) amountOfDivisonsOfCanvas = 19;
+    if (units === 64) amountOfDivisonsOfCanvas = 9.5;
+    if (units === 128) amountOfDivisonsOfCanvas = 4.75;
   }
 
   function coordinates(event) {
@@ -35,8 +29,8 @@ export default function showCoordinate() {
     function sizeNumbers() {
       const x = coordinatesPerSquareOnMainCanvasX.filter(coordinate => coordinate >= event.offsetX);
       const y = coordinatesPerSquareOnMainCanvasY.filter(coordinate => coordinate >= event.offsetY);
-      placeShowCoordinates.innerHTML = `x:${Math.floor(x[0] - amountOfDivisonsOfCanvas) / amountOfDivisonsOfCanvas},
-      y:${Math.floor(y[0] - amountOfDivisonsOfCanvas) / amountOfDivisonsOfCanvas}`;
+      placeShowCoordinates.innerHTML = `x:${Math.floor((x[0] - amountOfDivisonsOfCanvas) / amountOfDivisonsOfCanvas)},
+      y:${Math.floor((y[0] - amountOfDivisonsOfCanvas) / amountOfDivisonsOfCanvas)}`;
     }
     return sizeNumbers();
   }

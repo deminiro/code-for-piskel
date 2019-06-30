@@ -12,50 +12,23 @@ export default function penAndEraserTools() {
   let toolPen = false;
   let toolEraser = false;
 
-  divWithTools.addEventListener('mouseup', () => {
-    if (pen.classList.contains('active')) toolPen = true;
-    if (eraser.classList.contains('active')) toolEraser = true;
-  });
+  function changeCurrentTool() {
+    function chooseCurrentTool(event) {
+      if (pen.classList.contains('active') || event.keyCode === keyboardButtonP) toolPen = true;
+      if (eraser.classList.contains('active') || event.keyCode === keyboardButtonE) toolEraser = true;
+    }
 
-  document.addEventListener('keyup', (event) => {
-    if (event.keyCode === keyboardButtonP) toolPen = true;
-    if (event.keyCode === keyboardButtonE) toolEraser = true;
-  });
+    divWithTools.addEventListener('mouseup', chooseCurrentTool);
+    document.addEventListener('keyup', chooseCurrentTool);
+  }
+  changeCurrentTool();
 
   function changeUnitsOfCanvas() {
     units = +document.querySelector('input[name="size"]:checked').value;
-    if (units === 32) {
-      amountOfDivisonsOfCanvas = 19;
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-two')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-two');
-      }
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-four')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-four');
-      }
-      canvasWhichStateOnMiddleOfPage.classList.add('scaled-divide-by-one');
-    }
-    if (units === 64) {
-      amountOfDivisonsOfCanvas = 9.5;
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-one')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-one');
-      }
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-four')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-four');
-      }
-      canvasWhichStateOnMiddleOfPage.classList.add('scaled-divide-by-two');
-    }
-    if (units === 128) {
-      amountOfDivisonsOfCanvas = 4.75;
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-one')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-one');
-      }
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-two')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-two');
-      }
-      canvasWhichStateOnMiddleOfPage.classList.add('scaled-divide-by-four');
-    }
+    if (units === 32) amountOfDivisonsOfCanvas = 19;
+    if (units === 64) amountOfDivisonsOfCanvas = 9.5;
+    if (units === 128) amountOfDivisonsOfCanvas = 4.75;
   }
-
 
   function draw(event) {
     const coordinatesPerSquareOnMainCanvasX = [];
@@ -86,9 +59,10 @@ export default function penAndEraserTools() {
       }
       ctxOfMiddleCanvas.fill();
     }
-
     makeCoordinatePerSquare();
     drawOnMiddleCanvas();
+
+    return { makeCoordinatePerSquare, drawOnMiddleCanvas };
   }
 
   function makeDrawingWithMouse(event) {
@@ -113,28 +87,31 @@ export default function penAndEraserTools() {
     makeDrawingWithMouse(event);
   }
 
-  submitCanvasSize.addEventListener('click', changeUnitsOfCanvas);
-  canvasWhichStateOnMiddleOfPage.addEventListener('click', (event) => {
-    event.preventDefault();
-  });
-  canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', recognizeLeftOrRightClick);
-  canvasWhichStateOnMiddleOfPage.addEventListener('mouseup', (event) => {
-    event.preventDefault();
-    canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', draw);
-    canvasWhichStateOnMiddleOfPage.removeEventListener('mousemove', draw);
-  });
+  function activateEvendListeners() {
+    submitCanvasSize.addEventListener('click', changeUnitsOfCanvas);
+    canvasWhichStateOnMiddleOfPage.addEventListener('click', (event) => {
+      event.preventDefault();
+    });
+    canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', recognizeLeftOrRightClick);
+    canvasWhichStateOnMiddleOfPage.addEventListener('mouseup', (event) => {
+      event.preventDefault();
+      canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', draw);
+      canvasWhichStateOnMiddleOfPage.removeEventListener('mousemove', draw);
+    });
 
 
-  divWithTools.addEventListener('mouseup', () => {
-    if (!pen.classList.contains('active')) {
-      canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', makeDrawingWithMouse);
-      toolPen = false;
-    }
-    if (!eraser.classList.contains('active')) {
-      canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', makeDrawingWithMouse);
-      toolEraser = false;
-    }
-  });
+    divWithTools.addEventListener('mouseup', () => {
+      if (!pen.classList.contains('active')) {
+        canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', makeDrawingWithMouse);
+        toolPen = false;
+      }
+      if (!eraser.classList.contains('active')) {
+        canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', makeDrawingWithMouse);
+        toolEraser = false;
+      }
+    });
+  }
+  activateEvendListeners();
 
   function toActivateWithKeyboard(event) {
     if (event.keyCode !== keyboardButtonP) {
@@ -151,4 +128,7 @@ export default function penAndEraserTools() {
     }
   }
   document.addEventListener('keyup', toActivateWithKeyboard);
+
+
+  return { changeCurrentTool, activateEvendListeners };
 }

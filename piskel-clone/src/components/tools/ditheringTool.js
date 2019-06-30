@@ -1,7 +1,6 @@
 export default function ditheringTool() {
   const canvasWhichStateOnMiddleOfPage = document.getElementById('main-div--canvas');
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
-  const submitCanvasSize = document.getElementById('submit-size-of-canvas');
   const divWithTools = document.getElementById('div-with-tools');
   const colorLeftClick = document.getElementById('tools-choose-color--top');
   const colorRightClick = document.getElementById('tools-choose-color--bottom');
@@ -18,36 +17,9 @@ export default function ditheringTool() {
 
   function changeUnitsOfCanvas() {
     units = +document.querySelector('input[name="size"]:checked').value;
-    if (units === 32) {
-      amountOfDivisonsOfCanvas = 19;
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-two')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-two');
-      }
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-four')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-four');
-      }
-      canvasWhichStateOnMiddleOfPage.classList.add('scaled-divide-by-one');
-    }
-    if (units === 64) {
-      amountOfDivisonsOfCanvas = 9.5;
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-one')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-one');
-      }
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-four')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-four');
-      }
-      canvasWhichStateOnMiddleOfPage.classList.add('scaled-divide-by-two');
-    }
-    if (units === 128) {
-      amountOfDivisonsOfCanvas = 4.75;
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-one')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-one');
-      }
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-two')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-two');
-      }
-      canvasWhichStateOnMiddleOfPage.classList.add('scaled-divide-by-four');
-    }
+    if (units === 32) amountOfDivisonsOfCanvas = 19;
+    if (units === 64) amountOfDivisonsOfCanvas = 9.5;
+    if (units === 128) amountOfDivisonsOfCanvas = 4.75;
   }
 
 
@@ -95,6 +67,7 @@ export default function ditheringTool() {
   }
 
   function makeDrawingWithMouse(event) {
+    changeUnitsOfCanvas();
     draw(event);
     canvasWhichStateOnMiddleOfPage.addEventListener('mousemove', draw);
   }
@@ -112,7 +85,6 @@ export default function ditheringTool() {
     makeDrawingWithMouse(event);
   }
 
-  submitCanvasSize.addEventListener('click', changeUnitsOfCanvas);
   canvasWhichStateOnMiddleOfPage.addEventListener('click', (event) => {
     event.preventDefault();
   });

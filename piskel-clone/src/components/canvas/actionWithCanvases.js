@@ -21,6 +21,7 @@ export default function actionWithCanvases() {
   let imagesForPreviewAndFrames = new Map();
   const pressDublicateButton = 221;
   let changeToolAfterKeyboardUse = document.getElementsByClassName('active')[0];
+
   function deleteNullFromImagesMap() {
     if (imagesForPreviewAndFrames.has(null)) imagesForPreviewAndFrames.delete(null);
   }
@@ -35,6 +36,67 @@ export default function actionWithCanvases() {
     const numberOfCurrentFrame = Number(arrayOfYellowBorder[0].innerText);
     imagesForPreviewAndFrames.set(numberOfCurrentFrame, picture);
   }
+
+  function changeCanvasAfterChangeSizeOfIt() {
+    canvasWhichStateOnMiddleOfPage.style.imageRendering = 'pixelated';
+    const submitCanvasSize = document.getElementById('submit-size-of-canvas');
+    const numberOfActiveFrame = +document.getElementsByClassName('yellow-frame-items')[0].innerText;
+    let units = +document.querySelector('input[name="size"]:checked').value;
+    let previousUnits = 32;
+    let multiplierForImageSize = 1;
+    function changeCanvas() {
+      units = +document.querySelector('input[name="size"]:checked').value;
+      if (units === 32 && previousUnits !== 32
+        && imagesForPreviewAndFrames.has(numberOfActiveFrame)) {
+        if (previousUnits === 64) multiplierForImageSize = 2;
+        if (previousUnits === 128) multiplierForImageSize = 4;
+        const widthForImage = canvasWhichStateOnMiddleOfPage.width * multiplierForImageSize;
+        const heightForImage = canvasWhichStateOnMiddleOfPage.height * multiplierForImageSize;
+        const image = new Image();
+        image.src = imagesForPreviewAndFrames.get(numberOfActiveFrame);
+        ctxOfMiddleCanvas.clearRect(0, 0, canvasWhichStateOnMiddleOfPage.width,
+          canvasWhichStateOnMiddleOfPage.height);
+        ctxOfMiddleCanvas.imageSmoothingEnabled = false;
+        ctxOfMiddleCanvas.drawImage(image, 0, 0, widthForImage, heightForImage);
+        previousUnits = 32;
+      }
+      if (units === 64 && previousUnits !== 64
+         && imagesForPreviewAndFrames.has(numberOfActiveFrame)) {
+        if (previousUnits === 32) multiplierForImageSize = 1 / 2;
+        if (previousUnits === 128) multiplierForImageSize = 2;
+        const widthForImage = Math
+          .floor(canvasWhichStateOnMiddleOfPage.width * multiplierForImageSize);
+        const heightForImage = Math
+          .floor(canvasWhichStateOnMiddleOfPage.height * multiplierForImageSize);
+        const image = new Image();
+        image.src = imagesForPreviewAndFrames.get(numberOfActiveFrame);
+        ctxOfMiddleCanvas.clearRect(0, 0, canvasWhichStateOnMiddleOfPage.width,
+          canvasWhichStateOnMiddleOfPage.height);
+        ctxOfMiddleCanvas.drawImage(image, 0, 0, widthForImage, heightForImage);
+        previousUnits = 64;
+      }
+      if (units === 128 && previousUnits !== 128
+        && imagesForPreviewAndFrames.has(numberOfActiveFrame)) {
+        if (previousUnits === 32) multiplierForImageSize = 1 / 4;
+        if (previousUnits === 64) multiplierForImageSize = 1 / 2;
+        const widthForImage = Math
+          .floor(canvasWhichStateOnMiddleOfPage.width * multiplierForImageSize);
+        const heightForImage = Math
+          .floor(canvasWhichStateOnMiddleOfPage.height * multiplierForImageSize);
+        const image = new Image();
+        image.src = imagesForPreviewAndFrames.get(numberOfActiveFrame);
+        ctxOfMiddleCanvas.clearRect(0, 0, canvasWhichStateOnMiddleOfPage.width,
+          canvasWhichStateOnMiddleOfPage.height);
+        ctxOfMiddleCanvas.drawImage(image, 0, 0, widthForImage, heightForImage);
+        previousUnits = 128;
+      }
+      const image = canvasWhichStateOnMiddleOfPage.toDataURL('image/png');
+      imagesForPreviewAndFrames.delete(numberOfActiveFrame);
+      imagesForPreviewAndFrames.set(numberOfActiveFrame, image);
+    }
+    submitCanvasSize.addEventListener('click', changeCanvas);
+  }
+  changeCanvasAfterChangeSizeOfIt();
 
   function changeCanvasOfPreviewAndFrameAfterDrawing() {
     const ul = document.getElementById('list-of-frames');
@@ -183,7 +245,6 @@ export default function actionWithCanvases() {
           || event.target.classList.contains('choose-fps')) {
           event.stopPropagation();
           fpsOnPreview = 0;
-          forAnimation();
           fpsOnPreview = Number(inputRangeOnPreview.value);
           numberOfFpsElementHtml.innerHTML = `${fpsOnPreview} fps`;
           if (fpsOnPreview > 0) {
@@ -197,6 +258,7 @@ export default function actionWithCanvases() {
       document.addEventListener('keyup', activateAnimation);
     }
   }
+
   function fullScreenPreview() {
     function toggleFullScreen(event) {
       if (!preview.fullscreenElement && (event.target === preview || event.target.localName === 'img' || event.which === 70)) {
@@ -505,4 +567,6 @@ export default function actionWithCanvases() {
   }
 
   downloadGif();
+
+  return { tools };
 }
