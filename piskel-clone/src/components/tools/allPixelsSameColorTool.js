@@ -1,45 +1,14 @@
 export default function allPixelsSameColorTool() {
   const canvasWhichStateOnMiddleOfPage = document.getElementById('main-div--canvas');
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
-  // const sameColorTool = document
-  //   .getElementsByClassName('tools-which-change-canvas--paint-all-pixels-of-the-same-color');
-  // const colorLeftClick = document.getElementById('tools-choose-color--top');
-  // const colorRightClick = document.getElementById('tools-choose-color--bottom');
   let units = 32;
   let amountOfDivisonsOfCanvas = 19;
 
   function changeUnitsOfCanvas() {
     units = +document.querySelector('input[name="size"]:checked').value;
-    if (units === 32) {
-      amountOfDivisonsOfCanvas = 19;
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-two')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-two');
-      }
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-four')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-four');
-      }
-      canvasWhichStateOnMiddleOfPage.classList.add('scaled-divide-by-one');
-    }
-    if (units === 64) {
-      amountOfDivisonsOfCanvas = 9.5;
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-one')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-one');
-      }
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-four')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-four');
-      }
-      canvasWhichStateOnMiddleOfPage.classList.add('scaled-divide-by-two');
-    }
-    if (units === 128) {
-      amountOfDivisonsOfCanvas = 4.75;
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-one')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-one');
-      }
-      if (canvasWhichStateOnMiddleOfPage.classList.contains('scaled-divide-by-two')) {
-        canvasWhichStateOnMiddleOfPage.classList.remove('scaled-divide-by-two');
-      }
-      canvasWhichStateOnMiddleOfPage.classList.add('scaled-divide-by-four');
-    }
+    if (units === 32) amountOfDivisonsOfCanvas = 19;
+    if (units === 64) amountOfDivisonsOfCanvas = 9.5;
+    if (units === 128) amountOfDivisonsOfCanvas = 4.75;
   }
 
   function takeImageData(event) {
@@ -88,7 +57,6 @@ export default function allPixelsSameColorTool() {
 
     return imageData(event);
   }
-  changeUnitsOfCanvas();
 
   function recognizeLeftOrRightClick(event) {
     const colorLeftClick = document.getElementById('tools-choose-color--top');
@@ -119,13 +87,12 @@ export default function allPixelsSameColorTool() {
     if (activeTool.classList
       .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')) {
       canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', active);
-      global.console.log('act');
     }
     if (!activeTool.classList
       .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')) {
       canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', active);
-      global.console.log('dis');
     }
   }
+  changeUnitsOfCanvas();
   act();
 }

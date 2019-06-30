@@ -8,25 +8,16 @@ export default function colorPickerTool() {
   const toolPicker = document.getElementsByClassName('tools-which-change-canvas--color-picker')[0];
   const toolLighten = document.getElementsByClassName('tools-which-change-canvas--lighten')[0];
   const toolDarken = document.getElementsByClassName('tools-which-change-canvas--darken')[0];
-  const submitCanvasSize = document.getElementById('submit-size-of-canvas');
   let colorForLeftOrRightClick;
   let units = 32;
   let amountOfDivisonsOfCanvas = 19;
 
   function changeUnitsOfCanvas() {
     units = +document.querySelector('input[name="size"]:checked').value;
-    if (units === 32) {
-      amountOfDivisonsOfCanvas = 19;
-    }
-    if (units === 64) {
-      amountOfDivisonsOfCanvas = 9.5;
-    }
-    if (units === 128) {
-      amountOfDivisonsOfCanvas = 4.75;
-    }
+    if (units === 32) amountOfDivisonsOfCanvas = 19;
+    if (units === 64) amountOfDivisonsOfCanvas = 9.5;
+    if (units === 128) amountOfDivisonsOfCanvas = 4.75;
   }
-  submitCanvasSize.addEventListener('click', changeUnitsOfCanvas);
-
 
   function takeXAndYCoordinates(event) {
     const coordinatesPerSquareOnMainCanvasX = [];
@@ -90,11 +81,13 @@ export default function colorPickerTool() {
   }
 
   function leftOfRightClick(event) {
+    changeUnitsOfCanvas();
     pickColorFromPixel(event, 0, 0, 0);
     if (event.which === 1) colorTop.value = colorForLeftOrRightClick;
     if (event.which === 3) colorBottom.value = colorForLeftOrRightClick;
   }
   function activateLight(event) {
+    changeUnitsOfCanvas();
     const { x } = takeXAndYCoordinates(event);
     const { y } = takeXAndYCoordinates(event);
     pickColorFromPixel(event, 5, 5, 5);
@@ -103,6 +96,7 @@ export default function colorPickerTool() {
       amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas);
   }
   function activateDark(event) {
+    changeUnitsOfCanvas();
     const { x } = takeXAndYCoordinates(event);
     const { y } = takeXAndYCoordinates(event);
     pickColorFromPixel(event, -5, -5, -5);
@@ -111,7 +105,7 @@ export default function colorPickerTool() {
       amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas);
   }
 
-  divWithTools.addEventListener('mouseup', (event) => {
+  function listeners(event) {
     event.stopPropagation();
     if (toolPicker.classList.contains('active')) {
       canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', leftOfRightClick);
@@ -131,5 +125,8 @@ export default function colorPickerTool() {
     if (!toolDarken.classList.contains('active')) {
       canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', activateDark);
     }
-  });
+  }
+
+  divWithTools.addEventListener('mouseup', listeners);
+  document.addEventListener('keyup', listeners);
 }

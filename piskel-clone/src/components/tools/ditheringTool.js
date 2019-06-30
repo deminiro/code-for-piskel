@@ -43,7 +43,6 @@ export default function ditheringTool() {
       const y = coordinatesPerSquareOnMainCanvasY.filter(coordinate => coordinate >= event.offsetY);
       if (needToChangeFillAndClear === 0
         && !coordsForClear.has(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas)) {
-        global.console.log(x[0], y[0]);
         coordsForFill.add(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas);
         if (event.which === rightClick) ctxOfMiddleCanvas.fillStyle = colorRightClick.value;
         if (event.which === leftClick) ctxOfMiddleCanvas.fillStyle = colorLeftClick.value;

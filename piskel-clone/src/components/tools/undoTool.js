@@ -25,13 +25,12 @@ export default function undoFunction() {
     if ((event.keyCode === buttonZ) && event.ctrlKey) {
       event.preventDefault();
       const numberOfCurrentFrame = +document.getElementsByClassName('yellow-frame-items')[0].innerText;
-      global.console.log(storageOfPreviousImages);
       const pictureArray = JSON.parse(storageOfPreviousImages.get(numberOfCurrentFrame));
-      global.console.log(pictureArray);
       const { length } = pictureArray;
       const image = new Image();
       image.src = pictureArray[length - 1];
-      ctxOfMiddleCanvas.clearRect(0, 0, 640, 608);
+      ctxOfMiddleCanvas.clearRect(0, 0, canvasWhichStateOnMiddlePage.width,
+        canvasWhichStateOnMiddlePage.height);
       ctxOfMiddleCanvas.drawImage(image, 0, 0);
       pictureArray.pop();
       storageOfPreviousImages.set(numberOfCurrentFrame, JSON.stringify(pictureArray));
@@ -46,11 +45,9 @@ export default function undoFunction() {
     let numberOfDeleteFrame;
     if (event.keyCode === deleteButton) {
       numberOfDeleteFrame = +document.getElementsByClassName('yellow-frame-items')[0].innerText + 1;
-      global.alert('dsq');
     } else {
       numberOfDeleteFrame = +event.path[2].innerText;
     }
-    global.console.log(numberOfDeleteFrame);
     storageOfPreviousImages.delete(numberOfDeleteFrame);
     let numberWhichChangeNumberOfFrame = numberOfDeleteFrame;
     for (let key = numberOfDeleteFrame; key <= listOfFrames.children.length; key += 1) {
@@ -62,7 +59,6 @@ export default function undoFunction() {
       }
     }
     storageOfPreviousImages = new Map([...storageOfPreviousImages.entries()].sort());
-    global.console.log(storageOfPreviousImages);
   }
 
   function activate(event) {

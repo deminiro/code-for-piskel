@@ -7,23 +7,8 @@ export default function paintBucketTool() {
   const divWithTools = document.getElementById('div-with-tools');
   const colorTop = document.getElementById('tools-choose-color--top');
   const colorBottom = document.getElementById('tools-choose-color--bottom');
-  const submitCanvasSize = document.getElementById('submit-size-of-canvas');
-  let units = 32;
-  let amountOfDivisonsOfCanvas = 19;
-
-  function changeUnitsOfCanvas() {
-    units = +document.querySelector('input[name="size"]:checked').value;
-    if (units === 32) {
-      amountOfDivisonsOfCanvas = 19;
-    }
-    if (units === 64) {
-      amountOfDivisonsOfCanvas = 9.5;
-    }
-    if (units === 128) {
-      amountOfDivisonsOfCanvas = 4.75;
-    }
-  }
-  submitCanvasSize.addEventListener('click', changeUnitsOfCanvas);
+  const units = 32;
+  const amountOfDivisonsOfCanvas = 19;
 
 
   function takeXAndYCoordinates(event) {
@@ -146,8 +131,7 @@ export default function paintBucketTool() {
   }
 
   function activate(event) {
-    const { x } = takeXAndYCoordinates(event);
-    const { y } = takeXAndYCoordinates(event);
+    const { x, y } = takeXAndYCoordinates(event);
     const startX = x - amountOfDivisonsOfCanvas;
     const startY = y - amountOfDivisonsOfCanvas;
     let currentColor;

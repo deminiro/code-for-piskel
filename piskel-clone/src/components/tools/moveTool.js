@@ -1,4 +1,3 @@
-// /* eslint-disable */
 export default function moveToolFunction() {
   const canvasWhichStateOnMiddleOfPage = document.getElementById('main-div--canvas');
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
@@ -6,25 +5,10 @@ export default function moveToolFunction() {
   const moveTool = document.getElementsByClassName('tools-which-change-canvas--move-tool')[0];
   const imageWhichMove = new Image();
   let isDraggable = false;
-  const submitCanvasSize = document.getElementById('submit-size-of-canvas');
-  let units = 32;
-  let amountOfDivisonsOfCanvas = 19;
+  const units = 32;
+  const amountOfDivisonsOfCanvas = 19;
   let currentX = 0;
   let currentY = 0;
-
-  function changeUnitsOfCanvas() {
-    units = +document.querySelector('input[name="size"]:checked').value;
-    if (units === 32) {
-      amountOfDivisonsOfCanvas = 19;
-    }
-    if (units === 64) {
-      amountOfDivisonsOfCanvas = 9.5;
-    }
-    if (units === 128) {
-      amountOfDivisonsOfCanvas = 4.75;
-    }
-  }
-  submitCanvasSize.addEventListener('click', changeUnitsOfCanvas);
 
 
   function takeXAndYCoordinates(event) {
@@ -115,7 +99,8 @@ export default function moveToolFunction() {
     imageWhichMove.src = picture;
   });
   canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', go);
-  divWithTools.addEventListener('mouseup', () => {
+
+  function deactivate() {
     if (!moveTool.classList.contains('active')) {
       canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', go);
       canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', forMouseDown);
@@ -123,5 +108,7 @@ export default function moveToolFunction() {
       canvasWhichStateOnMiddleOfPage.removeEventListener('mouseup', isDraggableFalse);
       canvasWhichStateOnMiddleOfPage.removeEventListener('mouseout', isDraggableFalse);
     }
-  });
+  }
+  divWithTools.addEventListener('mouseup', deactivate);
+  document.addEventListener('keyup', deactivate);
 }
