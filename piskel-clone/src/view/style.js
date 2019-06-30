@@ -619,7 +619,7 @@ background: #C8B571;
 .bottom-shortcuts--text {
   margin: 15px 0 0 15px;
   text-align: left;
-  width: 169px;
+  width: 200px;
   height: 22px;
 }
 
@@ -656,11 +656,11 @@ background: #C8B571;
   color: #fff;
   background-color: #000;
   border-radius: 5px;
-  margin-top: 380px;
+  margin-top: 369px;
   padding-top: 10px;
   font-size: 80%;
   width: 250px;
-  height: 100px;
+  height: 126px;
 }
 
 .bottom-shortcuts--text:hover+.customize-shortcuts--tooltip {
