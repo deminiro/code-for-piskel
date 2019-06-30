@@ -7,7 +7,9 @@
     "lint": "eslint src/",
     "dev": "webpack-dev-server --mode development --watch",
     "build": "webpack --mode production",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "postinstall": "node patch-webpack.js"
   },
   "repository": {
     "type": "git",
@@ -27,7 +29,8 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-import": "^2.17.3",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^4.0.0-beta.5",
+    "jest": "^24.8.0",
     "style-loader": "^0.23.1",
     "stylelint": "^10.0.1",
     "webpack": "^4.32.2",
@@ -35,7 +38,12 @@
     "webpack-dev-server": "^3.5.1"
   },
   "dependencies": {
+    "downloadjs": "^1.4.7",
     "extract-text-webpack-plugin": "^3.0.2",
-    "html-webpack-inline-source-plugin": "0.0.10"
+    "fs": "0.0.1-security",
+    "gif-frames": "^1.0.1",
+    "gifencoder": "^2.0.1",
+    "html-webpack-inline-source-plugin": "0.0.10",
+    "mini-css-extract-plugin": "^0.7.0",
   }
 }
