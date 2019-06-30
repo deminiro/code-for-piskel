@@ -448,6 +448,9 @@ button:hover, input:hover {
 /* tooltips */
 .tools-tooltips {
   display: none;
+  margin-top: -15px;
+  margin-left: 45px;
+  z-index: 3;
 }
 
 .tools-which-change-canvas:hover>span {
@@ -456,11 +459,6 @@ button:hover, input:hover {
   background-color: #000;
   color: #fff;
   font-size: 90%;
-}
-
-.tools-tooltips {
-  margin-top: -15px;
-  margin-left: 45px;
 }
 
 .yellow-color {
