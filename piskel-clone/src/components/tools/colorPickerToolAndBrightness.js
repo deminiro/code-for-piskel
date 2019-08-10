@@ -9,15 +9,8 @@ export default function colorPickerTool() {
   const toolLighten = document.getElementsByClassName('tools-which-change-canvas--lighten')[0];
   const toolDarken = document.getElementsByClassName('tools-which-change-canvas--darken')[0];
   let colorForLeftOrRightClick;
-  let units = 32;
-  let amountOfDivisonsOfCanvas = 19;
-
-  function changeUnitsOfCanvas() {
-    units = +document.querySelector('input[name="size"]:checked').value;
-    if (units === 32) amountOfDivisonsOfCanvas = 19;
-    if (units === 64) amountOfDivisonsOfCanvas = 9.5;
-    if (units === 128) amountOfDivisonsOfCanvas = 4.75;
-  }
+  const units = 32;
+  const amountOfDivisonsOfCanvas = 19;
 
   function takeXAndYCoordinates(event) {
     const coordinatesPerSquareOnMainCanvasX = [];
@@ -81,28 +74,31 @@ export default function colorPickerTool() {
   }
 
   function leftOfRightClick(event) {
-    changeUnitsOfCanvas();
     pickColorFromPixel(event, 0, 0, 0);
     if (event.which === 1) colorTop.value = colorForLeftOrRightClick;
     if (event.which === 3) colorBottom.value = colorForLeftOrRightClick;
   }
   function activateLight(event) {
-    changeUnitsOfCanvas();
     const { x } = takeXAndYCoordinates(event);
     const { y } = takeXAndYCoordinates(event);
-    pickColorFromPixel(event, 5, 5, 5);
-    ctxMainCanvas.fillStyle = colorForLeftOrRightClick;
-    ctxMainCanvas.fillRect(x - amountOfDivisonsOfCanvas, y - amountOfDivisonsOfCanvas,
-      amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas);
+    const [red, green, blue] = ctxMainCanvas.getImageData(event.offsetX, event.offsetY, 1, 1).data;
+    if (red !== 255 && green !== 255 && blue !== 255) {
+      pickColorFromPixel(event, 5, 5, 5);
+      ctxMainCanvas.fillStyle = colorForLeftOrRightClick;
+      ctxMainCanvas.fillRect(x - amountOfDivisonsOfCanvas, y - amountOfDivisonsOfCanvas,
+        amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas);
+    }
   }
   function activateDark(event) {
-    changeUnitsOfCanvas();
     const { x } = takeXAndYCoordinates(event);
     const { y } = takeXAndYCoordinates(event);
-    pickColorFromPixel(event, -5, -5, -5);
-    ctxMainCanvas.fillStyle = colorForLeftOrRightClick;
-    ctxMainCanvas.fillRect(x - amountOfDivisonsOfCanvas, y - amountOfDivisonsOfCanvas,
-      amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas);
+    const [red, green, blue] = ctxMainCanvas.getImageData(event.offsetX, event.offsetY, 1, 1).data;
+    if (red !== 0 && green !== 0 && blue !== 0) {
+      pickColorFromPixel(event, -5, -5, -5);
+      ctxMainCanvas.fillStyle = colorForLeftOrRightClick;
+      ctxMainCanvas.fillRect(x - amountOfDivisonsOfCanvas, y - amountOfDivisonsOfCanvas,
+        amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas);
+    }
   }
 
   function listeners(event) {

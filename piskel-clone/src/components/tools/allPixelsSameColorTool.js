@@ -1,15 +1,9 @@
 export default function allPixelsSameColorTool() {
   const canvasWhichStateOnMiddleOfPage = document.getElementById('main-div--canvas');
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
-  let units = 32;
-  let amountOfDivisonsOfCanvas = 19;
-
-  function changeUnitsOfCanvas() {
-    units = +document.querySelector('input[name="size"]:checked').value;
-    if (units === 32) amountOfDivisonsOfCanvas = 19;
-    if (units === 64) amountOfDivisonsOfCanvas = 9.5;
-    if (units === 128) amountOfDivisonsOfCanvas = 4.75;
-  }
+  const buttonWithAllPixels = document.getElementsByClassName('tools-which-change-canvas--paint-all-pixels-of-the-same-color')[0];
+  const units = 32;
+  const amountOfDivisonsOfCanvas = 19;
 
   function takeImageData(event) {
     const coordinatesPerSquareOnMainCanvasX = [];
@@ -76,23 +70,20 @@ export default function allPixelsSameColorTool() {
 
 
   function active(event) {
-    const activeTool = document.getElementsByClassName('active')[0];
-    if (activeTool.classList
-      .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')) {
+    if (buttonWithAllPixels.classList
+      .contains('active')) {
       recognizeLeftOrRightClick(event);
     }
   }
   function act() {
-    const activeTool = document.getElementsByClassName('active')[0];
-    if (activeTool.classList
-      .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')) {
+    if (buttonWithAllPixels.classList
+      .contains('active')) {
       canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', active);
     }
-    if (!activeTool.classList
-      .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')) {
+    if (!buttonWithAllPixels.classList
+      .contains('active')) {
       canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', active);
     }
   }
-  changeUnitsOfCanvas();
   act();
 }

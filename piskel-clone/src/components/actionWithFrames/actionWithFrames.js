@@ -10,7 +10,6 @@ export default function actionWithFrames() {
 
   function changeCountOfFramesAfterReloadPage() {
     const images = JSON.parse(localStorage.getItem('images'));
-    global.console.log(images);
     if (images !== null) {
       if (images.length >= 2) {
         countOfFrames = images.length;
@@ -18,12 +17,6 @@ export default function actionWithFrames() {
     }
   }
   changeCountOfFramesAfterReloadPage();
-
-  // change count of frames, if frames were upload from local storage
-  // function changeCountOfFrames() {
-  //   countOfFrames = listOfFrames.children.length + 1;
-  // }
-  // changeCountOfFrames();
 
   function changeColorOfFrameFromYellowToGrey() {
     const previosframeBeforeClick = document.getElementsByClassName('yellow-border')[0];
@@ -49,9 +42,9 @@ export default function actionWithFrames() {
     const newLi = listOfFrames.innerHTML;
     const nKeyCode = 78;
     function addFrame(event) {
-      if (event.keyCode === nKeyCode || event.target.classList.contains('fa-plus')
+      if (document.getElementsByClassName('opacity-half')[0] === undefined && (event.keyCode === nKeyCode || event.target.classList.contains('fa-plus')
       || event.target.classList.contains('button-frame-text')
-      || event.target.classList.contains('button-add-new-frame')) {
+      || event.target.classList.contains('button-add-new-frame'))) {
         changeColorOfFrameFromYellowToGrey();
         listOfFrames.innerHTML += newLi;
         ctxOfMiddleCanvas.clearRect(0, 0, 640, 608);
@@ -71,7 +64,8 @@ export default function actionWithFrames() {
     function deleteChosenFrame(event) {
       const buttonDelete = 46;
       if ((event.keyCode === buttonDelete
-          || event.target.className === 'fas fa-trash-alt') && listOfFrames.children.length > 1) {
+          || event.target.className === 'fas fa-trash-alt') && listOfFrames.children.length > 1
+          && document.getElementsByClassName('opacity-half')[0] === undefined) {
         countOfFrames -= 1;
         arrayOflistFrames.pop();
         let currentLi;
@@ -219,13 +213,15 @@ export default function actionWithFrames() {
       }
     }
     listOfFrames.addEventListener('click', (event) => {
-      if (event.target.className === 'fas fa-copy') {
+      if (event.target.className === 'fas fa-copy'
+      && document.getElementsByClassName('opacity-half')[0] === undefined) {
         dublicate(event);
         fixBugsWithDublicateWhenClickNotOnCurrentFrame(event);
       }
     });
     document.addEventListener('keydown', (event) => {
-      if (event.keyCode === dublicateButton) {
+      if (event.keyCode === dublicateButton
+        && document.getElementsByClassName('opacity-half')[0] === undefined) {
         dublicate(event);
       }
     });

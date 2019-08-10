@@ -28,7 +28,6 @@ export default function shortcutsFunction() {
     if (localStorage.getItem('shortcuts') !== null) {
       const shortcutsStr = localStorage.getItem('shortcuts').toString();
       const shortcutsArr = shortcutsStr.replace(/,/gi, '');
-      global.console.log(shortcutsArr);
       toolsWhichUse.forEach((element, index) => {
         // eslint-disable-next-line no-param-reassign
         element.innerHTML = shortcutsArr[index];
@@ -93,8 +92,6 @@ export default function shortcutsFunction() {
     const moveTool = document.getElementsByClassName('tools-which-change-canvas--move-tool')[0];
     const ditheringToolKeyCode = shortcutDithering.innerHTML.toLocaleUpperCase().charCodeAt(0);
     const ditheringTool = document.getElementsByClassName('tools-which-change-canvas--dithering-tool')[0];
-    const rotateToolKeyCode = shortcutRotate.innerHTML.toLocaleUpperCase().charCodeAt(0);
-    const rotateTool = document.getElementsByClassName('tools-which-change-canvas--rotate')[0];
     const lightenToolKeyCode = shortcutLighten.innerHTML.toLocaleUpperCase().charCodeAt(0);
     const lightenTool = document.getElementsByClassName('tools-which-change-canvas--lighten')[0];
     const darkenToolKeyCode = shortcutDarken.innerHTML.toLocaleUpperCase().charCodeAt(0);
@@ -107,70 +104,67 @@ export default function shortcutsFunction() {
       // if use keyboard and button not change tool, below variable need to check it
       let changeTool = false;
       function activate() {
-        if (event.keyCode === penToolKeyCode && penTool.classList.contains('no-active')) {
-          penTool.classList.remove('no-active');
-          penTool.classList.add('active');
-          changeTool = true;
-        }
-        if (event.keyCode === mirrorPenToolKeyCode && mirrorPenTool.classList.contains('no-active')) {
-          mirrorPenTool.classList.remove('no-active');
-          mirrorPenTool.classList.add('active');
-          changeTool = true;
-        }
-        if (event.keyCode === paintBucketToolKeyCode && paintBucketTool.classList.contains('no-active')) {
-          paintBucketTool.classList.remove('no-active');
-          paintBucketTool.classList.add('active');
-          changeTool = true;
-        }
-        if (event.keyCode === paintAllPixelsSameColorToolKeyCode && paintAllPixelsSameColorTool.classList.contains('no-active')) {
-          paintAllPixelsSameColorTool.classList.remove('no-active');
-          paintAllPixelsSameColorTool.classList.add('active');
-          changeTool = true;
-        }
-        if (event.keyCode === eraserToolKeyCode && eraserTool.classList.contains('no-active')) {
-          eraserTool.classList.remove('no-active');
-          eraserTool.classList.add('active');
-          changeTool = true;
-        }
-        if (event.keyCode === rectangleToolKeyCode && rectangleTool.classList.contains('no-active')) {
-          rectangleTool.classList.remove('no-active');
-          rectangleTool.classList.add('active');
-          changeTool = true;
-        }
-        if (event.keyCode === moveToolKeyCode && moveTool.classList.contains('no-active')) {
-          moveTool.classList.remove('no-active');
-          moveTool.classList.add('active');
-          changeTool = true;
-        }
-        if (event.keyCode === ditheringToolKeyCode && ditheringTool.classList.contains('no-active')) {
-          ditheringTool.classList.remove('no-active');
-          ditheringTool.classList.add('active');
-          changeTool = true;
-        }
-        if (event.keyCode === rotateToolKeyCode && rotateTool.classList.contains('no-active')) {
-          rotateTool.classList.remove('no-active');
-          rotateTool.classList.add('active');
-          changeTool = true;
-        }
-        if (event.keyCode === lightenToolKeyCode && lightenTool.classList.contains('no-active')) {
-          lightenTool.classList.remove('no-active');
-          lightenTool.classList.add('active');
-          changeTool = true;
-        }
-        if (event.keyCode === darkenToolKeyCode && darkenTool.classList.contains('no-active')) {
-          darkenTool.classList.remove('no-active');
-          darkenTool.classList.add('active');
-          changeTool = true;
-        }
-        if (event.keyCode === colorPickerToolKeyCode && colorPickerTool.classList.contains('no-active')) {
-          colorPickerTool.classList.remove('no-active');
-          colorPickerTool.classList.add('active');
-          changeTool = true;
+        if (document.getElementsByClassName('opacity-half')[0] === undefined) {
+          if (event.keyCode === penToolKeyCode && penTool.classList.contains('no-active')) {
+            penTool.classList.remove('no-active');
+            penTool.classList.add('active');
+            changeTool = true;
+          }
+          if (event.keyCode === mirrorPenToolKeyCode && mirrorPenTool.classList.contains('no-active')) {
+            mirrorPenTool.classList.remove('no-active');
+            mirrorPenTool.classList.add('active');
+            changeTool = true;
+          }
+          if (event.keyCode === paintBucketToolKeyCode && paintBucketTool.classList.contains('no-active')) {
+            paintBucketTool.classList.remove('no-active');
+            paintBucketTool.classList.add('active');
+            changeTool = true;
+          }
+          if (event.keyCode === paintAllPixelsSameColorToolKeyCode && paintAllPixelsSameColorTool.classList.contains('no-active')) {
+            paintAllPixelsSameColorTool.classList.remove('no-active');
+            paintAllPixelsSameColorTool.classList.add('active');
+            changeTool = true;
+          }
+          if (event.keyCode === eraserToolKeyCode && eraserTool.classList.contains('no-active')) {
+            eraserTool.classList.remove('no-active');
+            eraserTool.classList.add('active');
+            changeTool = true;
+          }
+          if (event.keyCode === rectangleToolKeyCode && rectangleTool.classList.contains('no-active')) {
+            rectangleTool.classList.remove('no-active');
+            rectangleTool.classList.add('active');
+            changeTool = true;
+          }
+          if (event.keyCode === moveToolKeyCode && moveTool.classList.contains('no-active')) {
+            moveTool.classList.remove('no-active');
+            moveTool.classList.add('active');
+            changeTool = true;
+          }
+          if (event.keyCode === ditheringToolKeyCode && ditheringTool.classList.contains('no-active')) {
+            ditheringTool.classList.remove('no-active');
+            ditheringTool.classList.add('active');
+            changeTool = true;
+          }
+          if (event.keyCode === lightenToolKeyCode && lightenTool.classList.contains('no-active')) {
+            lightenTool.classList.remove('no-active');
+            lightenTool.classList.add('active');
+            changeTool = true;
+          }
+          if (event.keyCode === darkenToolKeyCode && darkenTool.classList.contains('no-active')) {
+            darkenTool.classList.remove('no-active');
+            darkenTool.classList.add('active');
+            changeTool = true;
+          }
+          if (event.keyCode === colorPickerToolKeyCode && colorPickerTool.classList.contains('no-active')) {
+            colorPickerTool.classList.remove('no-active');
+            colorPickerTool.classList.add('active');
+            changeTool = true;
+          }
         }
       }
 
       function diactivate() {
-        if (changeTool) {
+        if (changeTool && document.getElementsByClassName('opacity-half')[0] === undefined) {
           previosTool.classList.remove('active');
           previosTool.classList.add('no-active');
         }
@@ -189,7 +183,8 @@ export default function shortcutsFunction() {
     const keyboardButtonDown = 40;
 
     function changeCurrentFrameWithKeyboard(event) {
-      if (event.keyCode === keyboardButtonDown || event.keyCode === keyboardButtonUp) {
+      if (document.getElementsByClassName('opacity-half')[0] === undefined
+         && (event.keyCode === keyboardButtonDown || event.keyCode === keyboardButtonUp)) {
         const numberOfCurrentFrame = +document.getElementsByClassName('yellow-frame-items')[0].innerText;
         const currentFrame = document.getElementsByClassName('yellow-border')[0];
         const childsOfCurrentFrame = Array.from(currentFrame.children);
@@ -232,7 +227,8 @@ export default function shortcutsFunction() {
     const keyboardButtonLeft = 37;
     const keyboardButtonRight = 39;
     function changeFpsWithKeyboard(event) {
-      if (event.keyCode === keyboardButtonLeft || event.keyCode === keyboardButtonRight) {
+      if ((event.keyCode === keyboardButtonLeft || event.keyCode === keyboardButtonRight)
+      && document.getElementsByClassName('opacity-half')[0] === undefined) {
         const numberOfFps = document.getElementsByClassName('preview-fps--number-fps')[0];
         const inputWithRangeFps = document.getElementById('preview-fps--choose-fps');
         let valueOfInputRange = +inputWithRangeFps.value;
@@ -292,8 +288,7 @@ export default function shortcutsFunction() {
             elem.innerHTML = '???';
           }
         });
-        // eslint-disable-next-line prefer-destructuring
-        element = document.getElementsByClassName('opacity-half')[0];
+        [element] = document.getElementsByClassName('opacity-half');
         element.innerHTML = String.fromCharCode(event.keyCode);
         element.classList.remove('opacity-half');
         shortcutsForTools();

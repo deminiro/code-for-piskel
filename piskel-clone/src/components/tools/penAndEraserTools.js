@@ -1,10 +1,9 @@
 export default function penAndEraserTools() {
   const canvasWhichStateOnMiddleOfPage = document.getElementById('main-div--canvas');
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
-  const submitCanvasSize = document.getElementById('submit-size-of-canvas');
   const divWithTools = document.getElementById('div-with-tools');
-  let units = 32;
-  let amountOfDivisonsOfCanvas = 19;
+  const units = 32;
+  const amountOfDivisonsOfCanvas = 19;
   const pen = document.getElementsByClassName('tools-which-change-canvas--pen')[0];
   const eraser = document.getElementsByClassName('tools-which-change-canvas--eraser-tool')[0];
   const keyboardButtonE = 69;
@@ -22,13 +21,6 @@ export default function penAndEraserTools() {
     document.addEventListener('keyup', chooseCurrentTool);
   }
   changeCurrentTool();
-
-  function changeUnitsOfCanvas() {
-    units = +document.querySelector('input[name="size"]:checked').value;
-    if (units === 32) amountOfDivisonsOfCanvas = 19;
-    if (units === 64) amountOfDivisonsOfCanvas = 9.5;
-    if (units === 128) amountOfDivisonsOfCanvas = 4.75;
-  }
 
   function draw(event) {
     const coordinatesPerSquareOnMainCanvasX = [];
@@ -88,7 +80,6 @@ export default function penAndEraserTools() {
   }
 
   function activateEvendListeners() {
-    submitCanvasSize.addEventListener('click', changeUnitsOfCanvas);
     canvasWhichStateOnMiddleOfPage.addEventListener('click', (event) => {
       event.preventDefault();
     });

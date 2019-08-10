@@ -6,22 +6,14 @@ export default function ditheringTool() {
   const colorRightClick = document.getElementById('tools-choose-color--bottom');
   const leftClick = 1;
   const rightClick = 3;
-  let units = 32;
-  let amountOfDivisonsOfCanvas = 19;
+  const units = 32;
+  const amountOfDivisonsOfCanvas = 19;
   const dithering = document.getElementsByClassName('tools-which-change-canvas--dithering-tool')[0];
   // 0 equal fillRect, 1 equal clearRect
   let needToChangeFillAndClear = 0;
   // need to change fill pixel to clear pixel
   const coordsForFill = new Set();
   const coordsForClear = new Set();
-
-  function changeUnitsOfCanvas() {
-    units = +document.querySelector('input[name="size"]:checked').value;
-    if (units === 32) amountOfDivisonsOfCanvas = 19;
-    if (units === 64) amountOfDivisonsOfCanvas = 9.5;
-    if (units === 128) amountOfDivisonsOfCanvas = 4.75;
-  }
-
 
   function draw(event) {
     const coordinatesPerSquareOnMainCanvasX = [];
@@ -43,14 +35,14 @@ export default function ditheringTool() {
       const y = coordinatesPerSquareOnMainCanvasY.filter(coordinate => coordinate >= event.offsetY);
       if (needToChangeFillAndClear === 0
         && !coordsForClear.has(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas)) {
+        global.console.log(x[0], y[0]);
         coordsForFill.add(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas);
         if (event.which === rightClick) ctxOfMiddleCanvas.fillStyle = colorRightClick.value;
         if (event.which === leftClick) ctxOfMiddleCanvas.fillStyle = colorLeftClick.value;
         ctxOfMiddleCanvas.fillRect(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas,
           amountOfDivisonsOfCanvas, amountOfDivisonsOfCanvas);
         needToChangeFillAndClear += 1;
-      }
-      if (needToChangeFillAndClear === 1
+      } else if (needToChangeFillAndClear === 1
          && !coordsForFill.has(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas)) {
         coordsForClear.add(x[0] - amountOfDivisonsOfCanvas, y[0] - amountOfDivisonsOfCanvas);
         if (event.which === leftClick) ctxOfMiddleCanvas.fillStyle = colorRightClick.value;
@@ -66,7 +58,6 @@ export default function ditheringTool() {
   }
 
   function makeDrawingWithMouse(event) {
-    changeUnitsOfCanvas();
     draw(event);
     canvasWhichStateOnMiddleOfPage.addEventListener('mousemove', draw);
   }

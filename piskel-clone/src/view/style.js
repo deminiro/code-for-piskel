@@ -1,5 +1,5 @@
-export default function styles() {
-  document.getElementsByTagName('head')[0].innerHTML += `<style>
+function css() {
+  document.head.innerHTML += `<style>
 @import url('https://fonts.googleapis.com/css?family=Righteous&display=swap');
 
 .body {
@@ -117,6 +117,7 @@ export default function styles() {
   display: grid;
   grid-template-columns: 50% 50%;
   grid-gap: 2px;
+  margin-top: 85px;
   padding-top: 7px;
   grid-template-rows: repeat(8, 46px);
 }
@@ -209,7 +210,7 @@ export default function styles() {
 }
 
 .li-frame {
-  background-image: url('../src/view/assets/setka.png');
+  background-image: url('../../src/view/assets/setka.png');
   width: 98px;
   height: 98px;
   display: grid;
@@ -307,7 +308,7 @@ export default function styles() {
 }
 
 .main-div--canvas {
-  background-image: url('../src/view/assets/setka.png');
+  background-image: url('../../src/view/assets/setka.png');
   margin: 0;
   padding: 0;
 }
@@ -329,7 +330,6 @@ export default function styles() {
 .main-div-of-preview-and-settings {
   width: 100%;
   display: grid;
-  grid-template-columns: 79% 21%;
 }
 
 .main-preview--left-column {
@@ -345,7 +345,7 @@ export default function styles() {
 }
 
 .canvas-preview {
-  background-image: url('../src/view/assets/setka.png');
+  background-image: url('../../src/view/assets/setka.png');
   text-align: center;
 }
 
@@ -356,18 +356,21 @@ export default function styles() {
 .preview--fps {
   display: grid;
   grid-template-columns: 30% 70%;
-}
-
-.preview--fps {
-  display: grid;
-  grid-template-columns: 30% 70%;
+  background: #3E3F3F;
+    border: 1px solid black;
 }
 
 .preview-fps--number-fps {
   margin: 0;
-  padding-top: 4px;
-  padding-left: 10px;
+  padding-top: 2px;
+  padding-left: 16px;
   color: #AAAA8F;
+  border-right: 1px solid black;
+}
+
+.preview-fps--input {
+  width: 85%;
+  margin-left: 13px;
 }
 
 .main-div-under-preview--form>fieldset {
@@ -378,6 +381,10 @@ export default function styles() {
 .under-preview-coordinates {
   color: #AAAA8f;
   margin-bottom: 0
+}
+
+.show-coordinates {
+  margin-top: 230px;
 }
 
 /* right column */
@@ -405,16 +412,14 @@ button:hover, input:hover {
 }
 
 .save-gif {
-  position: absolute;
-  right: 0px;
+  margin-top: 20px;
   width: 180px;
-  height: 100px;
-  display: none;
+  height: 70px;
   grid-template-rows: 33% 33% 33%;
-  background-color: #222222;
-  justify-content: right;
-  color: #ffd700;
+  color: #AAAA8f;
   border-radius: 5px;
+  border: 1px solid black;
+  background: #3E3F3F;
 }
 
 .main-preview-right--save:hover>p {
@@ -423,7 +428,7 @@ button:hover, input:hover {
 
 .download-gif-tooltip {
   display: none;
-  color: #ffd700;
+  color: #AAAA8f;
   position: absolute;
   margin-bottom: 10px;
   right: 50px;
@@ -431,19 +436,21 @@ button:hover, input:hover {
   margin-top: -18px;
 }
 
+.save-gif--name {
+  margin:0
+}
+
 .save-gif--input-text {
-  width: 30%;
-  height: 40%;
-  margin: 13px 60px;
+  height: 16px;
   border: 0;
-  background-color: #ffd700;
+  background-color: #AAAA8f;
 }
 
 .save-gif--input-submit {
   width: 50%;
   margin: auto;
   border: 0;
-  background-color: #ffd700;
+  background-color: #AAAA8f;
 }
 /* tooltips */
 .tools-tooltips {
@@ -804,3 +811,5 @@ background: #C8B571;
 }
 </style>`;
 }
+
+export default css;

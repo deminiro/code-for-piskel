@@ -1,6 +1,5 @@
-export default function tools(event) {
+export default function tools(event, activeTool) {
   function makeToolNoActive() {
-    const activeTool = document.getElementsByClassName('active')[0];
     activeTool.classList.remove('active');
     activeTool.classList.add('no-active');
   }

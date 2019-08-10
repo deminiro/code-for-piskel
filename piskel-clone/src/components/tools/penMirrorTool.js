@@ -2,16 +2,9 @@ export default function mirrorPenTool() {
   const canvasWhichStateOnMiddleOfPage = document.getElementById('main-div--canvas');
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
   const divWithTools = document.getElementById('div-with-tools');
-  let units = 32;
-  let amountOfDivisonsOfCanvas = 19;
+  const units = 32;
+  const amountOfDivisonsOfCanvas = 19;
   const mirrorPen = document.getElementsByClassName('tools-which-change-canvas--mirror-pen')[0];
-
-  function changeUnitsOfCanvas() {
-    units = +document.querySelector('input[name="size"]:checked').value;
-    if (units === 32) amountOfDivisonsOfCanvas = 19;
-    if (units === 64) amountOfDivisonsOfCanvas = 9.5;
-    if (units === 128) amountOfDivisonsOfCanvas = 4.75;
-  }
 
   function draw(event) {
     const coordinatesPerSquareOnMainCanvasX = [];
@@ -44,7 +37,6 @@ export default function mirrorPenTool() {
   }
 
   function makeDrawingWithMouse(event) {
-    changeUnitsOfCanvas();
     draw(event);
     canvasWhichStateOnMiddleOfPage.addEventListener('mousemove', draw);
   }

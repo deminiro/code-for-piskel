@@ -1,16 +1,8 @@
 export default function showCoordinate() {
   const placeShowCoordinates = document.getElementById('place-for-show-coordinates');
   const canvasWhichStateOnMiddleOfPage = document.getElementById('main-div--canvas');
-  const submitCanvasSize = document.getElementById('submit-size-of-canvas');
-  let units = 32;
-  let amountOfDivisonsOfCanvas = 19;
-
-  function changeUnitsOfCanvas() {
-    units = +document.querySelector('input[name="size"]:checked').value;
-    if (units === 32) amountOfDivisonsOfCanvas = 19;
-    if (units === 64) amountOfDivisonsOfCanvas = 9.5;
-    if (units === 128) amountOfDivisonsOfCanvas = 4.75;
-  }
+  const units = 32;
+  const amountOfDivisonsOfCanvas = 19;
 
   function coordinates(event) {
     const coordinatesPerSquareOnMainCanvasX = [];
@@ -35,6 +27,5 @@ export default function showCoordinate() {
     return sizeNumbers();
   }
 
-  submitCanvasSize.addEventListener('click', changeUnitsOfCanvas);
   canvasWhichStateOnMiddleOfPage.addEventListener('mousemove', coordinates);
 }

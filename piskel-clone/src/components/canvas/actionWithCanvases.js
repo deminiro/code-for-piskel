@@ -21,6 +21,7 @@ export default function actionWithCanvases() {
   let imagesForPreviewAndFrames = new Map();
   const pressDublicateButton = 221;
   let changeToolAfterKeyboardUse = document.getElementsByClassName('active')[0];
+  let previosActiveTool = document.getElementsByClassName('active')[0];
 
   function deleteNullFromImagesMap() {
     if (imagesForPreviewAndFrames.has(null)) imagesForPreviewAndFrames.delete(null);
@@ -36,67 +37,6 @@ export default function actionWithCanvases() {
     const numberOfCurrentFrame = Number(arrayOfYellowBorder[0].innerText);
     imagesForPreviewAndFrames.set(numberOfCurrentFrame, picture);
   }
-
-  function changeCanvasAfterChangeSizeOfIt() {
-    canvasWhichStateOnMiddleOfPage.style.imageRendering = 'pixelated';
-    const submitCanvasSize = document.getElementById('submit-size-of-canvas');
-    const numberOfActiveFrame = +document.getElementsByClassName('yellow-frame-items')[0].innerText;
-    let units = +document.querySelector('input[name="size"]:checked').value;
-    let previousUnits = 32;
-    let multiplierForImageSize = 1;
-    function changeCanvas() {
-      units = +document.querySelector('input[name="size"]:checked').value;
-      if (units === 32 && previousUnits !== 32
-        && imagesForPreviewAndFrames.has(numberOfActiveFrame)) {
-        if (previousUnits === 64) multiplierForImageSize = 2;
-        if (previousUnits === 128) multiplierForImageSize = 4;
-        const widthForImage = canvasWhichStateOnMiddleOfPage.width * multiplierForImageSize;
-        const heightForImage = canvasWhichStateOnMiddleOfPage.height * multiplierForImageSize;
-        const image = new Image();
-        image.src = imagesForPreviewAndFrames.get(numberOfActiveFrame);
-        ctxOfMiddleCanvas.clearRect(0, 0, canvasWhichStateOnMiddleOfPage.width,
-          canvasWhichStateOnMiddleOfPage.height);
-        ctxOfMiddleCanvas.imageSmoothingEnabled = false;
-        ctxOfMiddleCanvas.drawImage(image, 0, 0, widthForImage, heightForImage);
-        previousUnits = 32;
-      }
-      if (units === 64 && previousUnits !== 64
-         && imagesForPreviewAndFrames.has(numberOfActiveFrame)) {
-        if (previousUnits === 32) multiplierForImageSize = 1 / 2;
-        if (previousUnits === 128) multiplierForImageSize = 2;
-        const widthForImage = Math
-          .floor(canvasWhichStateOnMiddleOfPage.width * multiplierForImageSize);
-        const heightForImage = Math
-          .floor(canvasWhichStateOnMiddleOfPage.height * multiplierForImageSize);
-        const image = new Image();
-        image.src = imagesForPreviewAndFrames.get(numberOfActiveFrame);
-        ctxOfMiddleCanvas.clearRect(0, 0, canvasWhichStateOnMiddleOfPage.width,
-          canvasWhichStateOnMiddleOfPage.height);
-        ctxOfMiddleCanvas.drawImage(image, 0, 0, widthForImage, heightForImage);
-        previousUnits = 64;
-      }
-      if (units === 128 && previousUnits !== 128
-        && imagesForPreviewAndFrames.has(numberOfActiveFrame)) {
-        if (previousUnits === 32) multiplierForImageSize = 1 / 4;
-        if (previousUnits === 64) multiplierForImageSize = 1 / 2;
-        const widthForImage = Math
-          .floor(canvasWhichStateOnMiddleOfPage.width * multiplierForImageSize);
-        const heightForImage = Math
-          .floor(canvasWhichStateOnMiddleOfPage.height * multiplierForImageSize);
-        const image = new Image();
-        image.src = imagesForPreviewAndFrames.get(numberOfActiveFrame);
-        ctxOfMiddleCanvas.clearRect(0, 0, canvasWhichStateOnMiddleOfPage.width,
-          canvasWhichStateOnMiddleOfPage.height);
-        ctxOfMiddleCanvas.drawImage(image, 0, 0, widthForImage, heightForImage);
-        previousUnits = 128;
-      }
-      const image = canvasWhichStateOnMiddleOfPage.toDataURL('image/png');
-      imagesForPreviewAndFrames.delete(numberOfActiveFrame);
-      imagesForPreviewAndFrames.set(numberOfActiveFrame, image);
-    }
-    submitCanvasSize.addEventListener('click', changeCanvas);
-  }
-  changeCanvasAfterChangeSizeOfIt();
 
   function changeCanvasOfPreviewAndFrameAfterDrawing() {
     const ul = document.getElementById('list-of-frames');
@@ -200,63 +140,56 @@ export default function actionWithCanvases() {
     }
   }
 
-  function animationOnPreview(event) {
+  function animationOnPreview() {
     const keyboardButtonLeft = 37;
     const keyboardButtonRight = 39;
-    const numberOfFpsElementHtml = document.getElementsByClassName('preview-fps--number-fps')[0];
-    if (event.keyCode === keyboardButtonLeft || event.keyCode === keyboardButtonRight
-      || event.target.classList.contains('choose-fps')) {
-      deleteNullFromImagesMap();
-      let number = 0;
-      let fpsOnPreview = Number(inputRangeOnPreview.value);
+    const fpsNubmer = document.getElementsByClassName('preview-fps--number-fps')[0];
+    let number = 0;
+    let fpsOnPreview = Number(inputRangeOnPreview.value);
 
-      const forAnimation = () => {
+    function forAnimation(event) {
+      if (event.keyCode === keyboardButtonLeft || event.keyCode === keyboardButtonRight
+        || event.target.classList.contains('preview-fps--input')) {
         const amountImages = imagesForPreviewAndFrames.size;
         const keysOfImages = [];
         // eslint-disable-next-line no-restricted-syntax
         for (const key of imagesForPreviewAndFrames.keys()) {
           keysOfImages.push(key);
         }
-        function step() {
-          if (fpsOnPreview !== 0) {
-            setTimeout(() => {
-              requestAnimationFrame(step);
-              if (number === amountImages) number = 0;
-              if (imagesForPreviewAndFrames.get(keysOfImages[number]) === undefined) number += 1;
-              if (document.fullscreenElement === null) {
-                document.getElementById('canvas-preview').innerHTML = '<img id="image-preview" width="202" height="200">';
-              }
-              if (document.fullscreenElement !== null) {
-                document.getElementById('canvas-preview').innerHTML = '<img id="image-preview" width="766" height="766">';
-              }
-              document
-                .getElementById('image-preview')
-                .setAttribute('src', imagesForPreviewAndFrames.get(keysOfImages[number]));
-
-              number += 1;
-            }, 1000 / fpsOnPreview);
-          }
-        }
-        step();
-      };
-
-      const activateAnimation = () => {
-        if (event.keyCode === keyboardButtonLeft || event.keyCode === keyboardButtonRight
-          || event.target.classList.contains('choose-fps')) {
-          event.stopPropagation();
-          fpsOnPreview = 0;
-          fpsOnPreview = Number(inputRangeOnPreview.value);
-          numberOfFpsElementHtml.innerHTML = `${fpsOnPreview} fps`;
-          if (fpsOnPreview > 0) {
-            forAnimation();
-          }
-        }
-      };
-
-      inputRangeOnPreview.addEventListener('click', activateAnimation);
-      inputRangeOnPreview.addEventListener('mousemove', activateAnimation);
-      document.addEventListener('keyup', activateAnimation);
+        const interval = setInterval(() => {
+          if (number === amountImages) number = 0;
+          setTimeout(() => {
+            deleteNullFromImagesMap();
+            document.getElementById('canvas-preview').innerHTML = '<img id="image-preview" width="202" height="200">';
+            document
+              .getElementById('image-preview')
+              .setAttribute('src', imagesForPreviewAndFrames.get(keysOfImages[number - 1]));
+            if (fpsOnPreview === 0) clearInterval(interval);
+          }, 1000);
+          number += 1;
+        }, 1000 / fpsOnPreview);
+      }
     }
+
+    inputRangeOnPreview.addEventListener('mousemove', () => {
+      fpsNubmer.innerHTML = `${Number(inputRangeOnPreview.value)} fps`;
+    });
+
+    inputRangeOnPreview.addEventListener('mouseup', (event) => {
+      fpsOnPreview = Number(inputRangeOnPreview.value);
+      fpsNubmer.innerHTML = `${Number(inputRangeOnPreview.value)} fps`;
+      if (fpsOnPreview > 0) {
+        forAnimation(event);
+      }
+    });
+
+    document.addEventListener('keyup', (event) => {
+      fpsOnPreview = Number(inputRangeOnPreview.value);
+      fpsNubmer.innerHTML = `${Number(inputRangeOnPreview.value)} fps`;
+      if (fpsOnPreview > 0) {
+        forAnimation(event);
+      }
+    });
   }
 
   function fullScreenPreview() {
@@ -290,49 +223,50 @@ export default function actionWithCanvases() {
   }
 
   function tools(event) {
-    event.stopPropagation();
-    const previosActiveTool = document.getElementsByClassName('active')[0];
-    activateNoActivateTools(event);
-    const activeTool = document.getElementsByClassName('active')[0] || previosActiveTool;
-    undoTool(event);
-    if (activeTool.children[0].classList.contains('fa-pencil-alt')
+    if (event.target.classList.contains('tools-which-change-canvas')
+    || event.path[1].classList.contains('tools-which-change-canvas')) {
+      event.stopPropagation();
+      if (document.getElementsByClassName('active')[0] !== undefined) {
+        [previosActiveTool] = document.getElementsByClassName('active');
+      }
+      activateNoActivateTools(event, previosActiveTool);
+      const activeTool = document.getElementsByClassName('active')[0] || previosActiveTool;
+      undoTool(event);
+      if (activeTool.children[0].classList.contains('fa-pencil-alt')
      || previosActiveTool.children[0].classList.contains('fa-pencil-alt')
      || activeTool.children[0].classList.contains('fa-eraser')
      || previosActiveTool.children[0].classList.contains('fa-eraser')) penAndEraserTools(event);
-    if (activeTool.children[0].classList.contains('fa-eye-dropper')
+      if (activeTool.children[0].classList.contains('fa-eye-dropper')
      || activeTool.children[0].classList.contains('lighten')
      || activeTool.children[0].classList.contains('darken')) colorPickerTool(event);
-    if (activeTool.classList
-      .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')
+      if (activeTool.classList
+        .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')
        || previosActiveTool.classList
          .contains('tools-which-change-canvas--paint-all-pixels-of-the-same-color')) {
-      allPixelsSameColorTool(event);
-    }
-    if (event.target.classList.contains('tools-which-change-canvas--rotate')
-     || event.target.classList.contains('fa-redo')) {
-      rotationTool(event);
-    }
-    if (event.target.classList.contains('tools-which-change-canvas--mirror-pen')
+        allPixelsSameColorTool(event);
+      }
+      if (event.target.classList.contains('tools-which-change-canvas--mirror-pen')
      || event.target.classList.contains('fa-grip-lines-vertical')
      || previosActiveTool.children[0].classList.contains('fa-grip-lines-vertical')) {
-      penMirrorTool(event);
-    }
-    if (event.target.classList.contains('tools-which-change-canvas--dithering-tool')
+        penMirrorTool(event);
+      }
+      if (event.target.classList.contains('tools-which-change-canvas--dithering-tool')
      || event.target.classList.contains('fa-chess-board')
      || previosActiveTool.children[0].classList.contains('fa-chess-board')) {
-      ditheringTool(event);
-    }
-    if (activeTool.children[0].classList.contains('fa-fill-drip')) {
-      paintBucketTool(event);
-    }
-    if (activeTool.children[0].classList.contains('fa-hand-paper')) {
-      moveTool(event);
-    }
-    // if (activeTool.children[0].classList.contains('fa-magic')) {
-    //   shapeSelectionTool(event);
-    // }
-    if (activeTool.children[0].classList.contains('fa-square')) {
-      rectangleTool(event);
+        ditheringTool(event);
+      }
+      if (activeTool.children[0].classList.contains('fa-fill-drip')) {
+        paintBucketTool(event);
+      }
+      if (activeTool.children[0].classList.contains('fa-hand-paper')) {
+        moveTool(event);
+      }
+      // if (activeTool.children[0].classList.contains('fa-magic')) {
+      //   shapeSelectionTool(event);
+      // }
+      if (activeTool.children[0].classList.contains('fa-square')) {
+        rectangleTool(event);
+      }
     }
   }
 
@@ -515,8 +449,6 @@ export default function actionWithCanvases() {
   storage();
 
   function downloadGif() {
-    const iconWithDownloadGif = document.getElementsByClassName('fa-save')[0];
-    const gifWindow = document.getElementById('window-with-save-gif');
     const nameByUserToGif = document.getElementById('save-gif--input-text');
     const submitNameToGif = document.getElementById('save-gif--input-submit');
     const keyboardButtonL = 76;
@@ -529,7 +461,7 @@ export default function actionWithCanvases() {
         const delayForFrames = Math.floor(1000 / valueOfFps);
         const gif = new GIF({
           workers: 2,
-          workerScript: '../../../src/components/canvas/gif.worker.js',
+          workerScript: '../../src/components/canvas/gif.worker.js',
           background: '#fff',
           quality: 10,
         });
@@ -554,14 +486,6 @@ export default function actionWithCanvases() {
       }
     }
 
-    function openCloseDownloadGifWindow() {
-      if (!gifWindow.hasAttribute('style')) {
-        gifWindow.setAttribute('style', 'display: grid');
-      } else {
-        gifWindow.removeAttribute('style', 'display: grid');
-      }
-    }
-    iconWithDownloadGif.addEventListener('click', openCloseDownloadGifWindow);
     submitNameToGif.addEventListener('click', downloadGifToFileSystem);
     document.addEventListener('keyup', downloadGifToFileSystem);
   }

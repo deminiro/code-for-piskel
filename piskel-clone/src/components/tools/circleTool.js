@@ -2,16 +2,31 @@ export default function rectangleToolFunction() {
   const canvasWhichStateOnMiddleOfPage = document.getElementById('main-div--canvas');
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
   const divWithTools = document.getElementById('div-with-tools');
-  const rectangleTool = document.getElementsByClassName('tools-which-change-canvas--rectangle-tool')[0];
+  const circleTool = document.getElementsByClassName('tools-which-change-canvas--circle-tool')[0];
+  const submitCanvasSize = document.getElementById('submit-size-of-canvas');
   const colorLeftClick = document.getElementById('tools-choose-color--top');
   const colorRightClick = document.getElementById('tools-choose-color--bottom');
   const image = new Image();
-  const units = 32;
-  const amountOfDivisonsOfCanvas = 19;
+  let units = 32;
+  let amountOfDivisonsOfCanvas = 19;
   let startPointX = 0;
   let startPointY = 0;
   let endPointX = 0;
   let endPointY = 0;
+
+  function changeUnitsOfCanvas() {
+    units = +document.querySelector('input[name="size"]:checked').value;
+    if (units === 32) {
+      amountOfDivisonsOfCanvas = 19;
+    }
+    if (units === 64) {
+      amountOfDivisonsOfCanvas = 9.5;
+    }
+    if (units === 128) {
+      amountOfDivisonsOfCanvas = 4.75;
+    }
+  }
+  submitCanvasSize.addEventListener('click', changeUnitsOfCanvas);
 
 
   function takeXAndYCoordinates(event) {
@@ -43,19 +58,20 @@ export default function rectangleToolFunction() {
   }
 
   function takeImage() {
-    if (rectangleTool.classList.contains('active')) {
+    if (circleTool.classList.contains('active')) {
       const currentImage = canvasWhichStateOnMiddleOfPage.toDataURL('image/png');
       image.src = currentImage;
     }
   }
+
 
   function drawRectangle(event) {
     event.preventDefault();
     const { x, y } = takeXAndYCoordinates(event);
     const leftClick = 1;
     const rightClick = 3;
-    endPointX = x - amountOfDivisonsOfCanvas;
-    endPointY = y - amountOfDivisonsOfCanvas;
+    endPointX = x - Math.floor(amountOfDivisonsOfCanvas / 2);
+    endPointY = y - Math.floor(amountOfDivisonsOfCanvas / 2);
     ctxOfMiddleCanvas.clearRect(0, 0, canvasWhichStateOnMiddleOfPage.width,
       canvasWhichStateOnMiddleOfPage.height);
     ctxOfMiddleCanvas.drawImage(image, 0, 0);
@@ -77,8 +93,8 @@ export default function rectangleToolFunction() {
     event.preventDefault();
     takeImage();
     const { x, y } = takeXAndYCoordinates(event);
-    startPointX = x - amountOfDivisonsOfCanvas;
-    startPointY = y - amountOfDivisonsOfCanvas;
+    startPointX = x - Math.floor(amountOfDivisonsOfCanvas / 2);
+    startPointY = y - Math.floor(amountOfDivisonsOfCanvas / 2);
     canvasWhichStateOnMiddleOfPage.addEventListener('mousemove', drawRectangle);
   }
 
@@ -89,14 +105,14 @@ export default function rectangleToolFunction() {
   }
 
   function activate() {
-    if (rectangleTool.classList.contains('active')) {
+    if (circleTool.classList.contains('active')) {
       canvasWhichStateOnMiddleOfPage.addEventListener('mousedown', takeStartPoint);
       canvasWhichStateOnMiddleOfPage.addEventListener('mouseup', stopDrawing);
     }
   }
 
   function deactivate() {
-    if (!rectangleTool.classList.contains('active')) {
+    if (!circleTool.classList.contains('active')) {
       canvasWhichStateOnMiddleOfPage.removeEventListener('mousedown', takeStartPoint);
       canvasWhichStateOnMiddleOfPage.removeEventListener('mouseup', stopDrawing);
     }
@@ -104,6 +120,4 @@ export default function rectangleToolFunction() {
 
   divWithTools.addEventListener('mouseup', activate);
   divWithTools.addEventListener('mouseup', deactivate);
-  document.addEventListener('keyup', activate);
-  document.addEventListener('keyup', deactivate);
 }

@@ -112,25 +112,10 @@
     <p class="header-headline--new white-color">New Piskel</p>
     <div class="header-block--buttons">
       <button class="header-buttons header-button--create-sprite">Create Sprite</button>
-      <button class="header-buttons header-button--sign-in" id="sign-in">Sign in</button>
     </div>
   </header>
   <main class="main">
     <div class="main-div-of-tools">
-      <div class="main-tools--buttons-pen-size">
-        <button class="main-tools-pen-size main-tools-pen-size--left">
-          <p></p>
-        </button>
-        <button class="main-tools-pen-size main-tools-pen-size--middle-left">
-          <p></p>
-        </button>
-        <button class="main-tools-pen-size main-tools-pen-size--middle-right">
-          <p></p>
-        </button>
-        <button class="main-tools-pen-size main-tools-pen-size--right">
-          <p></p>
-        </button>
-      </div>
       <div class="main-tools--tools-which-change-canvas" id="div-with-tools">
         <button class="tools-which-change-canvas tools-which-change-canvas--pen active">
             <i class="white-color fas fa-pencil-alt"></i>
@@ -189,12 +174,6 @@
           <i class="white-color fas fa-adjust darken"></i>
           <span class="tools-tooltips">Darken
             <span class="yellow-color" id="tool-tip-darken">(I)</span>
-          </span>
-        </button>
-        <button class="tools-which-change-canvas tools-which-change-canvas--rotate no-active">
-          <i class="white-color fas fa-redo"></i>
-          <span class="tools-tooltips">Rotate
-            <span class="yellow-color" id="tool-tip-lighten">(D)</span>
           </span>
         </button>
         <button class="tools-which-change-canvas tools-which-change-canvas--color-picker no-active">
@@ -365,6 +344,7 @@
           <div class="bottom-of-window-with-shortcuts">
               <p class="bottom-shortcuts--text">Description for shortcuts</p>
               <p class="customize-shortcuts--tooltip">Double press button on keyboard to active tool. Click on the shortcuts to change a key. When the shortcut become darker, press the key on your keyboard to assign it. Shortcut with gray color can't be change. "Restore shortcuts" button to make default shortcuts.</p>
+              <!-- <p class="customize-shortcuts--tooltip">Customize isn't work.<br>To activate tool with shortcut, press twice needable button</p> -->
               <button class="bottom-shortcuts--restore" id="restore-shortcuts">Restore shortcuts to default</button>
             </div>
         </div>
@@ -409,59 +389,18 @@
           <div class="canvas-preview" id="canvas-preview"></div>
           <div class="preview--fps">
               <p class="preview-fps--number-fps">0 fps</p>
-              <input id="preview-fps--choose-fps" value="0" type="range" name="" class="choose-fps" min="0" max="24">
-
+              <input id="preview-fps--choose-fps" class="preview-fps--input" value="0" type="range" name="" class="choose-fps" min="0" max="24">
           </div>
         </div>
-        <form action="" class="main-div-under-preview--form" onsubmit="return false">
-            <fieldset>
-              <legend>Size of canvas:</legend>
-              <div>
-                <input type="radio" id="contactChoice1" class="radio-buttons-of-canvas-size"
-                 name="size" value="32" checked>
-                <label for="contactChoice1">32</label>
-
-                <input type="radio" id="contactChoice2" class="radio-buttons-of-canvas-size"
-                 name="size" value="64">
-                <label for="contactChoice2">64</label>
-
-                <input type="radio" id="contactChoice3" class="radio-buttons-of-canvas-size"
-                 name="size" value="128">
-                <label for="contactChoice3">128</label>
-              </div>
-              <div>
-                <button type="submit" id="submit-size-of-canvas">Submit</button>
-              </div>
-            </fieldset>
-        </form>
-        <div class="show-coodinates">
+        <div class="save-gif" id="window-with-save-gif">
+          <h4 class="save-gif--name">Choose name to gif file</h4>
+          <input type="text" class="save-gif--input-text" id="save-gif--input-text">
+          <input type="submit" id="save-gif--input-submit" class="save-gif--input-submit" value="Download">
+        </div>
+        <div class="show-coordinates">
           <p class="under-preview-coordinates">Coordinates on canvas</p>
           <p class="under-preview-coordinates" id="place-for-show-coordinates"></p>
         </div>
-      <canvas width="100" height="100" id="test-canvas"></canvas>
-      </div>
-      <div class="main-preview--right-column">
-        <button class="main-preview-right--buttons main-preview-right--prefences">
-          <i class="white-color fas fa-cog"></i>
-        </button>
-        <button class="main-preview-right--buttons main-preview-right--resize">
-          <i class="white-color fas fa-external-link-square-alt"></i>
-        </button>
-        <button class="main-preview-right--buttons main-preview-right--save">
-          <i class="white-color far fa-save"></i>
-          <div class="save-gif" id="window-with-save-gif">
-            <h4 class="save-gif--name">Choose name to gif file</h4>
-            <input type="text" class="save-gif--input-text" id="save-gif--input-text">
-            <input type="submit" id="save-gif--input-submit" class="save-gif--input-submit" value="Download">
-          </div>
-          <p class="download-gif-tooltip">Download gif to file system</p>
-        </button>
-        <button class="main-preview-right--buttons main-preview-right--export">
-          <i class="white-color far fa-file-image"></i>
-        </button>
-        <button class="main-preview-right--buttons main-preview-right--import">
-          <i class="white-color fas fa-folder-open"></i>
-        </button>
       </div>
     </div>
   </main>
