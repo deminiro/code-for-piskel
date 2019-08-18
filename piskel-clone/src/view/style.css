@@ -208,7 +208,7 @@
 }
 
 .li-frame {
-  background-image: url('./assets/setka.png');
+  background-image: url('../../src/view/assets/setka.png');
   width: 98px;
   height: 98px;
   display: grid;
@@ -306,7 +306,7 @@
 }
 
 .main-div--canvas {
-  background-image: url('./assets/setka.png');
+  background-image: url('../../src/view/assets/setka.png');
   margin: 0;
   padding: 0;
 }
@@ -343,7 +343,7 @@
 }
 
 .canvas-preview {
-  background-image: url('./assets/setka.png');
+  background-image: url('../../src/view/assets/setka.png');
   text-align: center;
 }
 
