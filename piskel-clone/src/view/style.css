@@ -1,5 +1,3 @@
-function css() {
-  document.head.innerHTML += `<style>
 @import url('https://fonts.googleapis.com/css?family=Righteous&display=swap');
 
 .body {
@@ -210,7 +208,7 @@ function css() {
 }
 
 .li-frame {
-  background-image: url('../../src/view/assets/setka.png');
+  background-image: url('./assets/setka.png');
   width: 98px;
   height: 98px;
   display: grid;
@@ -308,7 +306,7 @@ function css() {
 }
 
 .main-div--canvas {
-  background-image: url('../../src/view/assets/setka.png');
+  background-image: url('./assets/setka.png');
   margin: 0;
   padding: 0;
 }
@@ -345,7 +343,7 @@ function css() {
 }
 
 .canvas-preview {
-  background-image: url('../../src/view/assets/setka.png');
+  background-image: url('./assets/setka.png');
   text-align: center;
 }
 
@@ -809,7 +807,3 @@ background: #C8B571;
 .about-me-list-element--link {
   text-decoration: none;
 }
-</style>`;
-}
-
-export default css;

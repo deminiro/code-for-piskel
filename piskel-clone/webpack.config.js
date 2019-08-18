@@ -1,6 +1,5 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: './src/app.js',
@@ -13,6 +12,17 @@ module.exports = {
     rules: [
       { enforce: 'pre', test: /\.js$/, loader: 'eslint-loader' },
       {
+        test: /\.(png|jpg|gif)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              fallback: 'responsive-loader',
+            },
+          },
+        ],
+      },
+      {
         test: /\.js$/,
         exclude: /(node_modules)/,
         use: {
@@ -21,7 +31,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },

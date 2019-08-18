@@ -44,6 +44,7 @@
     "gif-frames": "^1.0.1",
     "gifencoder": "^2.0.1",
     "html-webpack-inline-source-plugin": "0.0.10",
-    "mini-css-extract-plugin": "^0.7.0"
+    "mini-css-extract-plugin": "^0.7.0",
+    "url-loader": "^2.1.0"
   }
 }
