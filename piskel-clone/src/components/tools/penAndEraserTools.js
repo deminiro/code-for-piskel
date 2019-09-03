@@ -3,7 +3,7 @@ export default function penAndEraserTools() {
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
   const divWithTools = document.getElementById('div-with-tools');
   const units = 32;
-  const amountOfDivisonsOfCanvas = 19;
+  const amountOfDivisonsOfCanvas = Math.floor(canvasWhichStateOnMiddleOfPage.width / units);
   const pen = document.getElementsByClassName('tools-which-change-canvas--pen')[0];
   const eraser = document.getElementsByClassName('tools-which-change-canvas--eraser-tool')[0];
   const keyboardButtonE = 69;

@@ -7,7 +7,7 @@ export default function rectangleToolFunction() {
   const colorRightClick = document.getElementById('tools-choose-color--bottom');
   const image = new Image();
   const units = 32;
-  const amountOfDivisonsOfCanvas = 19;
+  const amountOfDivisonsOfCanvas = Math.floor(canvasWhichStateOnMiddleOfPage.width / units);
   let startPointX = 0;
   let startPointY = 0;
   let endPointX = 0;

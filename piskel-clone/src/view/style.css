@@ -807,3 +807,10 @@ background: #C8B571;
 .about-me-list-element--link {
   text-decoration: none;
 }
+
+/* @media screen and (min-height: 758px) {
+  .main-div--canvas {
+    width: 736px;
+    height: 736px;
+  }
+} */

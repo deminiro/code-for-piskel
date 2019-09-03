@@ -8,7 +8,7 @@ export default function paintBucketTool() {
   const colorTop = document.getElementById('tools-choose-color--top');
   const colorBottom = document.getElementById('tools-choose-color--bottom');
   const units = 32;
-  const amountOfDivisonsOfCanvas = 19;
+  const amountOfDivisonsOfCanvas = Math.floor(canvasWhichStateOnMiddleOfPage.width / units);
 
 
   function takeXAndYCoordinates(event) {

@@ -9,7 +9,7 @@ export default function shapeSelectionFunction() {
   const saveCoordinatesWhichChooseStickX = [];
   const saveCoordinatesWhichChooseStickY = [];
   let units = 32;
-  let amountOfDivisonsOfCanvas = 19;
+  const amountOfDivisonsOfCanvas = Math.floor(canvasWhichStateOnMiddleOfPage.width / units);
 
   function changeUnitsOfCanvas() {
     units = +document.querySelector('input[name="size"]:checked').value;

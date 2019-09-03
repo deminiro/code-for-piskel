@@ -6,7 +6,7 @@ export default function moveToolFunction() {
   const imageWhichMove = new Image();
   let isDraggable = false;
   const units = 32;
-  const amountOfDivisonsOfCanvas = 19;
+  const amountOfDivisonsOfCanvas = Math.floor(canvasWhichStateOnMiddleOfPage.width / units);
   let currentX = 0;
   let currentY = 0;
 

@@ -2,7 +2,7 @@ export default function showCoordinate() {
   const placeShowCoordinates = document.getElementById('place-for-show-coordinates');
   const canvasWhichStateOnMiddleOfPage = document.getElementById('main-div--canvas');
   const units = 32;
-  const amountOfDivisonsOfCanvas = 19;
+  const amountOfDivisonsOfCanvas = Math.floor(canvasWhichStateOnMiddleOfPage.width / units);
 
   function coordinates(event) {
     const coordinatesPerSquareOnMainCanvasX = [];

@@ -10,7 +10,7 @@ export default function colorPickerTool() {
   const toolDarken = document.getElementsByClassName('tools-which-change-canvas--darken')[0];
   let colorForLeftOrRightClick;
   const units = 32;
-  const amountOfDivisonsOfCanvas = 19;
+  const amountOfDivisonsOfCanvas = Math.floor(canvasWhichStateOnMiddleOfPage.width / units);
 
   function takeXAndYCoordinates(event) {
     const coordinatesPerSquareOnMainCanvasX = [];

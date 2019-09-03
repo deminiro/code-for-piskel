@@ -3,7 +3,7 @@ export default function mirrorPenTool() {
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
   const divWithTools = document.getElementById('div-with-tools');
   const units = 32;
-  const amountOfDivisonsOfCanvas = 19;
+  const amountOfDivisonsOfCanvas = Math.floor(canvasWhichStateOnMiddleOfPage.width / units);
   const mirrorPen = document.getElementsByClassName('tools-which-change-canvas--mirror-pen')[0];
 
   function draw(event) {

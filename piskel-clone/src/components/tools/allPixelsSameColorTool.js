@@ -3,7 +3,7 @@ export default function allPixelsSameColorTool() {
   const ctxOfMiddleCanvas = canvasWhichStateOnMiddleOfPage.getContext('2d');
   const buttonWithAllPixels = document.getElementsByClassName('tools-which-change-canvas--paint-all-pixels-of-the-same-color')[0];
   const units = 32;
-  const amountOfDivisonsOfCanvas = 19;
+  const amountOfDivisonsOfCanvas = Math.floor(canvasWhichStateOnMiddleOfPage.width / units);
 
   function takeImageData(event) {
     const coordinatesPerSquareOnMainCanvasX = [];

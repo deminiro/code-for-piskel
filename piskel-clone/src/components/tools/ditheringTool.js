@@ -7,7 +7,7 @@ export default function ditheringTool() {
   const leftClick = 1;
   const rightClick = 3;
   const units = 32;
-  const amountOfDivisonsOfCanvas = 19;
+  const amountOfDivisonsOfCanvas = Math.floor(canvasWhichStateOnMiddleOfPage.width / units);
   const dithering = document.getElementsByClassName('tools-which-change-canvas--dithering-tool')[0];
   // 0 equal fillRect, 1 equal clearRect
   let needToChangeFillAndClear = 0;
